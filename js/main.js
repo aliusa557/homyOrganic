@@ -11,7 +11,8 @@ const CART_KEY = "blush_roots_cart";
 
 function getCart() {
   try {
-    return JSON.parse(localStorage.getItem(CART_KEY)) || [];
+    const cart = JSON.parse(localStorage.getItem(CART_KEY)) || [];
+    return cart.filter(item => findProduct(item.id));
   } catch {
     return [];
   }

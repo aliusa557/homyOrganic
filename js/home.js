@@ -8,7 +8,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
   if (bestSellerGrid) {
     const bestSellers = PRODUCTS.filter(product => ["Best Seller", "Popular", "Glow", "Night Care"].includes(product.tag));
-    bestSellerGrid.innerHTML = bestSellers.slice(0, 4).map(productCard).join("");
+    const productsToShow = bestSellers.length >= 4 ? bestSellers : PRODUCTS;
+    bestSellerGrid.innerHTML = productsToShow.slice(0, 4).map(productCard).join("");
   }
 
   initRevealAnimations();
