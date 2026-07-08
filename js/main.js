@@ -1,10 +1,17 @@
 const STORE_CONFIG = {
   brandName: "Homy Organic",
+  logoPath: "assets/brand/homy-organic-logo.webp",
+  websiteUrl: "#",
   whatsappNumber: "923257316315",
   easypaisaNumber: "03XX-XXXXXXX",
   jazzcashNumber: "03XX-XXXXXXX",
   deliveryCharge: 250,
-  freeDeliveryAbove: 5000
+  freeDeliveryAbove: 5000,
+  socialLinks: [
+    { label: "Instagram", url: "#" },
+    { label: "Facebook", url: "#" },
+    { label: "TikTok", url: "#" }
+  ]
 };
 
 const CART_KEY = "blush_roots_cart";
@@ -248,15 +255,47 @@ function initNewsletter() {
 }
 
 function initWhatsAppFloatingButton() {
-  const button = document.querySelector("[data-whatsapp-float]");
-  if (!button) return;
-
   const message = encodeURIComponent("Hello, I want to ask about your organic beauty products.");
-  button.href = `https://wa.me/${STORE_CONFIG.whatsappNumber}?text=${message}`;
+  document.querySelectorAll("[data-whatsapp-float]").forEach(button => {
+    button.href = `https://wa.me/${STORE_CONFIG.whatsappNumber}?text=${message}`;
+  });
+}
+
+function initBranding() {
+  document.querySelectorAll("[data-brand-name]").forEach(element => {
+    element.textContent = STORE_CONFIG.brandName;
+  });
+
+  document.querySelectorAll("[data-brand-logo]").forEach(image => {
+    image.src = STORE_CONFIG.logoPath;
+    image.alt = `${STORE_CONFIG.brandName} logo`;
+  });
+
+  document.querySelectorAll("[data-current-year]").forEach(element => {
+    element.textContent = new Date().getFullYear();
+  });
+
+  document.querySelectorAll("[data-website-link]").forEach(link => {
+    link.href = STORE_CONFIG.websiteUrl;
+    link.textContent = STORE_CONFIG.websiteUrl === "#" ? "Website" : "Website";
+    link.toggleAttribute("aria-disabled", STORE_CONFIG.websiteUrl === "#");
+  });
+}
+
+function initSocialLinks() {
+  const links = STORE_CONFIG.socialLinks
+    .map(link => `<a href="${link.url}" target="_blank" rel="noopener" ${link.url === "#" ? 'aria-disabled="true"' : ""}>${link.label}</a>`)
+    .join("");
+
+  document.querySelectorAll("[data-social-links]").forEach(container => {
+    container.innerHTML = links;
+  });
 }
 
 document.addEventListener("DOMContentLoaded", () => {
   rewriteInternalLinks();
+  initBranding();
+  initSocialLinks();
   updateCartCount();
   initMobileMenu();
   initRevealAnimations();

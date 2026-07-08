@@ -117,8 +117,9 @@ button {
 }
 
 .logo img {
-  height: 54px;
-  width: auto;
+  width: 178px;
+  height: 58px;
+  object-fit: contain;
 }
 
 .nav {
@@ -781,6 +782,39 @@ textarea:focus {
   margin: 9px 0;
 }
 
+.social-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin: 12px 0;
+}
+
+.social-links a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 38px;
+  padding: 8px 13px;
+  border-radius: 999px;
+  border: 1px solid rgba(201, 143, 60, .34);
+  background: rgba(255, 255, 255, .08);
+  color: inherit;
+  font-size: 13px;
+  font-weight: 800;
+  margin: 0;
+}
+
+.contact-card .social-links a {
+  background: rgba(255, 255, 255, .72);
+  color: var(--brown);
+  box-shadow: var(--shadow-soft);
+}
+
+.social-links a[aria-disabled="true"],
+a[aria-disabled="true"] {
+  opacity: .68;
+}
+
 .footer-bottom {
   border-top: 1px solid rgba(255,255,255,.12);
   margin-top: 36px;
@@ -1357,7 +1391,8 @@ textarea:focus {
   }
 
   .logo img {
-    height: 48px;
+    width: 150px;
+    height: 50px;
   }
 
   .hero h1,

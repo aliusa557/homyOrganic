@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Checkout | Blush Roots</title>
+  <title>Checkout | Homy Organic</title>
   <meta name="description" content="Complete your order through WhatsApp checkout.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -11,12 +11,12 @@
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-  <div class="topbar">Free Shipping on Orders Above Rs. 3,000 • COD Available • WhatsApp Orders</div>
+  <div class="topbar">Free Shipping on Orders Above Rs. 3,000 - COD Available - WhatsApp Orders</div>
 
   <header class="header">
     <div class="container navbar">
-      <a class="logo" href="index.html" aria-label="Blush Roots Home">
-        <img src="assets/icons/logo.svg" alt="Blush Roots Organic Beauty">
+      <a class="logo" href="index.html" aria-label="Homy Organic Home">
+        <img src="assets/brand/homy-organic-logo.webp" alt="Homy Organic logo" data-brand-logo>
       </a>
 
       <nav class="nav" data-nav>
@@ -96,7 +96,7 @@
   <footer class="footer">
     <div class="container footer-grid">
       <div>
-        <h3>Blush Roots</h3>
+        <h3 data-brand-name>Homy Organic</h3>
         <p>Organic-inspired skin and hair care made for a soft, confident daily beauty routine.</p>
       </div>
 
@@ -115,22 +115,23 @@
       </div>
 
       <div>
-        <h4>Payments</h4>
-        <p>Cash on Delivery</p>
-        <p>Manual Easypaisa</p>
-        <p>Manual JazzCash</p>
+        <h4>Follow Us</h4>
+        <div class="social-links" data-social-links></div>
+        <a data-website-link href="#">Website</a>
       </div>
     </div>
 
     <div class="container footer-bottom">
-      <p>© 2026 Blush Roots. All rights reserved.</p>
+      <p>&copy; <span data-current-year>2026</span> Homy Organic. All rights reserved.</p>
     </div>
   </footer>
 
-  <a href="#" class="whatsapp-float" data-whatsapp-float aria-label="Chat on WhatsApp">☘</a>
+  <a href="#" class="whatsapp-float" data-whatsapp-float aria-label="Chat on WhatsApp">WA</a>
 
   <script src="js/products.js"></script>
   <script src="js/main.js"></script>
   <script src="js/checkout.js"></script>
 </body>
 </html>
+
+

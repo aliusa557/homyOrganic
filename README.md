@@ -1,4 +1,4 @@
-# Blush Roots - Static Organic Beauty E-Commerce Website
+﻿# Homy Organic - Static Organic Store Website
 
 This is a complete static HTML/CSS/JavaScript e-commerce website for organic skin-care and hair-care products.
 
@@ -75,7 +75,7 @@ Update product names, prices, descriptions, categories and images.
 Open:
 
 ```text
-assets/icons/logo.svg
+assets/brand/homy-organic-logo.webp
 ```
 
 or replace it with your own logo file.
@@ -105,3 +105,4 @@ Upload the full folder and set `index.html` as the homepage.
 ## Note
 
 This website does not use backend/database. Orders are processed through WhatsApp only.
+

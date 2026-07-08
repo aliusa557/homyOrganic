@@ -3,20 +3,20 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>About | Blush Roots</title>
-  <meta name="description" content="About Blush Roots organic beauty store.">
+  <title>About | Homy Organic</title>
+  <meta name="description" content="About Homy Organic Organic Store.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-  <div class="topbar">Free Shipping on Orders Above Rs. 3,000 • COD Available • WhatsApp Orders</div>
+  <div class="topbar">Free Shipping on Orders Above Rs. 3,000 - COD Available - WhatsApp Orders</div>
 
   <header class="header">
     <div class="container navbar">
-      <a class="logo" href="index.html" aria-label="Blush Roots Home">
-        <img src="assets/icons/logo.svg" alt="Blush Roots Organic Beauty">
+      <a class="logo" href="index.html" aria-label="Homy Organic Home">
+        <img src="assets/brand/homy-organic-logo.webp" alt="Homy Organic logo" data-brand-logo>
       </a>
 
       <nav class="nav" data-nav>
@@ -40,7 +40,7 @@
       <div class="container reveal">
         <p class="eyebrow">About Us</p>
         <h1>Soft care, natural feel, <span>modern beauty</span></h1>
-        <p>Blush Roots is a small organic-inspired beauty store focused on daily skin and hair care products with a premium, gentle and customer-friendly experience.</p>
+        <p>Homy Organic is a small organic-inspired beauty store focused on daily skin and hair care products with a premium, gentle and customer-friendly experience.</p>
       </div>
     </section>
 
@@ -81,18 +81,18 @@
       <div class="container">
         <div class="reviews-grid">
           <div class="review-card reveal">
-            <div class="stars">★★★★★</div>
-            <p>“The website looks very soft and professional. Ordering on WhatsApp is easy.”</p>
+            <div class="stars">*****</div>
+            <p>"The website looks very soft and professional. Ordering on WhatsApp is easy."</p>
             <div class="review-person"><div class="avatar">A</div><strong>Ayesha</strong></div>
           </div>
           <div class="review-card reveal">
-            <div class="stars">★★★★★</div>
-            <p>“The product pages are clean and the subtle theme fits beauty products perfectly.”</p>
+            <div class="stars">*****</div>
+            <p>"The product pages are clean and the subtle theme fits beauty products perfectly."</p>
             <div class="review-person"><div class="avatar">S</div><strong>Sana</strong></div>
           </div>
           <div class="review-card reveal">
-            <div class="stars">★★★★★</div>
-            <p>“Very simple checkout. I just add to cart and send my order on WhatsApp.”</p>
+            <div class="stars">*****</div>
+            <p>"Very simple checkout. I just add to cart and send my order on WhatsApp."</p>
             <div class="review-person"><div class="avatar">M</div><strong>Maham</strong></div>
           </div>
         </div>
@@ -103,7 +103,7 @@
   <footer class="footer">
     <div class="container footer-grid">
       <div>
-        <h3>Blush Roots</h3>
+        <h3 data-brand-name>Homy Organic</h3>
         <p>Organic-inspired skin and hair care made for a soft, confident daily beauty routine.</p>
       </div>
 
@@ -122,22 +122,23 @@
       </div>
 
       <div>
-        <h4>Payments</h4>
-        <p>Cash on Delivery</p>
-        <p>Manual Easypaisa</p>
-        <p>Manual JazzCash</p>
+        <h4>Follow Us</h4>
+        <div class="social-links" data-social-links></div>
+        <a data-website-link href="#">Website</a>
       </div>
     </div>
 
     <div class="container footer-bottom">
-      <p>© 2026 Blush Roots. All rights reserved.</p>
+      <p>&copy; <span data-current-year>2026</span> Homy Organic. All rights reserved.</p>
     </div>
   </footer>
 
-  <a href="#" class="whatsapp-float" data-whatsapp-float aria-label="Chat on WhatsApp">☘</a>
+  <a href="#" class="whatsapp-float" data-whatsapp-float aria-label="Chat on WhatsApp">WA</a>
 
   <script src="js/products.js"></script>
   <script src="js/main.js"></script>
   
 </body>
 </html>
+
+

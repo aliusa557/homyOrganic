@@ -37,7 +37,7 @@ function renderProductDetail() {
     return;
   }
 
-  document.title = `${product.name} | Blush Roots`;
+  document.title = `${product.name} | ${STORE_CONFIG.brandName}`;
 
   wrapper.innerHTML = `
     <section class="page-hero small">
