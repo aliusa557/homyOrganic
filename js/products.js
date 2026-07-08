@@ -113,8 +113,8 @@ const PRODUCTS = [
   },
   {
     "id": 9,
-    "name": "Pink Clay Face Mask",
-    "slug": "pink-clay-face-mask",
+    "name": "Clay Face Mask",
+    "slug": "clay-face-mask",
     "category": "Skin Care",
     "price": 1350,
     "oldPrice": 1600,
@@ -122,7 +122,7 @@ const PRODUCTS = [
     "rating": 4.6,
     "image": "assets/products/product-9.svg",
     "description": "A soft clay mask that helps skin feel fresh, smooth, and deeply cleansed.",
-    "ingredients": "Pink clay, rose powder, aloe vera powder, oat extract.",
+    "ingredients": "Kaolin clay, rose powder, aloe vera powder, oat extract.",
     "usage": "Apply a thin layer for 10–12 minutes. Rinse before fully dry."
   },
   {

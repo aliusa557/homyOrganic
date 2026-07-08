@@ -1,16 +1,16 @@
 :root {
-  /* MANA-inspired clean beauty palette: ivory base, charcoal text, botanical green, champagne-gold, soft rose and aqua product accents. */
-  --pink: #f5abc5;
-  --soft-pink: #fff2f6;
-  --rose: #e86f9c;
+  /* Clean neutral palette: ivory base, charcoal text, warm brown, champagne-gold, soft cream accents. */
+  --pink: #e6d2bf;
+  --soft-pink: #fbf3ea;
+  --rose: #c89f7a;
   --deep-rose: #111111;
   --wood: #e6c39b;
   --cream: #fff8ef;
   --brown: #15120f;
   --muted: #68605a;
   --gold: #c98f3c;
-  --green: #0b8f61;
-  --aqua: #dff7f3;
+  --green: #8a725b;
+  --aqua: #f7efe5;
   --white: #ffffff;
   --shadow: 0 24px 58px rgba(17, 17, 17, 0.14);
   --shadow-soft: 0 14px 36px rgba(17, 17, 17, 0.08);
@@ -33,7 +33,7 @@ body {
   font-family: "Poppins", Arial, sans-serif;
   color: var(--brown);
   background:
-    radial-gradient(circle at top left, rgba(223, 247, 243, .78), transparent 34rem),
+    radial-gradient(circle at top left, rgba(247, 239, 228, .82), transparent 34rem),
     radial-gradient(circle at 84% 10%, rgba(230, 195, 155, .78), transparent 30rem),
     var(--cream);
   line-height: 1.65;
@@ -57,8 +57,8 @@ body::after {
   pointer-events: none;
   background-image:
     linear-gradient(rgba(255,255,255,.48), rgba(255,255,255,.48)),
-    radial-gradient(circle at 20% 70%, rgba(245, 171, 197, .22), transparent 20rem),
-    radial-gradient(circle at 82% 76%, rgba(11, 143, 97, .12), transparent 18rem);
+    radial-gradient(circle at 20% 70%, rgba(236, 203, 175, .22), transparent 20rem),
+    radial-gradient(circle at 82% 76%, rgba(141, 104, 69, .12), transparent 18rem);
   z-index: -1;
 }
 
@@ -142,7 +142,7 @@ button {
   width: 0;
   height: 2px;
   border-radius: 999px;
-  background: var(--green);
+  background: var(--gold);
   transition: width .25s ease;
 }
 
@@ -182,7 +182,7 @@ button {
   height: 24px;
   padding: 0 6px;
   border-radius: 999px;
-  background: var(--green);
+  background: var(--gold);
   color: white;
   font-size: 12px;
 }
@@ -240,7 +240,7 @@ button {
   align-items: center;
   gap: 9px;
   margin: 0 0 14px;
-  color: var(--green);
+  color: var(--brown);
   font-weight: 800;
   text-transform: uppercase;
   letter-spacing: .14em;
@@ -266,7 +266,7 @@ button {
 
 .hero h1 span,
 .page-hero h1 span {
-  color: var(--green);
+  color: var(--brown);
 }
 
 .hero p {
@@ -341,7 +341,7 @@ button {
   position: absolute;
   inset: 18px;
   border-radius: 34px;
-  background: linear-gradient(145deg, rgba(223,247,243,.96), rgba(230,195,155,.90));
+  background: linear-gradient(145deg, rgba(247,239,228,.96), rgba(230,195,155,.90));
   z-index: -1;
 }
 
@@ -389,7 +389,7 @@ button {
 .stat-card strong {
   display: block;
   font-size: 25px;
-  color: var(--green);
+  color: var(--brown);
 }
 
 .stat-card span {
@@ -452,7 +452,7 @@ button {
   width: 180px;
   height: 180px;
   border-radius: 999px;
-  background: radial-gradient(circle, rgba(245,171,197,.44), rgba(223,247,243,.36));
+  background: radial-gradient(circle, rgba(236,203,175,.44), rgba(247,239,228,.36));
 }
 
 .category-card h3 {
@@ -489,7 +489,7 @@ button {
   position: relative;
   display: block;
   padding: 14px;
-  background: linear-gradient(145deg, rgba(223,247,243,.92), rgba(255,242,246,.86), rgba(230,195,155,.56));
+  background: linear-gradient(145deg, rgba(247,239,228,.92), rgba(255,249,243,.86), rgba(230,195,155,.56));
 }
 
 .product-image-wrap img {
@@ -512,7 +512,7 @@ button {
   padding: 7px 12px;
   border-radius: 999px;
   background: rgba(255, 255, 255, .86);
-  color: var(--green);
+  color: var(--gold);
   font-size: 12px;
   font-weight: 800;
   box-shadow: var(--shadow-soft);
@@ -567,7 +567,7 @@ button {
 
 .price-row strong {
   font-size: 21px;
-  color: var(--green);
+  color: var(--brown);
 }
 
 .price-row span {
@@ -591,7 +591,7 @@ button {
   border-radius: 44px;
   padding: 46px;
   background:
-    linear-gradient(115deg, rgba(21,18,15,.84), rgba(11,143,97,.58)),
+    linear-gradient(115deg, rgba(21,18,15,.84), rgba(141,104,69,.58)),
     url("../assets/patterns/wood.svg");
   background-size: cover;
   color: white;
@@ -645,7 +645,7 @@ button {
   display: grid;
   place-items: center;
   border-radius: 19px;
-  background: linear-gradient(135deg, var(--aqua), var(--wood));
+  background: linear-gradient(135deg, var(--cream), var(--wood));
   margin-bottom: 16px;
   font-size: 24px;
 }
@@ -689,11 +689,11 @@ button {
   width: 48px;
   height: 48px;
   border-radius: 50%;
-  background: linear-gradient(135deg, var(--aqua), var(--wood));
+  background: linear-gradient(135deg, var(--cream), var(--wood));
   display: grid;
   place-items: center;
   font-weight: 900;
-  color: var(--green);
+  color: var(--brown);
 }
 
 .newsletter {
@@ -748,8 +748,8 @@ textarea {
 .form-control:focus,
 select:focus,
 textarea:focus {
-  border-color: rgba(11, 143, 97, .46);
-  box-shadow: 0 0 0 4px rgba(11,143,97,.12);
+  border-color: rgba(201,143,60, .46);
+  box-shadow: 0 0 0 4px rgba(201,143,60,.12);
 }
 
 .footer {
@@ -944,7 +944,7 @@ textarea:focus {
 .notice-box {
   padding: 18px;
   border-radius: 20px;
-  background: rgba(223,247,243,.60);
+  background: rgba(247,239,228,.60);
   margin-top: 14px;
 }
 
@@ -1002,7 +1002,7 @@ textarea:focus {
   gap: 10px;
   padding: 8px;
   border-radius: 999px;
-  background: var(--aqua);
+  background: rgba(247,239,228,.32);
 }
 
 .cart-controls button {
@@ -1022,7 +1022,7 @@ textarea:focus {
 .cart-item-total button {
   display: block;
   margin-top: 8px;
-  color: var(--green);
+  color: var(--brown);
   background: transparent;
   font-weight: 700;
 }
@@ -1065,8 +1065,8 @@ textarea:focus {
 .summary-note {
   padding: 12px;
   border-radius: 16px;
-  background: rgba(11,143,97,.10);
-  color: var(--green);
+  background: rgba(201,143,60,.10);
+  color: var(--brown);
   font-size: 13px;
   margin-top: 12px;
 }
@@ -1124,7 +1124,7 @@ textarea:focus {
   margin: 14px 0 18px;
   padding: 16px;
   border-radius: 18px;
-  background: rgba(223,247,243,.64);
+  background: rgba(247,239,228,.64);
   color: var(--muted);
 }
 
@@ -1165,7 +1165,7 @@ textarea:focus {
 .value-item {
   padding: 18px;
   border-radius: 20px;
-  background: rgba(223,247,243,.58);
+  background: rgba(247,239,228,.58);
 }
 
 .value-item strong {
@@ -1212,7 +1212,7 @@ textarea:focus {
 
 .header .cart-link:hover,
 .btn-primary:hover {
-  background: linear-gradient(135deg, var(--green), #0a6f4d);
+  background: linear-gradient(135deg, var(--brown), #2d2925);
 }
 
 .product-card,
@@ -1243,7 +1243,7 @@ textarea:focus {
 }
 
 .footer {
-  border-top: 5px solid var(--green);
+  border-top: 5px solid var(--gold);
 }
 
 
