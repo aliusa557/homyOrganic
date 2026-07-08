@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Cart | Blush Roots</title>
-  <meta name="description" content="Review your shopping cart.">
+  <title>Product Detail | Blush Roots</title>
+  <meta name="description" content="View product details and add to cart.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -15,19 +15,19 @@
 
   <header class="header">
     <div class="container navbar">
-      <a class="logo" href="index" aria-label="Blush Roots Home">
+      <a class="logo" href="index.html" aria-label="Blush Roots Home">
         <img src="assets/icons/logo.svg" alt="Blush Roots Organic Beauty">
       </a>
 
       <nav class="nav" data-nav>
-        <a class="nav-link" href="index">Home</a>
-        <a class="nav-link" href="shop">Shop</a>
-        <a class="nav-link" href="about">About</a>
-        <a class="nav-link" href="contact">Contact</a>
+        <a class="nav-link" href="index.html">Home</a>
+        <a class="nav-link" href="shop.html">Shop</a>
+        <a class="nav-link" href="about.html">About</a>
+        <a class="nav-link" href="contact.html">Contact</a>
       </nav>
 
       <div class="nav-actions">
-        <a class="cart-link" href="cart">Cart <span class="cart-badge" data-cart-count>0</span></a>
+        <a class="cart-link" href="cart.html">Cart <span class="cart-badge" data-cart-count>0</span></a>
         <button class="menu-button" data-menu-button aria-label="Open menu">
           <span></span><span></span><span></span>
         </button>
@@ -35,22 +35,19 @@
     </div>
   </header>
 
-  <main>
-    <section class="page-hero small">
-      <div class="container reveal">
-        <p class="eyebrow">Your Cart</p>
-        <h1>Review your <span>order</span></h1>
-        <p>Update quantities, check total, then continue to WhatsApp checkout.</p>
-      </div>
-    </section>
+  <main data-product-detail></main>
 
-    <section class="section-sm">
-      <div class="container cart-layout">
-        <div data-cart-items></div>
-        <aside data-cart-summary></aside>
+  <section class="section">
+    <div class="container">
+      <div class="section-head reveal">
+        <div>
+          <p class="eyebrow">You May Also Like</p>
+          <h2>Related products</h2>
+        </div>
       </div>
-    </section>
-  </main>
+      <div class="product-grid" data-related-products></div>
+    </div>
+  </section>
 
   <footer class="footer">
     <div class="container footer-grid">
@@ -61,16 +58,16 @@
 
       <div>
         <h4>Shop</h4>
-        <a href="shop">All Products</a>
-        <a href="shop">Skin Care</a>
-        <a href="shop">Hair Care</a>
+        <a href="shop.html">All Products</a>
+        <a href="shop.html">Skin Care</a>
+        <a href="shop.html">Hair Care</a>
       </div>
 
       <div>
         <h4>Support</h4>
-        <a href="contact">Contact</a>
-        <a href="cart">Cart</a>
-        <a href="checkout">Checkout</a>
+        <a href="contact.html">Contact</a>
+        <a href="cart.html">Cart</a>
+        <a href="checkout.html">Checkout</a>
       </div>
 
       <div>
@@ -90,6 +87,6 @@
 
   <script src="js/products.js"></script>
   <script src="js/main.js"></script>
-  <script src="js/cart.js"></script>
+  <script src="js/product-detail.js"></script>
 </body>
 </html>

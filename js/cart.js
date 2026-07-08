@@ -76,7 +76,7 @@ function renderCart() {
         <strong>${formatPrice(totals.total)}</strong>
       </div>
 
-      <a href="checkout.html" class="btn btn-primary full">Proceed to Checkout</a>
+      <a href="checkout" class="btn btn-primary full">Proceed to Checkout</a>
       <a href="shop.html" class="btn btn-soft full">Continue Shopping</a>
     </div>
   `;
