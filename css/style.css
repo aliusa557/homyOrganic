@@ -117,8 +117,8 @@ button {
 }
 
 .logo img {
-  width: 178px;
-  height: 58px;
+  width: 190px;
+  height: 62px;
   object-fit: contain;
 }
 
@@ -172,8 +172,17 @@ button {
   padding: 10px 16px;
   border-radius: 999px;
   background: var(--white);
+  color: var(--brown);
   box-shadow: var(--shadow-soft);
   font-weight: 700;
+  transition: transform .25s ease, box-shadow .25s ease, background .25s ease, color .25s ease;
+}
+
+.cart-link:hover {
+  transform: translateY(-2px);
+  background: var(--white);
+  color: var(--brown);
+  box-shadow: 0 16px 34px rgba(17, 17, 17, .12);
 }
 
 .cart-badge {
@@ -1244,7 +1253,6 @@ a[aria-disabled="true"] {
   filter: drop-shadow(0 8px 16px rgba(17,17,17,.08));
 }
 
-.header .cart-link:hover,
 .btn-primary:hover {
   background: linear-gradient(135deg, var(--brown), #2d2925);
 }
@@ -1391,8 +1399,8 @@ a[aria-disabled="true"] {
   }
 
   .logo img {
-    width: 150px;
-    height: 50px;
+    width: 156px;
+    height: 52px;
   }
 
   .hero h1,

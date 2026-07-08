@@ -16,7 +16,7 @@
   <header class="header">
     <div class="container navbar">
       <a class="logo" href="index.html" aria-label="Homy Organic Home">
-        <img src="assets/brand/homy-organic-logo.webp" alt="Homy Organic logo" data-brand-logo>
+        <img src="assets/brand/homy-organic-logo.svg" alt="Homy Organic logo" data-brand-logo>
       </a>
 
       <nav class="nav" data-nav>
@@ -140,6 +140,7 @@
   
 </body>
 </html>
+
 
 
 

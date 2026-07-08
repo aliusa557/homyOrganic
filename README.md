@@ -75,7 +75,7 @@ Update product names, prices, descriptions, categories and images.
 Open:
 
 ```text
-assets/brand/homy-organic-logo.webp
+assets/brand/homy-organic-logo.svg
 ```
 
 or replace it with your own logo file.
@@ -105,4 +105,5 @@ Upload the full folder and set `index.html` as the homepage.
 ## Note
 
 This website does not use backend/database. Orders are processed through WhatsApp only.
+
 

@@ -1,6 +1,6 @@
 const STORE_CONFIG = {
   brandName: "Homy Organic",
-  logoPath: "assets/brand/homy-organic-logo.webp",
+  logoPath: "assets/brand/homy-organic-logo.svg",
   websiteUrl: "#",
   whatsappNumber: "923257316315",
   easypaisaNumber: "03XX-XXXXXXX",
