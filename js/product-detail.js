@@ -19,7 +19,7 @@ function renderProductDetail() {
   const wrapper = document.querySelector("[data-product-detail]");
 
   if (window.location.search.includes("id=")) {
-    window.history.replaceState({}, "", "product-detail");
+    window.history.replaceState({}, "", "product-detail.html");
   }
 
   if (!wrapper) return;

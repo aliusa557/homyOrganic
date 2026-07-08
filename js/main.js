@@ -127,22 +127,10 @@ function normalizePagePath(pathname = window.location.pathname) {
 function rewriteInternalLinks(root = document) {
   root.querySelectorAll("a[href]").forEach(link => {
     const href = link.getAttribute("href");
-    if (!href || /^https?:\/\//i.test(href) || href.startsWith("#") || href.startsWith("mailto:") || href.startsWith("tel:")) {
-      return;
-    }
+    const htmlPages = new Set(["index", "about", "shop", "contact", "cart", "checkout", "product-detail"]);
 
-    let cleanedHref = href.replace(/^\.\//, "");
-    cleanedHref = cleanedHref
-      .replace(/index\.html$/i, "index")
-      .replace(/about\.html$/i, "about")
-      .replace(/shop\.html$/i, "shop")
-      .replace(/contact\.html$/i, "contact")
-      .replace(/cart\.html$/i, "cart")
-      .replace(/checkout\.html$/i, "checkout")
-      .replace(/product-detail\.html(\?.*)?$/i, "product-detail");
-
-    if (cleanedHref !== href) {
-      link.setAttribute("href", cleanedHref);
+    if (htmlPages.has(href)) {
+      link.setAttribute("href", `${href}.html`);
     }
   });
 }
@@ -158,21 +146,21 @@ function initProductLinks() {
 
     event.preventDefault();
     setSelectedProductId(link.getAttribute("data-product-id"));
-    window.location.assign("product-detail");
+    window.location.assign("product-detail.html");
   });
 }
 
 function productCard(product) {
   return `
     <article class="product-card reveal">
-      <a href="product-detail" class="product-image-wrap" data-product-id="${product.id}" aria-label="View ${product.name}">
+      <a href="product-detail.html" class="product-image-wrap" data-product-id="${product.id}" aria-label="View ${product.name}">
         <span class="product-tag">${product.tag}</span>
         <img src="${product.image}" alt="${product.name}" loading="lazy">
       </a>
 
       <div class="product-content">
         <p class="product-category">${product.category}</p>
-        <h3><a href="product-detail" data-product-id="${product.id}">${product.name}</a></h3>
+        <h3><a href="product-detail.html" data-product-id="${product.id}">${product.name}</a></h3>
         <p class="product-description">${product.description}</p>
 
         <div class="rating-row">
@@ -186,7 +174,7 @@ function productCard(product) {
 
         <div class="product-actions">
           <button class="btn btn-primary" onclick="addToCart(${product.id})">Add to Cart</button>
-          <a class="btn btn-soft" href="product-detail" data-product-id="${product.id}">View</a>
+          <a class="btn btn-soft" href="product-detail.html" data-product-id="${product.id}">View</a>
         </div>
       </div>
     </article>
