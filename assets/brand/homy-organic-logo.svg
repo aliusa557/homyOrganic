@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 520 170" role="img" aria-labelledby="title desc">
+  <title id="title">Homy Organic</title>
+  <desc id="desc">Rectangular Homy Organic logo with leaf mark and premium tagline.</desc>
+  <defs>
+    <linearGradient id="paper" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#fffaf2"/>
+      <stop offset="1" stop-color="#ead2b0"/>
+    </linearGradient>
+    <linearGradient id="leaf" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#9fbf63"/>
+      <stop offset="1" stop-color="#2f6f3e"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="520" height="170" rx="18" fill="url(#paper)"/>
+  <rect x="8" y="8" width="504" height="154" rx="14" fill="none" stroke="#c99546" stroke-width="3"/>
+
+  <path d="M180 45 L258 14 L336 45" fill="none" stroke="#f7f0df" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M184 48 L258 20 L332 48" fill="none" stroke="#322a23" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" opacity=".26"/>
+
+  <text x="260" y="76" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="42" font-weight="700" fill="#2b2621">Homy</text>
+
+  <g transform="translate(67 70)">
+    <circle cx="34" cy="35" r="33" fill="#27231f"/>
+    <ellipse cx="36" cy="35" rx="15" ry="25" transform="rotate(25 36 35)" fill="url(#leaf)"/>
+    <path d="M27 53 C33 39 39 28 50 18" fill="none" stroke="#fff8ed" stroke-width="5" stroke-linecap="round"/>
+  </g>
+
+  <text x="287" y="118" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="64" font-weight="800" fill="#292520">Organic</text>
+  <text x="260" y="146" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="18" font-weight="700" letter-spacing="4" fill="#5d5248">PURE - NATURAL - PREMIUM</text>
+</svg>
