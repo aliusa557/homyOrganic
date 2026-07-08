@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Redirecting...</title>
+    <script>
+      (function () {
+        const path = window.location.pathname.replace(/\/+$/, "") || "/";
+        const map = {
+          "/": "/index.html",
+          "/index": "/index.html",
+          "/about": "/about.html",
+          "/shop": "/shop.html",
+          "/contact": "/contact.html",
+          "/cart": "/cart.html",
+          "/checkout": "/checkout.html",
+          "/product-detail": "/product-detail.html"
+        };
+        const target = map[path];
+        if (target) {
+          window.location.replace(target);
+        }
+      })();
+    </script>
+  </head>
+  <body></body>
+</html>

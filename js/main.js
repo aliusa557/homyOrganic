@@ -111,17 +111,60 @@ function renderStars(rating) {
   return `<span class="stars">${stars}</span><span>${rating}</span>`;
 }
 
+function normalizePagePath(pathname = window.location.pathname) {
+  const cleaned = pathname.replace(/\/+$/, "");
+  return cleaned.split("/").pop() || "index";
+}
+
+function rewriteInternalLinks(root = document) {
+  root.querySelectorAll("a[href]").forEach(link => {
+    const href = link.getAttribute("href");
+    if (!href || /^https?:\/\//i.test(href) || href.startsWith("#") || href.startsWith("mailto:") || href.startsWith("tel:")) {
+      return;
+    }
+
+    let cleanedHref = href.replace(/^\.\//, "");
+    cleanedHref = cleanedHref
+      .replace(/index\.html$/i, "index")
+      .replace(/about\.html$/i, "about")
+      .replace(/shop\.html$/i, "shop")
+      .replace(/contact\.html$/i, "contact")
+      .replace(/cart\.html$/i, "cart")
+      .replace(/checkout\.html$/i, "checkout")
+      .replace(/product-detail\.html(\?.*)?$/i, "product-detail");
+
+    if (cleanedHref !== href) {
+      link.setAttribute("href", cleanedHref);
+    }
+  });
+}
+
+function setSelectedProductId(productId) {
+  sessionStorage.setItem("blush_roots_selected_product", String(productId));
+}
+
+function initProductLinks() {
+  document.addEventListener("click", event => {
+    const link = event.target.closest("a[data-product-id]");
+    if (!link) return;
+
+    event.preventDefault();
+    setSelectedProductId(link.getAttribute("data-product-id"));
+    window.location.assign("product-detail");
+  });
+}
+
 function productCard(product) {
   return `
     <article class="product-card reveal">
-      <a href="product-detail.html?id=${product.id}" class="product-image-wrap" aria-label="View ${product.name}">
+      <a href="product-detail" class="product-image-wrap" data-product-id="${product.id}" aria-label="View ${product.name}">
         <span class="product-tag">${product.tag}</span>
         <img src="${product.image}" alt="${product.name}" loading="lazy">
       </a>
 
       <div class="product-content">
         <p class="product-category">${product.category}</p>
-        <h3><a href="product-detail.html?id=${product.id}">${product.name}</a></h3>
+        <h3><a href="product-detail" data-product-id="${product.id}">${product.name}</a></h3>
         <p class="product-description">${product.description}</p>
 
         <div class="rating-row">
@@ -135,7 +178,7 @@ function productCard(product) {
 
         <div class="product-actions">
           <button class="btn btn-primary" onclick="addToCart(${product.id})">Add to Cart</button>
-          <a class="btn btn-soft" href="product-detail.html?id=${product.id}">View</a>
+          <a class="btn btn-soft" href="product-detail" data-product-id="${product.id}">View</a>
         </div>
       </div>
     </article>
@@ -175,13 +218,13 @@ function initRevealAnimations() {
 }
 
 function setActiveNav() {
-  const currentPage = window.location.pathname.split("/").pop() || "index.html";
+  const currentPage = normalizePagePath(window.location.pathname);
 
   document.querySelectorAll(".nav-link").forEach(link => {
-    const href = link.getAttribute("href");
-    if (href === currentPage || (currentPage === "" && href === "index.html")) {
-      link.classList.add("active");
-    }
+    const href = (link.getAttribute("href") || "").replace(/\/+$/, "");
+    const pageName = href.split("/").pop() || "index";
+    const isActive = pageName === currentPage || (currentPage === "product-detail" && pageName === "shop") || (currentPage === "" && pageName === "index");
+    link.classList.toggle("active", isActive);
   });
 }
 
@@ -212,10 +255,12 @@ function initWhatsAppFloatingButton() {
 }
 
 document.addEventListener("DOMContentLoaded", () => {
+  rewriteInternalLinks();
   updateCartCount();
   initMobileMenu();
   initRevealAnimations();
   setActiveNav();
   initNewsletter();
   initWhatsAppFloatingButton();
+  initProductLinks();
 });

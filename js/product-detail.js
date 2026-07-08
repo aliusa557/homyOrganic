@@ -1,11 +1,26 @@
 function getProductIdFromUrl() {
   const params = new URLSearchParams(window.location.search);
-  return Number(params.get("id")) || PRODUCTS[0].id;
+  const productIdFromUrl = Number(params.get("id"));
+
+  if (Number.isFinite(productIdFromUrl) && productIdFromUrl > 0) {
+    return productIdFromUrl;
+  }
+
+  const productIdFromStorage = Number(sessionStorage.getItem("blush_roots_selected_product"));
+  if (Number.isFinite(productIdFromStorage) && productIdFromStorage > 0) {
+    return productIdFromStorage;
+  }
+
+  return PRODUCTS[0].id;
 }
 
 function renderProductDetail() {
   const product = findProduct(getProductIdFromUrl());
   const wrapper = document.querySelector("[data-product-detail]");
+
+  if (window.location.search.includes("id=")) {
+    window.history.replaceState({}, "", "product-detail");
+  }
 
   if (!wrapper) return;
 
@@ -94,6 +109,7 @@ function renderProductDetail() {
       .join("");
   }
 
+  rewriteInternalLinks(wrapper);
   initRevealAnimations();
 }
 
