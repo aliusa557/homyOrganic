@@ -1,6 +1,6 @@
 const STORE_CONFIG = {
-  brandName: "Blush Roots",
-  whatsappNumber: "923001234567",
+  brandName: "Homy Organic",
+  whatsappNumber: "923257316315",
   easypaisaNumber: "03XX-XXXXXXX",
   jazzcashNumber: "03XX-XXXXXXX",
   deliveryCharge: 250,
