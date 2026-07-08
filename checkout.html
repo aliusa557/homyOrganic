@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Checkout | Blush Roots</title>
+  <meta name="description" content="Complete your order through WhatsApp checkout.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div class="topbar">Free Shipping on Orders Above Rs. 3,000 • COD Available • WhatsApp Orders</div>
+
+  <header class="header">
+    <div class="container navbar">
+      <a class="logo" href="index.html" aria-label="Blush Roots Home">
+        <img src="assets/icons/logo.svg" alt="Blush Roots Organic Beauty">
+      </a>
+
+      <nav class="nav" data-nav>
+        <a class="nav-link" href="index.html">Home</a>
+        <a class="nav-link" href="shop.html">Shop</a>
+        <a class="nav-link" href="about.html">About</a>
+        <a class="nav-link" href="contact.html">Contact</a>
+      </nav>
+
+      <div class="nav-actions">
+        <a class="cart-link" href="cart.html">Cart <span class="cart-badge" data-cart-count>0</span></a>
+        <button class="menu-button" data-menu-button aria-label="Open menu">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="page-hero small">
+      <div class="container reveal">
+        <p class="eyebrow">Checkout</p>
+        <h1>Place order on <span>WhatsApp</span></h1>
+        <p>Fill your details, choose payment method, and send your order directly to WhatsApp.</p>
+      </div>
+    </section>
+
+    <section class="section-sm">
+      <div class="container checkout-layout">
+        <form class="checkout-form-card reveal" data-checkout-form>
+          <div class="form-grid">
+            <div class="form-group">
+              <label for="name">Full Name *</label>
+              <input class="form-control" id="name" type="text" placeholder="Your name">
+            </div>
+
+            <div class="form-group">
+              <label for="phone">Phone Number *</label>
+              <input class="form-control" id="phone" type="tel" placeholder="03XX-XXXXXXX">
+            </div>
+
+            <div class="form-group">
+              <label for="city">City *</label>
+              <input class="form-control" id="city" type="text" placeholder="Your city">
+            </div>
+
+            <div class="form-group">
+              <label for="paymentMethod">Payment Method *</label>
+              <select id="paymentMethod">
+                <option value="Cash on Delivery">Cash on Delivery</option>
+                <option value="Easypaisa Manual Payment">Easypaisa Manual Payment</option>
+                <option value="JazzCash Manual Payment">JazzCash Manual Payment</option>
+              </select>
+            </div>
+
+            <div class="form-group full">
+              <label for="address">Complete Address *</label>
+              <textarea id="address" placeholder="House number, street, area, city"></textarea>
+            </div>
+
+            <div class="form-group full">
+              <label for="note">Order Note</label>
+              <textarea id="note" placeholder="Any special note? Optional"></textarea>
+            </div>
+          </div>
+
+          <div class="payment-note" data-payment-note></div>
+
+          <button class="btn btn-primary full" type="submit">Place Order on WhatsApp</button>
+        </form>
+
+        <aside data-checkout-summary></aside>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer-grid">
+      <div>
+        <h3>Blush Roots</h3>
+        <p>Organic-inspired skin and hair care made for a soft, confident daily beauty routine.</p>
+      </div>
+
+      <div>
+        <h4>Shop</h4>
+        <a href="shop.html">All Products</a>
+        <a href="shop.html">Skin Care</a>
+        <a href="shop.html">Hair Care</a>
+      </div>
+
+      <div>
+        <h4>Support</h4>
+        <a href="contact.html">Contact</a>
+        <a href="cart.html">Cart</a>
+        <a href="checkout.html">Checkout</a>
+      </div>
+
+      <div>
+        <h4>Payments</h4>
+        <p>Cash on Delivery</p>
+        <p>Manual Easypaisa</p>
+        <p>Manual JazzCash</p>
+      </div>
+    </div>
+
+    <div class="container footer-bottom">
+      <p>© 2026 Blush Roots. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <a href="#" class="whatsapp-float" data-whatsapp-float aria-label="Chat on WhatsApp">☘</a>
+
+  <script src="js/products.js"></script>
+  <script src="js/main.js"></script>
+  <script src="js/checkout.js"></script>
+</body>
+</html>

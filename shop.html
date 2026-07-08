@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Shop | Blush Roots</title>
+  <meta name="description" content="Shop organic skin care and hair care products.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div class="topbar">Free Shipping on Orders Above Rs. 3,000 • COD Available • WhatsApp Orders</div>
+
+  <header class="header">
+    <div class="container navbar">
+      <a class="logo" href="index.html" aria-label="Blush Roots Home">
+        <img src="assets/icons/logo.svg" alt="Blush Roots Organic Beauty">
+      </a>
+
+      <nav class="nav" data-nav>
+        <a class="nav-link" href="index.html">Home</a>
+        <a class="nav-link" href="shop.html">Shop</a>
+        <a class="nav-link" href="about.html">About</a>
+        <a class="nav-link" href="contact.html">Contact</a>
+      </nav>
+
+      <div class="nav-actions">
+        <a class="cart-link" href="cart.html">Cart <span class="cart-badge" data-cart-count>0</span></a>
+        <button class="menu-button" data-menu-button aria-label="Open menu">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="page-hero">
+      <div class="container reveal">
+        <p class="eyebrow">Shop Products</p>
+        <h1>Organic beauty <span>collection</span></h1>
+        <p>Browse skin care and hair care products. Add products to cart and order on WhatsApp.</p>
+      </div>
+    </section>
+
+    <section class="section-sm">
+      <div class="container">
+        <div class="shop-toolbar reveal">
+          <input class="form-control" type="search" placeholder="Search products..." data-search>
+          <select data-category aria-label="Filter category"></select>
+          <select data-sort aria-label="Sort products">
+            <option value="featured">Featured</option>
+            <option value="rating">Highest Rated</option>
+            <option value="price-low">Price: Low to High</option>
+            <option value="price-high">Price: High to Low</option>
+          </select>
+        </div>
+
+        <p class="product-count" data-product-count></p>
+        <div class="product-grid" data-product-grid></div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer-grid">
+      <div>
+        <h3>Blush Roots</h3>
+        <p>Organic-inspired skin and hair care made for a soft, confident daily beauty routine.</p>
+      </div>
+
+      <div>
+        <h4>Shop</h4>
+        <a href="shop.html">All Products</a>
+        <a href="shop.html">Skin Care</a>
+        <a href="shop.html">Hair Care</a>
+      </div>
+
+      <div>
+        <h4>Support</h4>
+        <a href="contact.html">Contact</a>
+        <a href="cart.html">Cart</a>
+        <a href="checkout.html">Checkout</a>
+      </div>
+
+      <div>
+        <h4>Payments</h4>
+        <p>Cash on Delivery</p>
+        <p>Manual Easypaisa</p>
+        <p>Manual JazzCash</p>
+      </div>
+    </div>
+
+    <div class="container footer-bottom">
+      <p>© 2026 Blush Roots. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <a href="#" class="whatsapp-float" data-whatsapp-float aria-label="Chat on WhatsApp">☘</a>
+
+  <script src="js/products.js"></script>
+  <script src="js/main.js"></script>
+  <script src="js/shop.js"></script>
+</body>
+</html>
