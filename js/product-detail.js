@@ -14,6 +14,16 @@ function getProductIdFromUrl() {
   return PRODUCTS[0].id;
 }
 
+function renderIngredientsMarkup(ingredients) {
+  const parts = (ingredients || "").split(",").map(part => part.trim()).filter(Boolean);
+
+  if (parts.length <= 1) {
+    return `<p>${ingredients}</p>`;
+  }
+
+  return `<ul class="ingredient-chips">${parts.map(part => `<li>${part}</li>`).join("")}</ul>`;
+}
+
 function renderProductDetail() {
   const product = findProduct(getProductIdFromUrl());
   const wrapper = document.querySelector("[data-product-detail]");
@@ -76,19 +86,69 @@ function renderProductDetail() {
             <button class="btn btn-primary" data-add-detail>Add to Cart</button>
             <a href="cart.html" class="btn btn-soft">Go to Cart</a>
           </div>
+        </div>
+      </div>
+    </section>
 
-          <div class="info-card">
-            <h3>Ingredients</h3>
-            <p>${product.ingredients}</p>
+    <section class="section-sm pd-sections">
+      <div class="container">
+        <div class="pd-section-grid">
+          <div class="pd-section reveal">
+            <h3 class="pd-section-title">Description</h3>
+            <p>${product.description}</p>
           </div>
 
-          <div class="info-card">
-            <h3>How to Use</h3>
+          <div class="pd-section reveal">
+            <h3 class="pd-section-title">Key Benefits</h3>
+            <ul class="benefit-checklist">
+              ${product.keyBenefits.map(benefit => `<li>${benefit}</li>`).join("")}
+            </ul>
+          </div>
+
+          <div class="pd-section reveal">
+            <h3 class="pd-section-title">Selected Natural Ingredients</h3>
+            ${renderIngredientsMarkup(product.ingredients)}
+          </div>
+
+          <div class="pd-section reveal">
+            <h3 class="pd-section-title">How to Use</h3>
             <p>${product.usage}</p>
           </div>
 
-          <div class="notice-box">
-            <strong>Note:</strong> Results can vary by skin/hair type. Patch test before use and avoid contact with eyes.
+          <div class="pd-section pd-section-caution reveal">
+            <h3 class="pd-section-title">Precautions</h3>
+            <ul class="precaution-list">
+              ${product.precautions.map(item => `<li>${item}</li>`).join("")}
+            </ul>
+            ${product.shelfLife ? `<p class="shelf-life"><strong>Shelf Life:</strong> ${product.shelfLife}</p>` : ""}
+          </div>
+
+          <div class="pd-section pd-section-quality reveal">
+            <h3 class="pd-section-title">Our Quality</h3>
+            <p>${product.quality}</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section-sm trust-strip">
+      <div class="container">
+        <div class="trust-grid reveal">
+          <div class="trust-item">
+            <strong>Hand-Blended</strong>
+            <span>Crafted in small batches for freshness</span>
+          </div>
+          <div class="trust-item">
+            <strong>100% Natural</strong>
+            <span>Pure, natural ingredients only</span>
+          </div>
+          <div class="trust-item">
+            <strong>Hygienically Made</strong>
+            <span>Strict cleanliness &amp; quality standards</span>
+          </div>
+          <div class="trust-item">
+            <strong>Premium Quality</strong>
+            <span>No compromise on quality, ever</span>
           </div>
         </div>
       </div>

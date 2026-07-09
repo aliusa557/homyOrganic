@@ -1,22 +1,24 @@
 :root {
-  /* Clean neutral palette: ivory base, charcoal text, warm brown, champagne-gold, soft cream accents. */
+  /* Professional wellness palette: crisp ivory base, charcoal text, warm brown accent, gold highlight, trust-green for benefits. */
   --pink: #e6d2bf;
   --soft-pink: #fbf3ea;
   --rose: #c89f7a;
   --deep-rose: #111111;
   --wood: #e6c39b;
-  --cream: #fff8ef;
+  --cream: #fdfbf8;
   --brown: #15120f;
-  --muted: #68605a;
-  --gold: #c98f3c;
-  --green: #8a725b;
-  --aqua: #f7efe5;
+  --muted: #625b54;
+  --gold: #b9853a;
+  --green: #4f7a5b;
+  --green-soft: #eaf3ec;
+  --aqua: #f6f2eb;
   --white: #ffffff;
-  --shadow: 0 24px 58px rgba(17, 17, 17, 0.14);
-  --shadow-soft: 0 14px 36px rgba(17, 17, 17, 0.08);
-  --radius-xl: 34px;
-  --radius-lg: 24px;
-  --radius-md: 16px;
+  --border: rgba(21, 18, 15, .08);
+  --shadow: 0 18px 40px rgba(17, 17, 17, 0.09);
+  --shadow-soft: 0 8px 22px rgba(17, 17, 17, 0.06);
+  --radius-xl: 26px;
+  --radius-lg: 18px;
+  --radius-md: 14px;
   --container: 1180px;
 }
 
@@ -30,36 +32,10 @@ html {
 
 body {
   margin: 0;
-  font-family: "Poppins", Arial, sans-serif;
+  font-family: "Montserrat", Arial, sans-serif;
   color: var(--brown);
-  background:
-    radial-gradient(circle at top left, rgba(247, 239, 228, .82), transparent 34rem),
-    radial-gradient(circle at 84% 10%, rgba(230, 195, 155, .78), transparent 30rem),
-    var(--cream);
+  background: var(--cream);
   line-height: 1.65;
-}
-
-body::before {
-  content: "";
-  position: fixed;
-  inset: 0;
-  pointer-events: none;
-  background-image: url("../assets/patterns/wood.svg");
-  background-size: 850px auto;
-  opacity: .18;
-  z-index: -2;
-}
-
-body::after {
-  content: "";
-  position: fixed;
-  inset: 0;
-  pointer-events: none;
-  background-image:
-    linear-gradient(rgba(255,255,255,.48), rgba(255,255,255,.48)),
-    radial-gradient(circle at 20% 70%, rgba(236, 203, 175, .22), transparent 20rem),
-    radial-gradient(circle at 82% 76%, rgba(141, 104, 69, .12), transparent 18rem);
-  z-index: -1;
 }
 
 a {
@@ -117,8 +93,8 @@ button {
 }
 
 .logo img {
-  width: 190px;
-  height: 62px;
+  width: 210px;
+  height: 68px;
   object-fit: contain;
 }
 
@@ -268,7 +244,7 @@ button {
 .hero h1,
 .page-hero h1 {
   margin: 0;
-  font-family: "Playfair Display", Georgia, serif;
+  font-family: "Montserrat", Arial, sans-serif;
   font-size: clamp(43px, 6vw, 78px);
   line-height: .98;
   letter-spacing: -0.04em;
@@ -316,10 +292,10 @@ button {
 }
 
 .btn-soft {
-  background: rgba(255, 255, 255, .82);
+  background: var(--white);
   color: var(--brown);
   box-shadow: var(--shadow-soft);
-  border: 1px solid rgba(201, 143, 60, .22);
+  border: 1px solid rgba(185, 133, 58, .22);
 }
 
 .btn-outline {
@@ -340,10 +316,10 @@ button {
 .hero-product-card {
   position: relative;
   padding: 20px;
-  border-radius: 42px;
-  background: rgba(255, 255, 255, .68);
+  border-radius: 32px;
+  background: var(--white);
   box-shadow: var(--shadow);
-  border: 1px solid rgba(255, 255, 255, .72);
+  border: 1px solid var(--border);
 }
 
 .hero-product-card::before {
@@ -365,10 +341,10 @@ button {
   left: -18px;
   bottom: 48px;
   padding: 14px 18px;
-  border-radius: 20px;
-  background: rgba(255, 255, 255, .86);
+  border-radius: 16px;
+  background: var(--white);
   box-shadow: var(--shadow-soft);
-  border: 1px solid rgba(255, 255, 255, .7);
+  border: 1px solid var(--border);
 }
 
 .floating-info strong {
@@ -390,15 +366,17 @@ button {
 
 .stat-card {
   padding: 18px;
-  border-radius: 22px;
-  background: rgba(255, 255, 255, .62);
-  border: 1px solid rgba(201, 143, 60, .18);
+  border-radius: 16px;
+  background: var(--white);
+  border: 1px solid rgba(185, 133, 58, .18);
   box-shadow: var(--shadow-soft);
 }
 
 .stat-card strong {
   display: block;
+  font-family: "Syne", "Montserrat", Arial, sans-serif;
   font-size: 25px;
+  font-weight: 700;
   color: var(--brown);
 }
 
@@ -425,7 +403,7 @@ button {
 
 .section-head h2 {
   margin: 0;
-  font-family: "Playfair Display", Georgia, serif;
+  font-family: "Montserrat", Arial, sans-serif;
   font-size: clamp(32px, 4vw, 50px);
   line-height: 1;
   letter-spacing: -.03em;
@@ -447,22 +425,28 @@ button {
   min-height: 260px;
   padding: 28px;
   border-radius: var(--radius-xl);
-  background: rgba(255,255,255,.66);
-  border: 1px solid rgba(255,255,255,.72);
+  background: var(--white);
+  border: 1px solid var(--border);
   box-shadow: var(--shadow-soft);
   overflow: hidden;
   position: relative;
+  transition: transform .25s ease, box-shadow .25s ease;
+}
+
+.category-card:hover {
+  transform: translateY(-6px);
+  box-shadow: var(--shadow);
 }
 
 .category-card::after {
   content: "";
   position: absolute;
-  right: -34px;
-  bottom: -46px;
-  width: 180px;
-  height: 180px;
+  right: -50px;
+  bottom: -60px;
+  width: 160px;
+  height: 160px;
   border-radius: 999px;
-  background: radial-gradient(circle, rgba(236,203,175,.44), rgba(247,239,228,.36));
+  background: radial-gradient(circle, rgba(185,133,58,.10), transparent 70%);
 }
 
 .category-card h3 {
@@ -484,14 +468,14 @@ button {
 .product-card {
   overflow: hidden;
   border-radius: var(--radius-xl);
-  background: rgba(255, 255, 255, .74);
+  background: var(--white);
   box-shadow: var(--shadow-soft);
-  border: 1px solid rgba(255,255,255,.72);
+  border: 1px solid var(--border);
   transition: transform .25s ease, box-shadow .25s ease;
 }
 
 .product-card:hover {
-  transform: translateY(-8px);
+  transform: translateY(-6px);
   box-shadow: var(--shadow);
 }
 
@@ -499,7 +483,7 @@ button {
   position: relative;
   display: block;
   padding: 14px;
-  background: linear-gradient(145deg, rgba(247,239,228,.92), rgba(255,249,243,.86), rgba(230,195,155,.56));
+  background: var(--aqua);
 }
 
 .product-image-wrap img {
@@ -521,7 +505,7 @@ button {
   z-index: 2;
   padding: 7px 12px;
   border-radius: 999px;
-  background: rgba(255, 255, 255, .86);
+  background: var(--white);
   color: var(--gold);
   font-size: 12px;
   font-weight: 800;
@@ -576,7 +560,9 @@ button {
 }
 
 .price-row strong {
+  font-family: "Syne", "Montserrat", Arial, sans-serif;
   font-size: 21px;
+  font-weight: 700;
   color: var(--brown);
 }
 
@@ -598,33 +584,19 @@ button {
 }
 
 .banner {
-  border-radius: 44px;
+  border-radius: var(--radius-xl);
   padding: 46px;
-  background:
-    linear-gradient(115deg, rgba(21,18,15,.84), rgba(141,104,69,.58)),
-    url("../assets/patterns/wood.svg");
-  background-size: cover;
+  background: linear-gradient(115deg, #15120f, #3c2f22);
   color: white;
   box-shadow: var(--shadow);
   overflow: hidden;
   position: relative;
 }
 
-.banner::after {
-  content: "";
-  position: absolute;
-  right: -80px;
-  top: -80px;
-  width: 240px;
-  height: 240px;
-  border-radius: 999px;
-  background: rgba(255,255,255,.14);
-}
-
 .banner h2 {
   margin: 0;
   max-width: 680px;
-  font-family: "Playfair Display", Georgia, serif;
+  font-family: "Montserrat", Arial, sans-serif;
   font-size: clamp(34px, 4vw, 54px);
   line-height: 1.04;
 }
@@ -644,20 +616,29 @@ button {
 .benefit-card {
   padding: 24px;
   border-radius: var(--radius-lg);
-  background: rgba(255,255,255,.66);
-  border: 1px solid rgba(255,255,255,.75);
+  background: var(--white);
+  border: 1px solid var(--border);
   box-shadow: var(--shadow-soft);
+  transition: transform .25s ease, box-shadow .25s ease;
+}
+
+.benefit-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow);
 }
 
 .icon-bubble {
-  width: 54px;
-  height: 54px;
+  width: 50px;
+  height: 50px;
   display: grid;
   place-items: center;
-  border-radius: 19px;
-  background: linear-gradient(135deg, var(--cream), var(--wood));
+  border-radius: 14px;
+  background: var(--green-soft);
+  color: var(--green);
   margin-bottom: 16px;
-  font-size: 24px;
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: .02em;
 }
 
 .benefit-card h3 {
@@ -679,9 +660,9 @@ button {
 .review-card {
   padding: 26px;
   border-radius: var(--radius-xl);
-  background: rgba(255,255,255,.68);
+  background: var(--white);
   box-shadow: var(--shadow-soft);
-  border: 1px solid rgba(255,255,255,.8);
+  border: 1px solid var(--border);
 }
 
 .review-card p {
@@ -699,19 +680,19 @@ button {
   width: 48px;
   height: 48px;
   border-radius: 50%;
-  background: linear-gradient(135deg, var(--cream), var(--wood));
+  background: var(--green-soft);
   display: grid;
   place-items: center;
   font-weight: 900;
-  color: var(--brown);
+  color: var(--green);
 }
 
 .newsletter {
   padding: 36px;
   border-radius: var(--radius-xl);
-  background: rgba(255,255,255,.72);
+  background: var(--white);
   box-shadow: var(--shadow);
-  border: 1px solid rgba(255,255,255,.8);
+  border: 1px solid var(--border);
   display: grid;
   grid-template-columns: 1fr .9fr;
   gap: 24px;
@@ -719,7 +700,7 @@ button {
 }
 
 .newsletter h2 {
-  font-family: "Playfair Display", Georgia, serif;
+  font-family: "Montserrat", Arial, sans-serif;
   font-size: 38px;
   margin: 0 0 8px;
 }
@@ -741,9 +722,9 @@ textarea {
   width: 100%;
   min-height: 52px;
   border: 1px solid rgba(21,18,15,.14);
-  border-radius: 18px;
+  border-radius: 14px;
   padding: 13px 16px;
-  background: rgba(255,255,255,.8);
+  background: var(--white);
   color: var(--brown);
   outline: none;
   transition: border-color .25s ease, box-shadow .25s ease;
@@ -758,8 +739,8 @@ textarea {
 .form-control:focus,
 select:focus,
 textarea:focus {
-  border-color: rgba(201,143,60, .46);
-  box-shadow: 0 0 0 4px rgba(201,143,60,.12);
+  border-color: rgba(185,133,58, .46);
+  box-shadow: 0 0 0 4px rgba(185,133,58,.12);
 }
 
 .footer {
@@ -805,7 +786,7 @@ textarea:focus {
   min-height: 38px;
   padding: 8px 13px;
   border-radius: 999px;
-  border: 1px solid rgba(201, 143, 60, .34);
+  border: 1px solid rgba(185, 133, 58, .34);
   background: rgba(255, 255, 255, .08);
   color: inherit;
   font-size: 13px;
@@ -874,6 +855,18 @@ a[aria-disabled="true"] {
   transform: translate(-50%, 0);
 }
 
+.brand-statement {
+  text-align: center;
+}
+
+.brand-statement .container {
+  max-width: 760px;
+}
+
+.brand-statement .eyebrow {
+  justify-content: center;
+}
+
 .page-hero {
   padding: 76px 0 54px;
   text-align: center;
@@ -892,9 +885,9 @@ a[aria-disabled="true"] {
 .shop-toolbar {
   padding: 20px;
   border-radius: var(--radius-xl);
-  background: rgba(255,255,255,.72);
+  background: var(--white);
   box-shadow: var(--shadow-soft);
-  border: 1px solid rgba(255,255,255,.8);
+  border: 1px solid var(--border);
   display: grid;
   grid-template-columns: 1fr 220px 220px;
   gap: 14px;
@@ -912,7 +905,8 @@ a[aria-disabled="true"] {
   padding: 46px;
   text-align: center;
   border-radius: var(--radius-xl);
-  background: rgba(255,255,255,.66);
+  background: var(--white);
+  border: 1px solid var(--border);
   box-shadow: var(--shadow-soft);
 }
 
@@ -927,34 +921,36 @@ a[aria-disabled="true"] {
   position: sticky;
   top: 105px;
   padding: 18px;
-  border-radius: 42px;
-  background: rgba(255,255,255,.74);
+  border-radius: var(--radius-xl);
+  background: var(--white);
   box-shadow: var(--shadow);
-  border: 1px solid rgba(255,255,255,.8);
+  border: 1px solid var(--border);
 }
 
 .detail-image img {
-  border-radius: 32px;
+  border-radius: var(--radius-lg);
   width: 100%;
 }
 
 .detail-content {
   padding: 34px;
   border-radius: var(--radius-xl);
-  background: rgba(255,255,255,.68);
+  background: var(--white);
   box-shadow: var(--shadow-soft);
-  border: 1px solid rgba(255,255,255,.8);
+  border: 1px solid var(--border);
 }
 
 .detail-content h2 {
   margin: 0 0 6px;
-  font-family: "Playfair Display", Georgia, serif;
+  font-family: "Montserrat", Arial, sans-serif;
   font-size: clamp(34px, 4vw, 54px);
   line-height: 1.05;
 }
 
 .detail-price strong {
+  font-family: "Syne", "Montserrat", Arial, sans-serif;
   font-size: 30px;
+  font-weight: 700;
 }
 
 .lead-text {
@@ -983,21 +979,147 @@ a[aria-disabled="true"] {
   margin-bottom: 24px;
 }
 
-.info-card,
-.notice-box {
-  padding: 18px;
-  border-radius: 20px;
-  background: rgba(247,239,228,.60);
-  margin-top: 14px;
+.pd-sections {
+  padding-top: 0;
 }
 
-.info-card h3 {
-  margin: 0 0 6px;
+.pd-section-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
 }
 
-.info-card p,
-.notice-box {
+.pd-section {
+  padding: 26px 28px;
+  border-radius: var(--radius-lg);
+  background: var(--white);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-soft);
+}
+
+.pd-section-title {
+  margin: 0 0 14px;
+  padding-left: 14px;
+  border-left: 3px solid var(--gold);
+  font-size: 19px;
+  line-height: 1.3;
+}
+
+.pd-section p {
+  margin: 0;
   color: var(--muted);
+}
+
+.benefit-checklist,
+.precaution-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: 10px;
+}
+
+.benefit-checklist li {
+  position: relative;
+  padding-left: 30px;
+  color: var(--brown);
+}
+
+.benefit-checklist li::before {
+  content: "\2713";
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 20px;
+  height: 20px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: var(--green-soft);
+  color: var(--green);
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.ingredient-chips {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.ingredient-chips li {
+  padding: 7px 14px;
+  border-radius: 999px;
+  background: var(--aqua);
+  border: 1px solid var(--border);
+  color: var(--brown);
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.pd-section-caution {
+  border-color: rgba(185, 133, 58, .3);
+}
+
+.precaution-list li {
+  position: relative;
+  padding-left: 18px;
+  color: var(--muted);
+}
+
+.precaution-list li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 10px;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--gold);
+}
+
+.shelf-life {
+  margin: 16px 0 0;
+  padding-top: 14px;
+  border-top: 1px solid var(--border);
+  color: var(--brown) !important;
+}
+
+.pd-section-quality {
+  background: var(--green-soft);
+  border-color: rgba(79, 122, 91, .22);
+}
+
+.pd-section-quality .pd-section-title {
+  border-left-color: var(--green);
+}
+
+.trust-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+}
+
+.trust-item {
+  padding: 20px;
+  border-radius: var(--radius-md);
+  background: var(--white);
+  border: 1px solid var(--border);
+  text-align: center;
+}
+
+.trust-item strong {
+  display: block;
+  margin-bottom: 4px;
+  color: var(--brown);
+}
+
+.trust-item span {
+  color: var(--muted);
+  font-size: 13px;
 }
 
 .cart-layout,
@@ -1017,9 +1139,9 @@ a[aria-disabled="true"] {
   align-items: center;
   padding: 18px;
   border-radius: var(--radius-xl);
-  background: rgba(255,255,255,.72);
+  background: var(--white);
   box-shadow: var(--shadow-soft);
-  border: 1px solid rgba(255,255,255,.8);
+  border: 1px solid var(--border);
   margin-bottom: 16px;
 }
 
@@ -1076,9 +1198,9 @@ a[aria-disabled="true"] {
 .story-card {
   padding: 24px;
   border-radius: var(--radius-xl);
-  background: rgba(255,255,255,.72);
+  background: var(--white);
   box-shadow: var(--shadow-soft);
-  border: 1px solid rgba(255,255,255,.8);
+  border: 1px solid var(--border);
 }
 
 .summary-card {
@@ -1108,7 +1230,7 @@ a[aria-disabled="true"] {
 .summary-note {
   padding: 12px;
   border-radius: 16px;
-  background: rgba(201,143,60,.10);
+  background: rgba(185,133,58,.10);
   color: var(--brown);
   font-size: 13px;
   margin-top: 12px;
@@ -1248,7 +1370,7 @@ a[aria-disabled="true"] {
   }
 }
 
-/* Extra MANA-style refinements */
+/* Refinements */
 .logo img {
   filter: drop-shadow(0 8px 16px rgba(17,17,17,.08));
 }
@@ -1301,7 +1423,8 @@ a[aria-disabled="true"] {
   .cart-layout,
   .checkout-layout,
   .contact-layout,
-  .about-grid {
+  .about-grid,
+  .pd-section-grid {
     grid-template-columns: 1fr;
   }
 
@@ -1360,7 +1483,8 @@ a[aria-disabled="true"] {
   .category-grid,
   .product-grid,
   .benefit-grid,
-  .reviews-grid {
+  .reviews-grid,
+  .trust-grid {
     grid-template-columns: 1fr 1fr;
   }
 
@@ -1399,8 +1523,8 @@ a[aria-disabled="true"] {
   }
 
   .logo img {
-    width: 156px;
-    height: 52px;
+    width: 172px;
+    height: 56px;
   }
 
   .hero h1,
@@ -1427,6 +1551,7 @@ a[aria-disabled="true"] {
   .product-grid,
   .benefit-grid,
   .reviews-grid,
+  .trust-grid,
   .form-grid,
   .footer-grid {
     grid-template-columns: 1fr;

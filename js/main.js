@@ -2,15 +2,15 @@ const STORE_CONFIG = {
   brandName: "Homy Organic",
   logoPath: "assets/brand/homy-organic-logo.svg",
   websiteUrl: "#",
-  whatsappNumber: "923257316315",
+  whatsappNumber: "923023735860",
   easypaisaNumber: "03XX-XXXXXXX",
   jazzcashNumber: "03XX-XXXXXXX",
   deliveryCharge: 250,
   freeDeliveryAbove: 5000,
   socialLinks: [
-    { label: "Instagram", url: "#" },
-    { label: "Facebook", url: "#" },
-    { label: "TikTok", url: "#" }
+    { label: "Instagram", url: "https://www.instagram.com/homyorganicpk?igsh=MzBiamtkYXJneW14" },
+    { label: "Facebook", url: "https://web.facebook.com/homyorganicpk?rdid=8prHyIPi17E7Bhng&share_url=https%3A%2F%2Fweb.facebook.com%2Fshare%2F18uskoNihb%2F%3F_rdc%3D1%26_rdr" },
+    { label: "TikTok", url: "https://www.tiktok.com/@homyorganic" }
   ]
 };
 
