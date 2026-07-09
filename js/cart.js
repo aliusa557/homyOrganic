@@ -25,27 +25,29 @@ function renderCart() {
   }
 
   cartContainer.innerHTML = cart.map(item => {
-    const product = findProduct(item.id);
-    if (!product) return "";
+    const entity = findCartEntity(item);
+    if (!entity) return "";
+
+    const label = item.type === "bundle" ? "Bundle Deal" : entity.category;
 
     return `
       <article class="cart-item">
-        <img src="${product.image}" alt="${product.name}">
+        <img src="${entity.image}" alt="${entity.name}">
         <div>
-          <h3>${product.name}</h3>
-          <p>${product.category}</p>
-          <strong>${formatPrice(product.price)}</strong>
+          <h3>${entity.name}</h3>
+          <p>${label}</p>
+          <strong>${formatPrice(entity.price)}</strong>
         </div>
 
         <div class="cart-controls">
-          <button onclick="changeCartQuantity(${product.id}, -1)" aria-label="Decrease quantity">−</button>
+          <button onclick="changeCartQuantity(${entity.id}, -1)" aria-label="Decrease quantity">−</button>
           <span>${item.quantity}</span>
-          <button onclick="changeCartQuantity(${product.id}, 1)" aria-label="Increase quantity">+</button>
+          <button onclick="changeCartQuantity(${entity.id}, 1)" aria-label="Increase quantity">+</button>
         </div>
 
         <div class="cart-item-total">
-          <strong>${formatPrice(product.price * item.quantity)}</strong>
-          <button onclick="removeCartItem(${product.id})">Remove</button>
+          <strong>${formatPrice(entity.price * item.quantity)}</strong>
+          <button onclick="removeCartItem(${entity.id})">Remove</button>
         </div>
       </article>
     `;

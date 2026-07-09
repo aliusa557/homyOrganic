@@ -19,7 +19,7 @@ const CART_KEY = "blush_roots_cart";
 function getCart() {
   try {
     const cart = JSON.parse(localStorage.getItem(CART_KEY)) || [];
-    return cart.filter(item => findProduct(item.id));
+    return cart.filter(item => findCartEntity(item));
   } catch {
     return [];
   }
@@ -34,15 +34,27 @@ function findProduct(productId) {
   return PRODUCTS.find(product => Number(product.id) === Number(productId));
 }
 
+function findBundle(bundleId) {
+  return BUNDLES.find(bundle => Number(bundle.id) === Number(bundleId));
+}
+
+function findCartEntity(item) {
+  return item.type === "bundle" ? findBundle(item.id) : findProduct(item.id);
+}
+
+function bundlePrice(bundle) {
+  return bundle.itemIds.reduce((sum, id) => sum + (findProduct(id)?.price || 0), 0);
+}
+
 function formatPrice(amount) {
   return `Rs. ${Number(amount).toLocaleString("en-PK")}`;
 }
 
 function calculateCartTotals(cart) {
   const subtotal = cart.reduce((sum, item) => {
-    const product = findProduct(item.id);
-    if (!product) return sum;
-    return sum + product.price * item.quantity;
+    const entity = findCartEntity(item);
+    if (!entity) return sum;
+    return sum + entity.price * item.quantity;
   }, 0);
 
   const delivery = subtotal === 0 || subtotal >= STORE_CONFIG.freeDeliveryAbove ? 0 : STORE_CONFIG.deliveryCharge;
@@ -58,16 +70,33 @@ function addToCart(productId, quantity = 1) {
   if (!product) return;
 
   const cart = getCart();
-  const existing = cart.find(item => Number(item.id) === Number(productId));
+  const existing = cart.find(item => item.type !== "bundle" && Number(item.id) === Number(productId));
 
   if (existing) {
     existing.quantity += quantity;
   } else {
-    cart.push({ id: Number(productId), quantity });
+    cart.push({ type: "product", id: Number(productId), quantity });
   }
 
   saveCart(cart);
   showToast(`${product.name} added to cart`);
+}
+
+function addBundleToCart(bundleId) {
+  const bundle = findBundle(bundleId);
+  if (!bundle) return;
+
+  const cart = getCart();
+  const existing = cart.find(item => item.type === "bundle" && Number(item.id) === Number(bundleId));
+
+  if (existing) {
+    existing.quantity += 1;
+  } else {
+    cart.push({ type: "bundle", id: Number(bundleId), quantity: 1 });
+  }
+
+  saveCart(cart);
+  showToast(`${bundle.name} added to cart`);
 }
 
 function removeFromCart(productId) {
@@ -150,18 +179,25 @@ function initProductLinks() {
   });
 }
 
+function discountPercent(product) {
+  if (!product.oldPrice || product.oldPrice <= product.price) return 0;
+  return Math.round((1 - product.price / product.oldPrice) * 100);
+}
+
 function productCard(product) {
+  const discount = discountPercent(product);
+
   return `
     <article class="product-card reveal">
       <a href="product-detail.html" class="product-image-wrap" data-product-id="${product.id}" aria-label="View ${product.name}">
         <span class="product-tag">${product.tag}</span>
+        ${discount > 0 ? `<span class="discount-badge">-${discount}%</span>` : ""}
         <img src="${product.image}" alt="${product.name}" loading="lazy">
       </a>
 
       <div class="product-content">
         <p class="product-category">${product.category}</p>
         <h3><a href="product-detail.html" data-product-id="${product.id}">${product.name}</a></h3>
-        <p class="product-description">${product.description}</p>
 
         <div class="rating-row">
           ${renderStars(product.rating)}
@@ -175,6 +211,37 @@ function productCard(product) {
         <div class="product-actions">
           <button class="btn btn-primary" onclick="addToCart(${product.id})">Add to Cart</button>
           <a class="btn btn-soft" href="product-detail.html" data-product-id="${product.id}">View</a>
+        </div>
+      </div>
+    </article>
+  `;
+}
+
+function bundleCard(bundle) {
+  const items = bundle.itemIds.map(findProduct).filter(Boolean);
+  const oldPrice = bundlePrice(bundle);
+  const discount = oldPrice > bundle.price ? Math.round((1 - bundle.price / oldPrice) * 100) : 0;
+
+  return `
+    <article class="product-card bundle-card reveal">
+      <div class="product-image-wrap">
+        <span class="product-tag">${bundle.tag}</span>
+        ${discount > 0 ? `<span class="discount-badge">-${discount}%</span>` : ""}
+        <img src="${bundle.image}" alt="${bundle.name}" loading="lazy">
+      </div>
+
+      <div class="product-content">
+        <p class="product-category">Bundle Deal</p>
+        <h3>${bundle.name}</h3>
+        <p class="bundle-includes">${items.map(item => item.name).join(" + ")}</p>
+
+        <div class="price-row">
+          <strong>${formatPrice(bundle.price)}</strong>
+          <span>${formatPrice(oldPrice)}</span>
+        </div>
+
+        <div class="product-actions">
+          <button class="btn btn-primary" onclick="addBundleToCart(${bundle.id})">Add Bundle to Cart</button>
         </div>
       </div>
     </article>

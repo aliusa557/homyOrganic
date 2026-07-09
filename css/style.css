@@ -273,6 +273,7 @@ button {
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  gap: 8px;
   min-height: 50px;
   padding: 13px 22px;
   border-radius: 999px;
@@ -477,31 +478,34 @@ button {
 .product-card:hover {
   transform: translateY(-6px);
   box-shadow: var(--shadow);
+  border-color: rgba(185, 133, 58, .35);
 }
 
 .product-image-wrap {
   position: relative;
   display: block;
-  padding: 14px;
+  overflow: hidden;
+  padding: 10px;
   background: var(--aqua);
 }
 
 .product-image-wrap img {
   width: 100%;
-  aspect-ratio: 1 / .92;
+  aspect-ratio: 1 / 1.02;
   object-fit: cover;
-  border-radius: 24px;
-  transition: transform .35s ease;
+  border-radius: 18px;
+  transform: scale(1.07);
+  transition: transform .5s ease;
 }
 
 .product-card:hover .product-image-wrap img {
-  transform: scale(1.045) rotate(-1deg);
+  transform: scale(1.16);
 }
 
 .product-tag {
   position: absolute;
-  left: 24px;
-  top: 24px;
+  left: 20px;
+  top: 20px;
   z-index: 2;
   padding: 7px 12px;
   border-radius: 999px;
@@ -509,6 +513,21 @@ button {
   color: var(--gold);
   font-size: 12px;
   font-weight: 800;
+  box-shadow: var(--shadow-soft);
+}
+
+.discount-badge {
+  position: absolute;
+  right: 20px;
+  top: 20px;
+  z-index: 2;
+  padding: 6px 11px;
+  border-radius: 8px;
+  background: var(--brown);
+  color: var(--white);
+  font-family: "Syne", "Montserrat", Arial, sans-serif;
+  font-size: 12px;
+  font-weight: 700;
   box-shadow: var(--shadow-soft);
 }
 
@@ -531,11 +550,10 @@ button {
   font-size: 19px;
 }
 
-.product-description {
-  margin: 10px 0 14px;
-  min-height: 48px;
+.bundle-includes {
+  margin: 10px 0 0;
   color: var(--muted);
-  font-size: 14px;
+  font-size: 13px;
 }
 
 .rating-row {
@@ -826,8 +844,19 @@ a[aria-disabled="true"] {
   background: #25d366;
   color: #fff;
   box-shadow: 0 14px 28px rgba(37, 211, 102, .28);
-  font-size: 28px;
   transition: transform .25s ease;
+}
+
+.whatsapp-float svg {
+  width: 30px;
+  height: 30px;
+  fill: currentColor;
+}
+
+.btn-primary .whatsapp-icon {
+  width: 18px;
+  height: 18px;
+  fill: currentColor;
 }
 
 .whatsapp-float:hover {
@@ -1097,6 +1126,53 @@ a[aria-disabled="true"] {
   border-left-color: var(--green);
 }
 
+.bundle-grid {
+  grid-template-columns: repeat(2, 1fr);
+  max-width: 820px;
+  margin-inline: auto;
+}
+
+.hot-sale-section {
+  background: linear-gradient(180deg, rgba(185,133,58,.06), transparent);
+}
+
+.hot-sale-card {
+  display: grid;
+  grid-template-columns: .85fr 1.15fr;
+  gap: 40px;
+  align-items: center;
+  padding: 32px;
+  border-radius: var(--radius-xl);
+  background: var(--white);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow);
+}
+
+.hot-sale-image {
+  position: relative;
+}
+
+.hot-sale-image img {
+  width: 100%;
+  aspect-ratio: 1 / .92;
+  object-fit: cover;
+  border-radius: var(--radius-lg);
+  transform: scale(1.05);
+}
+
+.hot-sale-content .eyebrow {
+  color: var(--gold);
+}
+
+.hot-sale-content h2 {
+  margin: 0 0 10px;
+  font-size: clamp(28px, 3.4vw, 40px);
+}
+
+.hot-sale-content p {
+  color: var(--muted);
+}
+
 .trust-grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
@@ -1351,10 +1427,10 @@ a[aria-disabled="true"] {
 
 @keyframes float {
   0%, 100% {
-    transform: translateY(0);
+    transform: translateY(0) scale(1);
   }
   50% {
-    transform: translateY(-13px);
+    transform: translateY(-13px) scale(1.055);
   }
 }
 
@@ -1410,6 +1486,16 @@ a[aria-disabled="true"] {
   border-top: 5px solid var(--gold);
 }
 
+.product-grid .reveal:nth-child(1),
+.trust-grid .reveal:nth-child(1) { transition-delay: .02s; }
+.product-grid .reveal:nth-child(2),
+.trust-grid .reveal:nth-child(2) { transition-delay: .08s; }
+.product-grid .reveal:nth-child(3),
+.trust-grid .reveal:nth-child(3) { transition-delay: .14s; }
+.product-grid .reveal:nth-child(4),
+.trust-grid .reveal:nth-child(4) { transition-delay: .2s; }
+.product-grid .reveal:nth-child(5) { transition-delay: .26s; }
+
 
 @media (max-width: 1040px) {
   .product-grid,
@@ -1424,7 +1510,8 @@ a[aria-disabled="true"] {
   .checkout-layout,
   .contact-layout,
   .about-grid,
-  .pd-section-grid {
+  .pd-section-grid,
+  .hot-sale-card {
     grid-template-columns: 1fr;
   }
 

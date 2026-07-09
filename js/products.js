@@ -4,9 +4,9 @@ const PRODUCTS = [
     name: "Signature Hair Oil",
     slug: "signature-hair-oil",
     category: "Hair Care",
-    price: 1800,
-    oldPrice: 2200,
-    tag: "Best Seller",
+    price: 1450,
+    oldPrice: 1950,
+    tag: "Hot Sale",
     rating: 4.9,
     image: "assets/products-real/signature-hair-oil.webp",
     description: "A premium herbal infusion blend of natural botanical oils, suitable for home and professional salon use. Crafted for complete hair and scalp care.",
@@ -34,8 +34,8 @@ const PRODUCTS = [
     name: "Pure Glow Tea",
     slug: "pure-glow-tea",
     category: "Herbal Tea",
-    price: 1450,
-    oldPrice: 1700,
+    price: 1100,
+    oldPrice: 1470,
     tag: "Glow",
     rating: 4.8,
     image: "assets/products-real/pure-glow-tea.webp",
@@ -59,15 +59,15 @@ const PRODUCTS = [
   },
   {
     id: 3,
-    name: "Organic Ubtan Powder",
-    slug: "organic-ubtan-powder",
+    name: "Glass Glow Face Pack",
+    slug: "glass-glow-face-pack",
     category: "Skin Care",
-    price: 1600,
-    oldPrice: 1900,
-    tag: "Natural Glow",
+    price: 1050,
+    oldPrice: 1400,
+    tag: "Bestseller",
     rating: 4.7,
     image: "assets/products-real/organic-ubtan-powder.webp",
-    description: "A Homy Organic powder blend inspired by traditional ubtan care for fresh, polished, naturally glowing-looking skin.",
+    description: "A Homy Organic ubtan-inspired face pack powder blend, crafted to help skin look fresh, polished, and naturally glowing — a modern glass-skin ritual with a traditional touch.",
     keyBenefits: [
       "Helps skin look fresh, polished & naturally glowing",
       "Gently exfoliates for smoother-looking skin",
@@ -88,18 +88,18 @@ const PRODUCTS = [
   },
   {
     id: 4,
-    name: "Herbal Spice Blend",
-    slug: "herbal-spice-blend",
-    category: "Herbal Blends",
-    price: 1200,
-    oldPrice: 1500,
+    name: "Digest Well Powder",
+    slug: "digest-well-powder",
+    category: "Digestive Wellness",
+    price: 950,
+    oldPrice: 1270,
     tag: "Organic",
     rating: 4.6,
     image: "assets/products-real/herbal-spice-blend.webp",
-    description: "A premium Homy Organic powdered herbal spice blend made with visible whole spices and natural ingredients.",
+    description: "A premium Homy Organic powdered herbal spice blend made with visible whole spices and natural ingredients, thoughtfully blended to support healthy digestion and everyday comfort.",
     keyBenefits: [
       "Made with visible whole spices & natural ingredients",
-      "Supports a warm, comforting daily ritual",
+      "Supports healthy digestion and gut comfort",
       "Free from artificial fillers",
       "Versatile for cooking & wellness use"
     ],
@@ -112,5 +112,56 @@ const PRODUCTS = [
     ],
     shelfLife: "See packaging for batch and expiry details.",
     quality: "Blended from whole, carefully selected spices for authentic flavor and freshness in every batch."
+  },
+  {
+    id: 5,
+    name: "Signature Spa Soak",
+    slug: "signature-spa-soak",
+    category: "Bath & Spa",
+    price: 899,
+    oldPrice: 1200,
+    tag: "New",
+    rating: 4.8,
+    image: "assets/products-real/signature-spa-soak.svg",
+    description: "A Homy Organic bath soak blend of mineral-rich salts, dried rose petals, calendula and mint — designed to turn an everyday bath into a calming, spa-like ritual at home.",
+    keyBenefits: [
+      "Helps soothe tired muscles and calm the senses",
+      "Infused with dried florals and mineral-rich salts",
+      "Supports a relaxing, spa-like self-care ritual",
+      "Makes a thoughtful gift or personal indulgence"
+    ],
+    ingredients: "Himalayan pink salt, Epsom salt, dried rose petals, calendula, mint, herbal botanicals.",
+    usage: "Add 2-3 tablespoons to warm bath water and soak for 15-20 minutes. Rinse after use.",
+    precautions: [
+      "For external use only.",
+      "Avoid use on broken or irritated skin.",
+      "Discontinue use if irritation occurs.",
+      "Store in a cool, dry place away from moisture."
+    ],
+    shelfLife: "See packaging for batch and expiry details.",
+    quality: "Hand-blended in small batches with mineral salts and dried botanicals, packaged in a breathable sachet for a fresh, aromatic soak every time."
+  }
+];
+
+const BUNDLES = [
+  {
+    id: 101,
+    name: "Hair & Glow Duo",
+    slug: "hair-glow-duo",
+    tag: "Bundle & Save",
+    itemIds: [1, 3],
+    price: 2200,
+    image: "assets/products-real/signature-hair-oil.webp",
+    description: "Signature Hair Oil + Glass Glow Face Pack, bundled together for daily hair and skin care."
+  },
+  {
+    id: 102,
+    name: "Wellness Trio",
+    slug: "wellness-trio",
+    tag: "Bundle & Save",
+    itemIds: [2, 4, 5],
+    price: 2600,
+    image: "assets/products-real/pure-glow-tea.webp",
+    description: "Pure Glow Tea + Digest Well Powder + Signature Spa Soak — a complete everyday wellness ritual."
   }
 ];
