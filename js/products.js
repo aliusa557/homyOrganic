@@ -122,7 +122,7 @@ const PRODUCTS = [
     oldPrice: 1200,
     tag: "New",
     rating: 4.8,
-    image: "assets/products-real/signature-spa-soak.svg",
+    image: "assets/products-real/signature-spa-soak.webp",
     description: "A Homy Organic bath soak blend of mineral-rich salts, dried rose petals, calendula and mint — designed to turn an everyday bath into a calming, spa-like ritual at home.",
     keyBenefits: [
       "Helps soothe tired muscles and calm the senses",
