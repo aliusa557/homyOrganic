@@ -361,6 +361,11 @@ button {
   grid-template-rows: minmax(0, 1fr);
   flex: 1;
   min-height: 0;
+  cursor: grab;
+}
+
+.slider-track:active {
+  cursor: grabbing;
 }
 
 .slider-track [data-slide] {
@@ -387,6 +392,8 @@ button {
   height: 100%;
   object-fit: contain;
   display: block;
+  -webkit-user-drag: none;
+  user-select: none;
 }
 
 .slider-track [data-slide].active img {
@@ -413,6 +420,40 @@ button {
   gap: 10px;
   margin: 0;
   padding: 0;
+}
+
+.slider-arrow {
+  position: absolute;
+  top: 50%;
+  z-index: 6;
+  width: 48px;
+  height: 48px;
+  transform: translateY(-50%);
+  border-radius: 50%;
+  background: rgba(255, 255, 255, .85);
+  color: var(--brown);
+  display: grid;
+  place-items: center;
+  box-shadow: var(--shadow-soft);
+  transition: background .2s ease, transform .2s ease;
+}
+
+.slider-arrow:hover {
+  background: var(--white);
+  transform: translateY(-50%) scale(1.08);
+}
+
+.slider-arrow svg {
+  width: 22px;
+  height: 22px;
+}
+
+.slider-arrow-prev {
+  left: 18px;
+}
+
+.slider-arrow-next {
+  right: 18px;
 }
 
 .slider-dot {

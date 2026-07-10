@@ -3,7 +3,10 @@ function initHeroSlider() {
   if (!slider) return;
 
   const slides = Array.from(slider.querySelectorAll("[data-slide]"));
+  const track = slider.querySelector(".slider-track");
   const dotsContainer = slider.querySelector("[data-slider-dots]");
+  const prevButton = slider.querySelector("[data-slider-prev]");
+  const nextButton = slider.querySelector("[data-slider-next]");
   if (slides.length <= 1) return;
 
   let activeIndex = slides.findIndex(slide => slide.classList.contains("active"));
@@ -46,9 +49,54 @@ function initHeroSlider() {
     startAutoplay();
   }
 
+  prevButton?.addEventListener("click", () => goToSlide(activeIndex - 1, true));
+  nextButton?.addEventListener("click", () => goToSlide(activeIndex + 1, true));
+
   slider.addEventListener("mouseenter", stopAutoplay);
   slider.addEventListener("mouseleave", startAutoplay);
-  slider.addEventListener("touchstart", stopAutoplay, { passive: true });
+
+  let dragStartX = null;
+  let dragDeltaX = 0;
+  let isDragging = false;
+
+  function dragStart(x) {
+    isDragging = true;
+    dragStartX = x;
+    dragDeltaX = 0;
+    stopAutoplay();
+  }
+
+  function dragMove(x) {
+    if (!isDragging) return;
+    dragDeltaX = x - dragStartX;
+  }
+
+  function dragEnd() {
+    if (!isDragging) return;
+    isDragging = false;
+
+    const threshold = 50;
+    if (dragDeltaX > threshold) {
+      goToSlide(activeIndex - 1, true);
+    } else if (dragDeltaX < -threshold) {
+      goToSlide(activeIndex + 1, true);
+    } else {
+      startAutoplay();
+    }
+
+    dragDeltaX = 0;
+  }
+
+  slider.addEventListener("touchstart", event => dragStart(event.touches[0].clientX), { passive: true });
+  slider.addEventListener("touchmove", event => dragMove(event.touches[0].clientX), { passive: true });
+  slider.addEventListener("touchend", dragEnd);
+
+  track?.addEventListener("mousedown", event => {
+    event.preventDefault();
+    dragStart(event.clientX);
+  });
+  window.addEventListener("mousemove", event => dragMove(event.clientX));
+  window.addEventListener("mouseup", dragEnd);
 
   startAutoplay();
 }
