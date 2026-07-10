@@ -15,24 +15,37 @@
 
   <header class="header">
     <div class="container navbar">
+      <div class="navbar-side navbar-start">
+        <button class="menu-button" data-menu-button aria-label="Open menu">
+          <span></span><span></span><span></span>
+        </button>
+        <button class="icon-btn" data-search-toggle aria-label="Search">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M10 4a6 6 0 1 0 3.76 10.66l4.79 4.79a1 1 0 0 0 1.42-1.42l-4.79-4.79A6 6 0 0 0 10 4Zm-4 6a4 4 0 1 1 8 0 4 4 0 0 1-8 0Z"/></svg>
+        </button>
+      </div>
+
       <a class="logo" href="index.html" aria-label="Homy Organic Home">
         <img src="assets/brand/homy-organic-logo.svg" alt="Homy Organic logo" data-brand-logo>
       </a>
 
-      <nav class="nav" data-nav>
-        <a class="nav-link" href="index.html">Home</a>
-        <a class="nav-link" href="shop.html">Shop</a>
-        <a class="nav-link" href="about.html">About</a>
-        <a class="nav-link" href="contact.html">Contact</a>
-      </nav>
-
-      <div class="nav-actions">
+      <div class="navbar-side navbar-end">
         <a class="cart-link" href="cart.html">Cart <span class="cart-badge" data-cart-count>0</span></a>
-        <button class="menu-button" data-menu-button aria-label="Open menu">
-          <span></span><span></span><span></span>
-        </button>
       </div>
     </div>
+
+    <div class="search-panel" data-search-panel>
+      <form class="container search-form" data-search-form>
+        <input type="search" name="search" placeholder="Search products..." aria-label="Search products">
+        <button type="submit" class="btn btn-primary">Search</button>
+      </form>
+    </div>
+
+    <nav class="nav" data-nav>
+      <a class="nav-link" href="index.html">Home</a>
+      <a class="nav-link" href="shop.html">Shop</a>
+      <a class="nav-link" href="about.html">About</a>
+      <a class="nav-link" href="contact.html">Contact</a>
+    </nav>
   </header>
 
   <main>

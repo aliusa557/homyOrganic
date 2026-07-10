@@ -15,63 +15,79 @@
 
   <header class="header">
     <div class="container navbar">
+      <div class="navbar-side navbar-start">
+        <button class="menu-button" data-menu-button aria-label="Open menu">
+          <span></span><span></span><span></span>
+        </button>
+        <button class="icon-btn" data-search-toggle aria-label="Search">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M10 4a6 6 0 1 0 3.76 10.66l4.79 4.79a1 1 0 0 0 1.42-1.42l-4.79-4.79A6 6 0 0 0 10 4Zm-4 6a4 4 0 1 1 8 0 4 4 0 0 1-8 0Z"/></svg>
+        </button>
+      </div>
+
       <a class="logo" href="index.html" aria-label="Homy Organic Home">
         <img src="assets/brand/homy-organic-logo.svg" alt="Homy Organic logo" data-brand-logo>
       </a>
 
-      <nav class="nav" data-nav>
-        <a class="nav-link" href="index.html">Home</a>
-        <a class="nav-link" href="shop.html">Shop</a>
-        <a class="nav-link" href="about.html">About</a>
-        <a class="nav-link" href="contact.html">Contact</a>
-      </nav>
-
-      <div class="nav-actions">
+      <div class="navbar-side navbar-end">
         <a class="cart-link" href="cart.html">Cart <span class="cart-badge" data-cart-count>0</span></a>
-        <button class="menu-button" data-menu-button aria-label="Open menu">
-          <span></span><span></span><span></span>
-        </button>
       </div>
     </div>
+
+    <div class="search-panel" data-search-panel>
+      <form class="container search-form" data-search-form>
+        <input type="search" name="search" placeholder="Search products..." aria-label="Search products">
+        <button type="submit" class="btn btn-primary">Search</button>
+      </form>
+    </div>
+
+    <nav class="nav" data-nav>
+      <a class="nav-link" href="index.html">Home</a>
+      <a class="nav-link" href="shop.html">Shop</a>
+      <a class="nav-link" href="about.html">About</a>
+      <a class="nav-link" href="contact.html">Contact</a>
+    </nav>
   </header>
 
   <main>
-    <section class="hero">
-      <div class="container hero-grid">
-        <div class="hero-copy reveal">
-          <p class="eyebrow">Where Beauty Meets Wellness</p>
-          <h1>Natural glow for <span>skin</span>, hair and everyday confidence.</h1>
-          <p>Homy Organic is a premium organic beauty and wellness brand, offering hand-blended products made from natural ingredients — pure, natural, and premium, for your inner wellness and outer beauty.</p>
+    <section class="hero hero-slider" data-hero-slider>
+      <div class="hero-tagline">
+        <p class="eyebrow">Where Beauty Meets Wellness</p>
+      </div>
 
-          <div class="hero-actions">
-            <a class="btn btn-primary" href="shop.html">Shop Collection</a>
-            <a class="btn btn-soft" href="#best-sellers">View Best Sellers</a>
-          </div>
-
-          <div class="stats-row">
-            <div class="stat-card">
-              <strong>5</strong>
-              <span>Homy Organic products</span>
-            </div>
-            <div class="stat-card">
-              <strong>COD</strong>
-              <span>Easy ordering</span>
-            </div>
-            <div class="stat-card">
-              <strong>4.8/5</strong>
-              <span>Customer rating</span>
-            </div>
-          </div>
+      <div class="slider-track">
+        <div class="slide active" data-slide>
+          <img src="assets/products-real/signature-hair-oil.webp" alt="Homy Organic Signature Hair Oil">
         </div>
+        <div class="slide" data-slide>
+          <img src="assets/products-real/pure-glow-tea.webp" alt="Homy Organic Pure Glow Tea">
+        </div>
+        <div class="slide" data-slide>
+          <img src="assets/products-real/organic-ubtan-powder.webp" alt="Homy Organic Glass Glow Face Pack">
+        </div>
+        <div class="slide" data-slide>
+          <img src="assets/products-real/herbal-spice-blend.webp" alt="Homy Organic Digest Well Powder">
+        </div>
+        <div class="slide" data-slide>
+          <img src="assets/products-real/signature-spa-soak.svg" alt="Homy Organic Signature Spa Soak">
+        </div>
+      </div>
 
-        <div class="hero-card reveal">
-          <div class="hero-product-card">
-            <img src="assets/products-real/signature-hair-oil.webp" alt="Homy Organic Signature Hair Oil">
-            <div class="floating-info">
-              <strong>Soft care</strong>
-              <span>Premium organic look</span>
-            </div>
-          </div>
+      <div class="slider-dots" data-slider-dots></div>
+    </section>
+
+    <section class="section-sm">
+      <div class="container stats-row">
+        <div class="stat-card">
+          <strong>5</strong>
+          <span>Homy Organic products</span>
+        </div>
+        <div class="stat-card">
+          <strong>COD</strong>
+          <span>Easy ordering</span>
+        </div>
+        <div class="stat-card">
+          <strong>4.8/5</strong>
+          <span>Customer rating</span>
         </div>
       </div>
     </section>
@@ -79,32 +95,7 @@
     <section class="section-sm brand-statement">
       <div class="container reveal">
         <p class="eyebrow">Our Promise</p>
-        <p class="lead-text">Each product is pure, natural, and premium — designed to care for both your inner wellness and outer beauty. No compromise is ever made on cleanliness, hygiene, or quality standards in the crafting of any product. All our products are carefully hand-blended in small batches to ensure maximum freshness, quality, and effectiveness.</p>
-      </div>
-    </section>
-
-    <section class="section-sm">
-      <div class="container category-grid">
-        <a class="category-card reveal" href="shop.html">
-          <p class="eyebrow">Skin Care</p>
-          <h3>Glass glow face care</h3>
-          <p>Ubtan-inspired face pack for a fresh, polished, naturally glowing-looking routine.</p>
-          <span class="btn btn-soft">Explore Skin</span>
-        </a>
-
-        <a class="category-card reveal" href="shop.html">
-          <p class="eyebrow">Hair Care</p>
-          <h3>Signature hair oil</h3>
-          <p>Homy Organic hair oil for nourished scalp care and stronger-looking strands.</p>
-          <span class="btn btn-soft">Explore Hair</span>
-        </a>
-
-        <a class="category-card reveal" href="checkout.html">
-          <p class="eyebrow">Easy Orders</p>
-          <h3>Order on WhatsApp</h3>
-          <p>Add to cart, fill checkout details, and send your order directly.</p>
-          <span class="btn btn-soft">How it Works</span>
-        </a>
+        <p class="lead-text">Homy Organic is a premium organic beauty and wellness brand, offering hand-blended products made from natural ingredients. Each product is pure, natural, and premium — designed to care for both your inner wellness and outer beauty. No compromise is ever made on cleanliness, hygiene, or quality standards in the crafting of any product.</p>
       </div>
     </section>
 
@@ -123,12 +114,61 @@
       </div>
     </section>
 
+    <section class="section-sm" id="shop-by-category">
+      <div class="container">
+        <div class="section-head reveal">
+          <div>
+            <p class="eyebrow">Shop By Category</p>
+            <h2>Find your ritual</h2>
+            <p>Five categories, one natural, hand-blended standard.</p>
+          </div>
+        </div>
+
+        <div class="category-grid">
+          <a class="category-card reveal" href="shop.html">
+            <p class="eyebrow">Hair Care</p>
+            <h3>Signature Hair Oil</h3>
+            <p>Nourished scalp care and stronger-looking strands.</p>
+            <span class="btn btn-soft">Shop Hair Care</span>
+          </a>
+
+          <a class="category-card reveal" href="shop.html">
+            <p class="eyebrow">Herbal Tea</p>
+            <h3>Pure Glow Tea</h3>
+            <p>Everyday wellness, digestion and antioxidant support.</p>
+            <span class="btn btn-soft">Shop Herbal Tea</span>
+          </a>
+
+          <a class="category-card reveal" href="shop.html">
+            <p class="eyebrow">Skin Care</p>
+            <h3>Glass Glow Face Pack</h3>
+            <p>Ubtan-inspired care for fresh, glowing-looking skin.</p>
+            <span class="btn btn-soft">Shop Skin Care</span>
+          </a>
+
+          <a class="category-card reveal" href="shop.html">
+            <p class="eyebrow">Digestive Wellness</p>
+            <h3>Digest Well Powder</h3>
+            <p>Whole natural spices for everyday gut comfort.</p>
+            <span class="btn btn-soft">Shop Wellness</span>
+          </a>
+
+          <a class="category-card reveal" href="shop.html">
+            <p class="eyebrow">Bath & Spa</p>
+            <h3>Signature Spa Soak</h3>
+            <p>A calming, spa-like self-care ritual at home.</p>
+            <span class="btn btn-soft">Shop Bath & Spa</span>
+          </a>
+        </div>
+      </div>
+    </section>
+
     <section class="section-sm" id="bundles">
       <div class="container">
         <div class="section-head reveal">
           <div>
-            <p class="eyebrow">Bundle & Save</p>
-            <h2>More together, for less</h2>
+            <p class="eyebrow">Save More</p>
+            <h2>Combos & Bundles</h2>
             <p>Pair your favorites and save on every combo.</p>
           </div>
         </div>
@@ -155,7 +195,7 @@
         <div class="section-head reveal">
           <div>
             <p class="eyebrow">Customer Love</p>
-            <h2>What our customers say</h2>
+            <h2>Customer Reviews</h2>
           </div>
         </div>
 
@@ -176,6 +216,21 @@
             <div class="review-person"><div class="avatar">M</div><strong>Maham</strong></div>
           </div>
         </div>
+      </div>
+    </section>
+
+    <section class="section" id="instagram-feed">
+      <div class="container">
+        <div class="section-head reveal">
+          <div>
+            <p class="eyebrow">Follow Along</p>
+            <h2>Instagram Feed & Gallery</h2>
+            <p>Join our community <a href="https://www.instagram.com/homyorganicpk?igsh=MzBiamtkYXJneW14" target="_blank" rel="noopener">@homyorganicpk</a> for behind-the-scenes and new arrivals.</p>
+          </div>
+          <a class="btn btn-outline" href="https://www.instagram.com/homyorganicpk?igsh=MzBiamtkYXJneW14" target="_blank" rel="noopener">Follow on Instagram</a>
+        </div>
+
+        <div class="insta-grid" data-insta-grid></div>
       </div>
     </section>
 
@@ -280,6 +335,7 @@
   <script src="js/products.js"></script>
   <script src="js/main.js"></script>
   <script src="js/home.js"></script>
+  <script src="js/hero-slider.js"></script>
 </body>
 </html>
 

@@ -65,6 +65,14 @@ function calculateCartTotals(cart) {
   };
 }
 
+function bumpCartLink() {
+  document.querySelectorAll(".cart-link").forEach(link => {
+    link.classList.remove("bump");
+    void link.offsetWidth;
+    link.classList.add("bump");
+  });
+}
+
 function addToCart(productId, quantity = 1) {
   const product = findProduct(productId);
   if (!product) return;
@@ -79,6 +87,7 @@ function addToCart(productId, quantity = 1) {
   }
 
   saveCart(cart);
+  bumpCartLink();
   showToast(`${product.name} added to cart`);
 }
 
@@ -96,6 +105,7 @@ function addBundleToCart(bundleId) {
   }
 
   saveCart(cart);
+  bumpCartLink();
   showToast(`${bundle.name} added to cart`);
 }
 
@@ -257,6 +267,35 @@ function initMobileMenu() {
   menuButton.addEventListener("click", () => {
     nav.classList.toggle("open");
     menuButton.classList.toggle("open");
+    document.querySelector("[data-search-panel]")?.classList.remove("open");
+  });
+}
+
+function initSearchToggle() {
+  const panel = document.querySelector("[data-search-panel]");
+  if (!panel) return;
+
+  document.querySelectorAll("[data-search-toggle]").forEach(button => {
+    button.addEventListener("click", () => {
+      panel.classList.toggle("open");
+      document.querySelector("[data-nav]")?.classList.remove("open");
+      document.querySelector("[data-menu-button]")?.classList.remove("open");
+
+      if (panel.classList.contains("open")) {
+        panel.querySelector("input")?.focus();
+      }
+    });
+  });
+}
+
+function initSearchForm() {
+  const form = document.querySelector("[data-search-form]");
+  if (!form) return;
+
+  form.addEventListener("submit", event => {
+    event.preventDefault();
+    const query = form.querySelector("input").value.trim();
+    window.location.href = `shop.html${query ? `?search=${encodeURIComponent(query)}` : ""}`;
   });
 }
 
@@ -353,6 +392,8 @@ document.addEventListener("DOMContentLoaded", () => {
   initSocialLinks();
   updateCartCount();
   initMobileMenu();
+  initSearchToggle();
+  initSearchForm();
   initRevealAnimations();
   setActiveNav();
   initNewsletter();

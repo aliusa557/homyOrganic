@@ -63,6 +63,12 @@ document.addEventListener("DOMContentLoaded", () => {
     categorySelect.innerHTML = categories.map(category => `<option value="${category}">${category}</option>`).join("");
   }
 
+  const searchParam = new URLSearchParams(window.location.search).get("search");
+  const searchInput = document.querySelector("[data-search]");
+  if (searchParam && searchInput) {
+    searchInput.value = searchParam;
+  }
+
   document.querySelector("[data-search]")?.addEventListener("input", applyFilters);
   document.querySelector("[data-category]")?.addEventListener("change", applyFilters);
   document.querySelector("[data-sort]")?.addEventListener("change", applyFilters);
