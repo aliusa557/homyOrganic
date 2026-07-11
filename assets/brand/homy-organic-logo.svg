@@ -1,16 +1,17 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 260 190" role="img" aria-labelledby="hoTitle hoDesc">
   <title id="hoTitle">Homy Organic</title>
-  <desc id="hoDesc">Homy Organic wordmark with a roofline mark, transparent background.</desc>
+  <desc id="hoDesc">Homy Organic wordmark with a roofline mark and a leaf worked into the O of Organic, transparent background.</desc>
 
-  <path d="M50 58 L130 10 L210 58" fill="none" stroke="#b9853a" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
-
-  <g transform="translate(130 14)">
-    <path d="M0 0 C0 -8 4 -13 10 -16" fill="none" stroke="#4f7a5b" stroke-width="3" stroke-linecap="round"/>
-    <path d="M0 0 C-6 -3 -9 -8 -9 -14" fill="none" stroke="#4f7a5b" stroke-width="3" stroke-linecap="round"/>
-  </g>
+  <path d="M45 60 L130 8 L215 60" fill="none" stroke="#e6c39b" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
 
   <text x="130" y="98" text-anchor="middle" font-family="'Playfair Display', Georgia, serif" font-size="34" font-weight="600" fill="#1c1712">Homy</text>
-  <text x="130" y="140" text-anchor="middle" font-family="'Playfair Display', Georgia, serif" font-size="44" font-weight="800" fill="#1c1712">Organic</text>
-  <text x="222" y="108" font-family="Arial, Helvetica, sans-serif" font-size="13" font-weight="700" fill="#1c1712">&#8482;</text>
+  <text x="30" y="142" text-anchor="start" font-family="'Playfair Display', Georgia, serif" font-size="46" font-weight="800" fill="#1c1712">Organic</text>
+
+  <g transform="translate(46 120) rotate(-12)">
+    <path d="M0 15 C-7 6 -7 -6 0 -15 C7 -6 7 6 0 15 Z" fill="#2f6d3d"/>
+    <path d="M0 15 L0 -9" stroke="#eaf3ec" stroke-width="1.4" stroke-linecap="round"/>
+  </g>
+
+  <text x="224" y="108" font-family="Arial, Helvetica, sans-serif" font-size="13" font-weight="700" fill="#1c1712">&#8482;</text>
   <text x="130" y="163" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="12" font-weight="700" letter-spacing="2.6" fill="#8a7a63">PURE - NATURAL - PREMIUM</text>
 </svg>
