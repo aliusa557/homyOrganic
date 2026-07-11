@@ -3,6 +3,7 @@ const STORE_CONFIG = {
   logoPath: "assets/brand/homy-organic-logo.svg",
   websiteUrl: "#",
   whatsappNumber: "923023735860",
+  supportEmail: "support@homyorganic.pk",
   easypaisaNumber: "03XX-XXXXXXX",
   jazzcashNumber: "03XX-XXXXXXX",
   deliveryCharge: 250,
@@ -386,10 +387,18 @@ function initSocialLinks() {
   });
 }
 
+function initSupportEmail() {
+  document.querySelectorAll("[data-support-email]").forEach(element => {
+    element.href = `mailto:${STORE_CONFIG.supportEmail}`;
+    element.textContent = STORE_CONFIG.supportEmail;
+  });
+}
+
 document.addEventListener("DOMContentLoaded", () => {
   rewriteInternalLinks();
   initBranding();
   initSocialLinks();
+  initSupportEmail();
   updateCartCount();
   initMobileMenu();
   initSearchToggle();
