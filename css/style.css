@@ -79,8 +79,7 @@ button {
   position: sticky;
   top: 0;
   z-index: 30;
-  backdrop-filter: blur(18px);
-  background: rgba(255, 248, 239, .91);
+  background: var(--white);
   border-bottom: 1px solid rgba(21, 18, 15, .08);
 }
 
@@ -142,7 +141,7 @@ button {
   max-height: 0;
   overflow: hidden;
   border-bottom: 1px solid var(--border);
-  background: rgba(255, 248, 239, .98);
+  background: var(--white);
   transition: max-height .3s ease;
 }
 
@@ -177,7 +176,7 @@ button {
   gap: 4px;
   padding: 16px;
   border-radius: 24px;
-  background: rgba(255, 248, 239, .97);
+  background: var(--white);
   box-shadow: var(--shadow);
   border: 1px solid var(--border);
   opacity: 0;
