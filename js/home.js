@@ -8,7 +8,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const instaGrid = document.querySelector("[data-insta-grid]");
 
   if (featuredGrid) {
-    featuredGrid.innerHTML = PRODUCTS.slice(0, 4).map(productCard).join("");
+    featuredGrid.innerHTML = PRODUCTS.map(productCard).join("");
   }
 
   if (bundleGrid) {

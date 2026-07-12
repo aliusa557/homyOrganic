@@ -5,7 +5,9 @@
   --rose: #c89f7a;
   --deep-rose: #111111;
   --wood: #e6c39b;
-  --cream: #fdfbf8;
+  --cream: #fff8e8;
+  --page-bg: #fff8e8;
+  --footer-bg: #f7ead3;
   --brown: #15120f;
   --muted: #625b54;
   --gold: #b9853a;
@@ -34,7 +36,7 @@ body {
   margin: 0;
   font-family: "Jost", Arial, sans-serif;
   color: var(--brown);
-  background: var(--white);
+  background: var(--page-bg);
   line-height: 1.65;
 }
 
@@ -596,7 +598,7 @@ button {
 }
 
 #best-sellers {
-  background: var(--white);
+  background: var(--page-bg);
 }
 
 .section-sm {
@@ -1063,9 +1065,10 @@ textarea:focus {
 
 .footer {
   padding: 54px 0 22px;
-  background: rgba(21,18,15,.96);
-  color: rgba(255,255,255,.88);
+  background: var(--footer-bg);
+  color: var(--brown);
   margin-top: 0;
+  border-top: 1px solid rgba(185, 133, 58, .22);
 }
 
 .footer-grid {
@@ -1076,20 +1079,25 @@ textarea:focus {
 
 .footer h3,
 .footer h4 {
-  color: white;
+  color: var(--brown);
   margin-top: 0;
 }
 
 .footer-logo-wrap {
   display: inline-flex;
-  background: var(--white);
-  padding: 10px 18px;
-  border-radius: 16px;
+  align-items: center;
+  justify-content: center;
+  background: var(--footer-bg);
+  padding: 0;
+  border-radius: 0;
+  border: 0;
+  box-shadow: none;
 }
 
 .footer-logo-wrap img {
-  width: 84px;
-  height: auto;
+  width: 158px;
+  max-height: 92px;
+  object-fit: contain;
   display: block;
 }
 
@@ -1122,13 +1130,13 @@ textarea:focus {
 
 .footer-email a {
   margin: 0;
-  color: rgba(255, 255, 255, .85);
+  color: var(--brown);
   font-weight: 600;
 }
 
 .footer p,
 .footer a {
-  color: rgba(255,255,255,.72);
+  color: rgba(21, 18, 15, .72);
 }
 
 .footer a {
@@ -1151,8 +1159,8 @@ textarea:focus {
   padding: 8px 13px;
   border-radius: 999px;
   border: 1px solid rgba(185, 133, 58, .34);
-  background: rgba(255, 255, 255, .08);
-  color: inherit;
+  background: rgba(255, 255, 255, .58);
+  color: var(--brown);
   font-size: 13px;
   font-weight: 800;
   margin: 0;
@@ -1170,11 +1178,11 @@ a[aria-disabled="true"] {
 }
 
 .footer-bottom {
-  border-top: 1px solid rgba(255,255,255,.12);
+  border-top: 1px solid rgba(185, 133, 58, .22);
   margin-top: 36px;
   padding-top: 20px;
   text-align: center;
-  color: rgba(255,255,255,.64);
+  color: rgba(21, 18, 15, .58);
 }
 
 .whatsapp-float {
@@ -1931,7 +1939,7 @@ a[aria-disabled="true"] {
 }
 
 .footer {
-  border-top: 5px solid var(--gold);
+  border-top: 1px solid rgba(185, 133, 58, .22);
 }
 
 .product-grid .reveal:nth-child(1),
