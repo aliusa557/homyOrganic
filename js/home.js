@@ -19,7 +19,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const gallery = [...PRODUCTS, ...PRODUCTS].slice(0, 6);
     instaGrid.innerHTML = gallery.map(product => `
       <a class="insta-tile reveal" href="${INSTAGRAM_URL}" target="_blank" rel="noopener" aria-label="View ${product.name} on Instagram">
-        <img src="${product.image}" alt="${product.name}" loading="lazy">
+        <img src="${product.image}" alt="${product.name}" loading="lazy" decoding="async">
         ${INSTAGRAM_ICON}
       </a>
     `).join("");
@@ -32,7 +32,7 @@ document.addEventListener("DOMContentLoaded", () => {
     hotSaleSpotlight.innerHTML = `
       <div class="hot-sale-image">
         ${discount > 0 ? `<span class="discount-badge">-${discount}%</span>` : ""}
-        <img src="${hotProduct.image}" alt="${hotProduct.name}">
+        <img src="${hotProduct.image}" alt="${hotProduct.name}" loading="lazy" decoding="async">
       </div>
       <div class="hot-sale-content">
         <p class="eyebrow">Hot Sale</p>

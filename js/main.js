@@ -1,6 +1,6 @@
 const STORE_CONFIG = {
   brandName: "Homy Organic",
-  logoPath: "assets/brand/homy-organic-logo.svg",
+  logoPath: "assets/brand/homy-organic-logo.webp",
   websiteUrl: "#",
   whatsappNumber: "923023735860",
   supportEmail: "support@homyorganic.pk",
@@ -228,7 +228,7 @@ function productCard(product) {
         <span class="product-tag">${product.tag}</span>
         ${discount > 0 ? `<span class="discount-badge">-${discount}%</span>` : ""}
         <a href="product-detail.html" data-product-id="${product.id}" aria-label="View ${product.name}">
-          <img src="${product.image}" alt="${product.name}" loading="lazy">
+          <img src="${product.image}" alt="${product.name}" loading="lazy" decoding="async">
         </a>
         <div class="product-quick-actions">
           <button class="icon-action" type="button" onclick="addToCart(${product.id})" aria-label="Add ${product.name} to cart">${cartIcon()}</button>
@@ -264,7 +264,7 @@ function bundleCard(bundle) {
       <div class="product-image-wrap">
         <span class="product-tag">${bundle.tag}</span>
         ${discount > 0 ? `<span class="discount-badge">-${discount}%</span>` : ""}
-        <img src="${bundle.image}" alt="${bundle.name}" loading="lazy">
+        <img src="${bundle.image}" alt="${bundle.name}" loading="lazy" decoding="async">
       </div>
 
       <div class="product-content">

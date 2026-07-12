@@ -62,7 +62,7 @@ function renderProductDetail() {
       <div class="container product-detail-grid">
         <div class="detail-image reveal">
           <span class="product-tag">${product.tag}</span>
-          <img src="${product.image}" alt="${product.name}">
+          <img src="${product.image}" alt="${product.name}" fetchpriority="high" decoding="async">
         </div>
 
         <div class="detail-content reveal">
