@@ -8,6 +8,7 @@ const PRODUCTS = [
     oldPrice: 1950,
     tag: "Hot Sale",
     rating: 4.9,
+    reviewCount: 21,
     image: "assets/products-real/signature-hair-oil.webp",
     description: "A premium herbal infusion blend of natural botanical oils, suitable for home and professional salon use. Crafted for complete hair and scalp care.",
     keyBenefits: [
@@ -38,6 +39,7 @@ const PRODUCTS = [
     oldPrice: 1470,
     tag: "Glow",
     rating: 4.8,
+    reviewCount: 7,
     image: "assets/products-real/pure-glow-tea.webp",
     description: "Homy Organic Pure Glow Tea is a specially crafted herbal wellness blend made with carefully selected natural ingredients. It is designed to support everyday wellness, healthy digestion, and overall well-being. Rich in natural antioxidants, it helps you feel refreshed and supports healthy-looking skin. It is a comforting choice for busy lifestyles and daily self-care.",
     keyBenefits: [
@@ -66,6 +68,7 @@ const PRODUCTS = [
     oldPrice: 1400,
     tag: "Bestseller",
     rating: 4.7,
+    reviewCount: 18,
     image: "assets/products-real/organic-ubtan-powder.webp",
     description: "A Homy Organic ubtan-inspired face pack powder blend, crafted to help skin look fresh, polished, and naturally glowing — a modern glass-skin ritual with a traditional touch.",
     keyBenefits: [
@@ -95,6 +98,7 @@ const PRODUCTS = [
     oldPrice: 1270,
     tag: "Organic",
     rating: 4.6,
+    reviewCount: 3,
     image: "assets/products-real/herbal-spice-blend.webp",
     description: "A premium Homy Organic powdered herbal spice blend made with visible whole spices and natural ingredients, thoughtfully blended to support healthy digestion and everyday comfort.",
     keyBenefits: [
@@ -122,6 +126,7 @@ const PRODUCTS = [
     oldPrice: 1200,
     tag: "New",
     rating: 4.8,
+    reviewCount: 4,
     image: "assets/products-real/signature-spa-soak.webp",
     description: "A Homy Organic bath soak blend of mineral-rich salts, dried rose petals, calendula and mint — designed to turn an everyday bath into a calming, spa-like ritual at home.",
     keyBenefits: [
@@ -151,6 +156,8 @@ const BUNDLES = [
     tag: "Bundle & Save",
     itemIds: [1, 3],
     price: 2200,
+    rating: 4.9,
+    reviewCount: 12,
     image: "assets/products-real/signature-hair-oil.webp",
     description: "Signature Hair Oil + Glass Glow Face Pack, bundled together for daily hair and skin care."
   },
@@ -161,6 +168,8 @@ const BUNDLES = [
     tag: "Bundle & Save",
     itemIds: [2, 4, 5],
     price: 2600,
+    rating: 4.8,
+    reviewCount: 9,
     image: "assets/products-real/pure-glow-tea.webp",
     description: "Pure Glow Tea + Digest Well Powder + Signature Spa Soak — a complete everyday wellness ritual."
   }

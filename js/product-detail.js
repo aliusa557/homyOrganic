@@ -68,7 +68,7 @@ function renderProductDetail() {
         <div class="detail-content reveal">
           <p class="product-category">${product.category}</p>
           <h2>${product.name}</h2>
-          <div class="rating-row">${renderStars(product.rating)}</div>
+          <div class="rating-row">${renderStars(product.rating, product.reviewCount)}</div>
 
           <div class="price-row detail-price">
             <strong>${formatPrice(product.price)}</strong>

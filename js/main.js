@@ -48,7 +48,7 @@ function bundlePrice(bundle) {
 }
 
 function formatPrice(amount) {
-  return `Rs. ${Number(amount).toLocaleString("en-PK")}`;
+  return `Rs.${Number(amount).toLocaleString("en-PK")}.00`;
 }
 
 function calculateCartTotals(cart) {
@@ -153,12 +153,6 @@ function showToast(message) {
   }, 2200);
 }
 
-function renderStars(rating) {
-  const fullStars = Math.floor(rating);
-  const stars = "★".repeat(fullStars) + "☆".repeat(5 - fullStars);
-  return `<span class="stars">${stars}</span><span>${rating}</span>`;
-}
-
 function normalizePagePath(pathname = window.location.pathname) {
   const cleaned = pathname.replace(/\/+$/, "");
   return cleaned.split("/").pop() || "index";
@@ -195,23 +189,59 @@ function discountPercent(product) {
   return Math.round((1 - product.price / product.oldPrice) * 100);
 }
 
+function reviewText(reviewCount = 0) {
+  if (!reviewCount) return "No reviews";
+  return `${reviewCount} review${reviewCount === 1 ? "" : "s"}`;
+}
+
+function renderStars(rating, reviewCount = 0) {
+  const fullStars = Math.round(rating);
+  const stars = "&#9733;".repeat(fullStars) + "&#9734;".repeat(5 - fullStars);
+  return `<span class="stars" aria-label="${rating} out of 5 stars">${stars}</span><span>${reviewText(reviewCount)}</span>`;
+}
+
+function cartIcon() {
+  return `
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M6 8h12l-1 11H7L6 8Z"></path>
+      <path d="M9 8a3 3 0 0 1 6 0"></path>
+      <path d="M9 13h6"></path>
+    </svg>
+  `;
+}
+
+function eyeIcon() {
+  return `
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M2.5 12s3.5-6 9.5-6 9.5 6 9.5 6-3.5 6-9.5 6-9.5-6-9.5-6Z"></path>
+      <circle cx="12" cy="12" r="2.5"></circle>
+    </svg>
+  `;
+}
+
 function productCard(product) {
   const discount = discountPercent(product);
 
   return `
     <article class="product-card reveal">
-      <a href="product-detail.html" class="product-image-wrap" data-product-id="${product.id}" aria-label="View ${product.name}">
+      <div class="product-image-wrap">
         <span class="product-tag">${product.tag}</span>
         ${discount > 0 ? `<span class="discount-badge">-${discount}%</span>` : ""}
-        <img src="${product.image}" alt="${product.name}" loading="lazy">
-      </a>
+        <a href="product-detail.html" data-product-id="${product.id}" aria-label="View ${product.name}">
+          <img src="${product.image}" alt="${product.name}" loading="lazy">
+        </a>
+        <div class="product-quick-actions">
+          <button class="icon-action" type="button" onclick="addToCart(${product.id})" aria-label="Add ${product.name} to cart">${cartIcon()}</button>
+          <a class="icon-action" href="product-detail.html" data-product-id="${product.id}" aria-label="View ${product.name}">${eyeIcon()}</a>
+        </div>
+      </div>
 
       <div class="product-content">
         <p class="product-category">${product.category}</p>
         <h3><a href="product-detail.html" data-product-id="${product.id}">${product.name}</a></h3>
 
         <div class="rating-row">
-          ${renderStars(product.rating)}
+          ${renderStars(product.rating, product.reviewCount)}
         </div>
 
         <div class="price-row">
@@ -219,10 +249,6 @@ function productCard(product) {
           <span>${formatPrice(product.oldPrice)}</span>
         </div>
 
-        <div class="product-actions">
-          <button class="btn btn-primary" onclick="addToCart(${product.id})">Add to Cart</button>
-          <a class="btn btn-soft" href="product-detail.html" data-product-id="${product.id}">View</a>
-        </div>
       </div>
     </article>
   `;
@@ -244,6 +270,9 @@ function bundleCard(bundle) {
       <div class="product-content">
         <p class="product-category">Bundle Deal</p>
         <h3>${bundle.name}</h3>
+        <div class="rating-row">
+          ${renderStars(bundle.rating, bundle.reviewCount)}
+        </div>
         <p class="bundle-includes">${items.map(item => item.name).join(" + ")}</p>
 
         <div class="price-row">
