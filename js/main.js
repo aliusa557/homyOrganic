@@ -43,19 +43,42 @@ function findCartEntity(item) {
   return item.type === "bundle" ? findBundle(item.id) : findProduct(item.id);
 }
 
+function findProductVariant(product, variantId) {
+  if (!product?.variants?.length) return null;
+  return product.variants.find(variant => variant.id === variantId) || product.variants[0];
+}
+
+function cartItemPrice(item, entity = findCartEntity(item)) {
+  if (!entity) return 0;
+  if (item.type === "bundle") return entity.price;
+  return findProductVariant(entity, item.variantId)?.price || entity.price;
+}
+
+function cartItemName(item, entity = findCartEntity(item)) {
+  if (!entity) return "";
+  const variant = item.type === "bundle" ? null : findProductVariant(entity, item.variantId);
+  return variant ? `${entity.name} - ${variant.name}` : entity.name;
+}
+
 function bundlePrice(bundle) {
-  return bundle.itemIds.reduce((sum, id) => sum + (findProduct(id)?.price || 0), 0);
+  if (bundle.originalPrice) return bundle.originalPrice;
+  if (bundle.items) return bundle.items.reduce((sum, item) => sum + (item.price || 0), 0);
+  return (bundle.itemIds || []).reduce((sum, id) => sum + (findProduct(id)?.price || 0), 0);
 }
 
 function formatPrice(amount) {
   return `Rs.${Number(amount).toLocaleString("en-PK")}.00`;
 }
 
+function formatBundlePrice(amount) {
+  return `Rs. ${Number(amount).toLocaleString("en-PK")}`;
+}
+
 function calculateCartTotals(cart) {
   const subtotal = cart.reduce((sum, item) => {
     const entity = findCartEntity(item);
     if (!entity) return sum;
-    return sum + entity.price * item.quantity;
+    return sum + cartItemPrice(item, entity) * item.quantity;
   }, 0);
 
   const delivery = subtotal === 0 || subtotal >= STORE_CONFIG.freeDeliveryAbove ? 0 : STORE_CONFIG.deliveryCharge;
@@ -78,18 +101,30 @@ function addToCart(productId, quantity = 1) {
   const product = findProduct(productId);
   if (!product) return;
 
+  addProductToCart(productId, quantity, product.variants?.[0]?.id || null);
+}
+
+function addProductToCart(productId, quantity = 1, variantId = null) {
+  const product = findProduct(productId);
+  if (!product) return;
+  const selectedVariant = findProductVariant(product, variantId);
+
   const cart = getCart();
-  const existing = cart.find(item => item.type !== "bundle" && Number(item.id) === Number(productId));
+  const existing = cart.find(item =>
+    item.type !== "bundle" &&
+    Number(item.id) === Number(productId) &&
+    (item.variantId || null) === (selectedVariant?.id || null)
+  );
 
   if (existing) {
     existing.quantity += quantity;
   } else {
-    cart.push({ type: "product", id: Number(productId), quantity });
+    cart.push({ type: "product", id: Number(productId), quantity, variantId: selectedVariant?.id || null });
   }
 
   saveCart(cart);
   bumpCartLink();
-  showToast(`${product.name} added to cart`);
+  showToast(`${selectedVariant ? `${product.name} - ${selectedVariant.name}` : product.name} added to cart`);
 }
 
 function addBundleToCart(bundleId) {
@@ -110,14 +145,23 @@ function addBundleToCart(bundleId) {
   showToast(`${bundle.name} added to cart`);
 }
 
-function removeFromCart(productId) {
-  const cart = getCart().filter(item => Number(item.id) !== Number(productId));
+function removeFromCart(productId, variantId = undefined, type = undefined) {
+  const cart = getCart().filter(item => {
+    const sameId = Number(item.id) === Number(productId);
+    const sameType = type === undefined || item.type === type;
+    const sameVariant = variantId === undefined || (item.variantId || null) === (variantId || null);
+    return !(sameId && sameType && sameVariant);
+  });
   saveCart(cart);
 }
 
-function updateQuantity(productId, quantity) {
+function updateQuantity(productId, quantity, variantId = undefined, type = undefined) {
   const cart = getCart();
-  const item = cart.find(cartItem => Number(cartItem.id) === Number(productId));
+  const item = cart.find(cartItem =>
+    Number(cartItem.id) === Number(productId) &&
+    (type === undefined || cartItem.type === type) &&
+    (variantId === undefined || (cartItem.variantId || null) === (variantId || null))
+  );
 
   if (!item) return;
 
@@ -221,6 +265,8 @@ function eyeIcon() {
 
 function productCard(product) {
   const discount = discountPercent(product);
+  const displayPrice = product.variants?.length ? Math.min(...product.variants.map(variant => variant.price)) : product.price;
+  const displayOldPrice = product.variants?.length ? Math.max(...product.variants.map(variant => variant.price)) : product.oldPrice;
 
   return `
     <article class="product-card reveal">
@@ -245,8 +291,8 @@ function productCard(product) {
         </div>
 
         <div class="price-row">
-          <strong>${formatPrice(product.price)}</strong>
-          <span>${formatPrice(product.oldPrice)}</span>
+          <strong>${product.variants?.length ? "From " : ""}${formatPrice(displayPrice)}</strong>
+          <span>${formatPrice(displayOldPrice)}</span>
         </div>
 
       </div>
@@ -255,7 +301,7 @@ function productCard(product) {
 }
 
 function bundleCard(bundle) {
-  const items = bundle.itemIds.map(findProduct).filter(Boolean);
+  const items = bundle.items || (bundle.itemIds || []).map(findProduct).filter(Boolean);
   const oldPrice = bundlePrice(bundle);
   const discount = oldPrice > bundle.price ? Math.round((1 - bundle.price / oldPrice) * 100) : 0;
 
@@ -268,20 +314,26 @@ function bundleCard(bundle) {
       </div>
 
       <div class="product-content">
-        <p class="product-category">Bundle Deal</p>
+        <p class="product-category">Value Pack</p>
         <h3>${bundle.name}</h3>
         <div class="rating-row">
           ${renderStars(bundle.rating, bundle.reviewCount)}
         </div>
-        <p class="bundle-includes">${items.map(item => item.name).join(" + ")}</p>
-
-        <div class="price-row">
-          <strong>${formatPrice(bundle.price)}</strong>
-          <span>${formatPrice(oldPrice)}</span>
+        <div class="bundle-includes">
+          <strong>Includes:</strong>
+          <ul>
+            ${items.map(item => `<li><span>${item.name}</span><span>${formatBundlePrice(item.price)}</span></li>`).join("")}
+          </ul>
         </div>
 
+        <div class="price-row">
+          <strong>${formatBundlePrice(bundle.price)}</strong>
+          <span>${formatBundlePrice(oldPrice)}</span>
+        </div>
+        <p class="bundle-savings">You Save: ${formatBundlePrice(bundle.savings || oldPrice - bundle.price)}</p>
+
         <div class="product-actions">
-          <button class="btn btn-primary" onclick="addBundleToCart(${bundle.id})">Add Bundle to Cart</button>
+          <button class="btn btn-primary" onclick="addBundleToCart(${bundle.id})">Add Value Pack to Cart</button>
         </div>
       </div>
     </article>

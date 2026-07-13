@@ -15,18 +15,30 @@ function getProductIdFromUrl() {
 }
 
 function renderIngredientsMarkup(ingredients) {
-  const parts = (ingredients || "").split(",").map(part => part.trim()).filter(Boolean);
+  const cleaned = (ingredients || "").trim().replace(/\.$/, "");
+  const parts = cleaned.split(",").map(part => part.trim()).filter(Boolean);
+  const looksLikeList = parts.length > 1 && parts.every(part => part.length <= 30 && !part.includes("."));
 
-  if (parts.length <= 1) {
+  if (!looksLikeList) {
     return `<p>${ingredients}</p>`;
   }
 
   return `<ul class="ingredient-chips">${parts.map(part => `<li>${part}</li>`).join("")}</ul>`;
 }
 
+function renderQualityMarkup(quality) {
+  if (Array.isArray(quality)) {
+    return `<ul class="benefit-checklist">${quality.map(item => `<li>${item}</li>`).join("")}</ul>`;
+  }
+  return `<p>${quality}</p>`;
+}
+
 function renderProductDetail() {
   const product = findProduct(getProductIdFromUrl());
   const wrapper = document.querySelector("[data-product-detail]");
+  const variantOptions = product?.variants?.length
+    ? product.variants.map(variant => `<option value="${variant.id}" data-price="${variant.price}">${variant.name} - ${formatPrice(variant.price)}</option>`).join("")
+    : "";
 
   if (window.location.search.includes("id=")) {
     window.history.replaceState({}, "", "product-detail.html");
@@ -53,7 +65,7 @@ function renderProductDetail() {
     <section class="page-hero small">
       <div class="container">
         <p class="eyebrow">Product Detail</p>
-        <h1>${product.name}</h1>
+        <h1>${product.name}${product.trademark ? "&#8482;" : ""}</h1>
         <p>${product.description}</p>
       </div>
     </section>
@@ -66,16 +78,23 @@ function renderProductDetail() {
         </div>
 
         <div class="detail-content reveal">
-          <p class="product-category">${product.category}</p>
-          <h2>${product.name}</h2>
+          <p class="product-category">${product.category}${product.size ? ` &middot; ${product.size}` : ""}</p>
+          <h2>${product.name}${product.trademark ? "&#8482;" : ""}</h2>
           <div class="rating-row">${renderStars(product.rating, product.reviewCount)}</div>
 
           <div class="price-row detail-price">
-            <strong>${formatPrice(product.price)}</strong>
+            <strong data-detail-price>${formatPrice(product.price)}</strong>
             <span>${formatPrice(product.oldPrice)}</span>
           </div>
 
           <p class="lead-text">${product.description}</p>
+
+          ${product.variants?.length ? `
+            <div class="quantity-box">
+              <label for="variant">Size</label>
+              <select id="variant">${variantOptions}</select>
+            </div>
+          ` : ""}
 
           <div class="quantity-box">
             <label for="quantity">Quantity</label>
@@ -125,7 +144,7 @@ function renderProductDetail() {
 
           <div class="pd-section pd-section-quality reveal">
             <h3 class="pd-section-title">Our Quality</h3>
-            <p>${product.quality}</p>
+            ${renderQualityMarkup(product.quality)}
           </div>
         </div>
       </div>
@@ -157,7 +176,15 @@ function renderProductDetail() {
 
   document.querySelector("[data-add-detail]")?.addEventListener("click", () => {
     const quantity = Number(document.getElementById("quantity").value) || 1;
-    addToCart(product.id, quantity);
+    addProductToCart(product.id, quantity, document.getElementById("variant")?.value || null);
+  });
+
+  document.getElementById("variant")?.addEventListener("change", event => {
+    const variant = findProductVariant(product, event.target.value);
+    const priceElement = document.querySelector("[data-detail-price]");
+    if (variant && priceElement) {
+      priceElement.textContent = formatPrice(variant.price);
+    }
   });
 
   const relatedGrid = document.querySelector("[data-related-products]");

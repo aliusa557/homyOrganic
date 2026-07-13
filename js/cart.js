@@ -24,30 +24,32 @@ function renderCart() {
     return;
   }
 
-  cartContainer.innerHTML = cart.map(item => {
+  cartContainer.innerHTML = cart.map((item, index) => {
     const entity = findCartEntity(item);
     if (!entity) return "";
 
-    const label = item.type === "bundle" ? "Bundle Deal" : entity.category;
+    const label = item.type === "bundle" ? "Value Pack" : entity.category;
+    const price = cartItemPrice(item, entity);
+    const name = cartItemName(item, entity);
 
     return `
       <article class="cart-item">
-        <img src="${entity.image}" alt="${entity.name}">
+        <img src="${entity.image}" alt="${name}">
         <div>
-          <h3>${entity.name}</h3>
+          <h3>${name}</h3>
           <p>${label}</p>
-          <strong>${formatPrice(entity.price)}</strong>
+          <strong>${formatPrice(price)}</strong>
         </div>
 
         <div class="cart-controls">
-          <button onclick="changeCartQuantity(${entity.id}, -1)" aria-label="Decrease quantity">−</button>
+          <button onclick="changeCartQuantity(${index}, -1)" aria-label="Decrease quantity">-</button>
           <span>${item.quantity}</span>
-          <button onclick="changeCartQuantity(${entity.id}, 1)" aria-label="Increase quantity">+</button>
+          <button onclick="changeCartQuantity(${index}, 1)" aria-label="Increase quantity">+</button>
         </div>
 
         <div class="cart-item-total">
-          <strong>${formatPrice(entity.price * item.quantity)}</strong>
-          <button onclick="removeCartItem(${entity.id})">Remove</button>
+          <strong>${formatPrice(price * item.quantity)}</strong>
+          <button onclick="removeCartItem(${index})">Remove</button>
         </div>
       </article>
     `;
@@ -84,25 +86,26 @@ function renderCart() {
   `;
 }
 
-function changeCartQuantity(productId, amount) {
+function changeCartQuantity(index, amount) {
   const cart = getCart();
-  const item = cart.find(cartItem => Number(cartItem.id) === Number(productId));
+  const item = cart[index];
 
   if (!item) return;
 
   item.quantity += amount;
 
   if (item.quantity <= 0) {
-    removeFromCart(productId);
-  } else {
-    saveCart(cart);
+    cart.splice(index, 1);
   }
 
+  saveCart(cart);
   renderCart();
 }
 
-function removeCartItem(productId) {
-  removeFromCart(productId);
+function removeCartItem(index) {
+  const cart = getCart();
+  cart.splice(index, 1);
+  saveCart(cart);
   renderCart();
   showToast("Product removed from cart");
 }

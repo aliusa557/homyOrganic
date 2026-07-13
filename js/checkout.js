@@ -25,14 +25,16 @@ function renderCheckoutSummary() {
         ${cart.map(item => {
           const entity = findCartEntity(item);
           if (!entity) return "";
+          const name = item.type === "bundle" ? entity.name : cartItemName(item, entity);
+          const price = cartItemPrice(item, entity);
           return `
             <div class="mini-product">
-              <img src="${entity.image}" alt="${entity.name}">
+              <img src="${entity.image}" alt="${name}">
               <div>
-                <strong>${entity.name}</strong>
+                <strong>${name}</strong>
                 <span>Qty: ${item.quantity}</span>
               </div>
-              <b>${formatPrice(entity.price * item.quantity)}</b>
+              <b>${formatPrice(price * item.quantity)}</b>
             </div>
           `;
         }).join("")}
@@ -146,12 +148,13 @@ function placeOrderOnWhatsApp(event) {
     const entity = findCartEntity(item);
     if (!entity) return;
 
-    const label = item.type === "bundle" ? `${entity.name} (Bundle)` : entity.name;
+    const label = item.type === "bundle" ? `${entity.name} (Value Pack)` : cartItemName(item, entity);
+    const price = cartItemPrice(item, entity);
 
     message += `${index + 1}. ${encodeURIComponent(label)}%0A`;
     message += `Qty: ${item.quantity}%0A`;
-    message += `Price: ${formatPrice(entity.price)}%0A`;
-    message += `Subtotal: ${formatPrice(entity.price * item.quantity)}%0A%0A`;
+    message += `Price: ${formatPrice(price)}%0A`;
+    message += `Subtotal: ${formatPrice(price * item.quantity)}%0A%0A`;
   });
 
   message += `Subtotal: ${formatPrice(totals.subtotal)}%0A`;
