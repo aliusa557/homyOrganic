@@ -5,9 +5,9 @@
   --rose: #c89f7a;
   --deep-rose: #111111;
   --wood: #e6c39b;
-  --cream: #fdfbf8;
+  --cream: #ffffff;
   --page-bg: #ffffff;
-  --footer-bg: #faf6ef;
+  --footer-bg: #f7ead3;
   --brown: #15120f;
   --muted: #625b54;
   --gold: #b9853a;
@@ -689,6 +689,9 @@ button {
 }
 
 .product-card {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
   overflow: hidden;
   border-radius: 0;
   background: var(--white);
@@ -798,6 +801,9 @@ button {
 }
 
 .product-content {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
   padding: 15px 0 0;
 }
 
@@ -823,6 +829,43 @@ button {
   margin: 8px 0 0;
   color: var(--muted);
   font-size: 13px;
+}
+
+.bundle-includes strong {
+  display: block;
+  margin-bottom: 6px;
+  color: var(--dark);
+  font-weight: 500;
+}
+
+.bundle-includes ul {
+  display: grid;
+  gap: 5px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.bundle-includes li {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.bundle-includes li span:first-child {
+  min-width: 0;
+}
+
+.bundle-includes li span:last-child {
+  flex: 0 0 auto;
+  color: var(--dark);
+}
+
+.bundle-savings {
+  margin: -8px 0 16px;
+  color: var(--green);
+  font-size: 13px;
+  font-weight: 500;
 }
 
 .rating-row {
@@ -862,6 +905,10 @@ button {
   display: grid;
   grid-template-columns: 1fr auto;
   gap: 10px;
+}
+
+.bundle-card .product-actions {
+  margin-top: auto;
 }
 
 .product-actions .btn {
@@ -1348,12 +1395,17 @@ a[aria-disabled="true"] {
   margin: 24px 0;
 }
 
-.quantity-box input {
+.quantity-box input,
+.quantity-box select {
   width: 96px;
   min-height: 48px;
   border-radius: 16px;
   border: 1px solid rgba(21,18,15,.15);
   padding: 8px 12px;
+}
+
+.quantity-box select {
+  width: min(260px, 100%);
 }
 
 .detail-actions {
@@ -1481,8 +1533,8 @@ a[aria-disabled="true"] {
 }
 
 .bundle-grid {
-  grid-template-columns: repeat(2, 1fr);
-  max-width: 820px;
+  grid-template-columns: repeat(4, 1fr);
+  max-width: none;
   margin-inline: auto;
 }
 
