@@ -110,4 +110,4 @@ function removeCartItem(index) {
   showToast("Product removed from cart");
 }
 
-document.addEventListener("DOMContentLoaded", renderCart);
+whenReady(renderCart);

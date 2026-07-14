@@ -36,9 +36,12 @@ function renderQualityMarkup(quality) {
 function renderProductDetail() {
   const product = findProduct(getProductIdFromUrl());
   const wrapper = document.querySelector("[data-product-detail]");
-  const variantOptions = product?.variants?.length
+  const hasVariants = !!product?.variants?.length;
+  const variantOptions = hasVariants
     ? product.variants.map(variant => `<option value="${variant.id}" data-price="${variant.price}">${variant.name} - ${formatPrice(variant.price)}</option>`).join("")
     : "";
+  const initialVariant = hasVariants ? findProductVariant(product, null) : null;
+  const displayPrice = initialVariant ? initialVariant.price : product?.price;
 
   if (window.location.search.includes("id=")) {
     window.history.replaceState({}, "", "product-detail.html");
@@ -83,8 +86,8 @@ function renderProductDetail() {
           <div class="rating-row">${renderStars(product.rating, product.reviewCount)}</div>
 
           <div class="price-row detail-price">
-            <strong data-detail-price>${formatPrice(product.price)}</strong>
-            <span>${formatPrice(product.oldPrice)}</span>
+            <strong data-detail-price>${formatPrice(displayPrice)}</strong>
+            ${!hasVariants && product.oldPrice > product.price ? `<span>${formatPrice(product.oldPrice)}</span>` : ""}
           </div>
 
           <p class="lead-text">${product.description}</p>
@@ -200,4 +203,4 @@ function renderProductDetail() {
   initRevealAnimations();
 }
 
-document.addEventListener("DOMContentLoaded", renderProductDetail);
+whenReady(renderProductDetail);

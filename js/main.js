@@ -17,6 +17,25 @@ const STORE_CONFIG = {
 
 const CART_KEY = "blush_roots_cart";
 
+let storeDataReady = false;
+document.addEventListener("store:ready", () => {
+  storeDataReady = true;
+  updateCartCount();
+});
+
+function whenReady(callback) {
+  const run = () => {
+    if (storeDataReady) callback();
+    else document.addEventListener("store:ready", callback, { once: true });
+  };
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", run);
+  } else {
+    run();
+  }
+}
+
 function getCart() {
   try {
     const cart = JSON.parse(localStorage.getItem(CART_KEY)) || [];
@@ -292,7 +311,7 @@ function productCard(product) {
 
         <div class="price-row">
           <strong>${product.variants?.length ? "From " : ""}${formatPrice(displayPrice)}</strong>
-          <span>${formatPrice(displayOldPrice)}</span>
+          ${displayOldPrice > displayPrice ? `<span>${formatPrice(displayOldPrice)}</span>` : ""}
         </div>
 
       </div>

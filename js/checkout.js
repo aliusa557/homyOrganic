@@ -102,6 +102,42 @@ function getInputValue(id) {
   return document.getElementById(id)?.value.trim() || "";
 }
 
+async function saveOrderToSupabase(orderCode, customer, cart, totals) {
+  const { error: orderError } = await supabaseClient.from("orders").insert({
+    order_code: orderCode,
+    customer_name: customer.name,
+    phone: customer.phone,
+    city: customer.city,
+    address: customer.address,
+    note: customer.note || null,
+    payment_method: customer.paymentMethod,
+    subtotal: totals.subtotal,
+    delivery: totals.delivery,
+    total: totals.total
+  });
+
+  if (orderError) throw orderError;
+
+  const orderItems = cart.map(item => {
+    const entity = findCartEntity(item);
+    const variant = item.type === "bundle" ? null : findProductVariant(entity, item.variantId);
+
+    return {
+      order_code: orderCode,
+      item_type: item.type,
+      item_id: item.id,
+      name: entity.name,
+      variant_name: variant?.name || null,
+      price: cartItemPrice(item, entity),
+      quantity: item.quantity,
+      image: entity.image
+    };
+  });
+
+  const { error: itemsError } = await supabaseClient.from("order_items").insert(orderItems);
+  if (itemsError) throw itemsError;
+}
+
 function placeOrderOnWhatsApp(event) {
   event.preventDefault();
 
@@ -128,6 +164,10 @@ function placeOrderOnWhatsApp(event) {
 
   const totals = calculateCartTotals(cart);
   const orderId = `BR-${Date.now().toString().slice(-6)}`;
+
+  saveOrderToSupabase(orderId, customer, cart, totals).catch(error => {
+    console.error("Failed to save order to Supabase:", error);
+  });
 
   let message = `New Order - ${STORE_CONFIG.brandName}%0A`;
   message += `Order ID: ${orderId}%0A%0A`;
@@ -171,7 +211,7 @@ function placeOrderOnWhatsApp(event) {
   showToast("WhatsApp opened with your order details");
 }
 
-document.addEventListener("DOMContentLoaded", () => {
+whenReady(() => {
   renderCheckoutSummary();
   initPaymentNotes();
 

@@ -55,7 +55,7 @@ function applyFilters() {
   renderProducts();
 }
 
-document.addEventListener("DOMContentLoaded", () => {
+whenReady(() => {
   const categorySelect = document.querySelector("[data-category]");
   const categories = ["All", ...new Set(PRODUCTS.map(product => product.category))];
 
