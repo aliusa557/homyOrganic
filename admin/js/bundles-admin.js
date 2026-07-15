@@ -1,5 +1,6 @@
 let allBundles = [];
 let editingBundleImageUrl = "";
+let bundleFormDirty;
 
 function bundleRowHtml(bundle) {
   const statusClass = bundle.is_active ? "badge-active" : "badge-inactive";
@@ -106,19 +107,22 @@ function openBundleModal(bundle = null) {
   }
 
   document.querySelector("[data-bundle-modal]").classList.add("show");
+  bundleFormDirty?.reset();
 }
 
 function closeBundleModal() {
   document.querySelector("[data-bundle-modal]").classList.remove("show");
 }
 
-async function uploadBundleImage(file) {
-  const path = `bundles/${Date.now()}-${slugify(file.name.replace(/\.[^.]+$/, ""))}${file.name.match(/\.[^.]+$/)?.[0] || ""}`;
-  const { error } = await supabaseClient.storage.from("product-images").upload(path, file);
-  if (error) throw error;
-
-  const { data } = supabaseClient.storage.from("product-images").getPublicUrl(path);
-  return data.publicUrl;
+async function attemptCloseBundleModal() {
+  if (bundleFormDirty?.isDirty()) {
+    const confirmed = await showAdminConfirm(
+      "You have unsaved changes. Are you sure you want to close without saving?",
+      { title: "Unsaved Changes", confirmLabel: "Discard Changes", cancelLabel: "Keep Editing" }
+    );
+    if (!confirmed) return;
+  }
+  closeBundleModal();
 }
 
 async function handleBundleSubmit(event) {
@@ -133,7 +137,7 @@ async function handleBundleSubmit(event) {
     let imageUrl = form.querySelector('[data-field="image"]').value.trim() || editingBundleImageUrl;
 
     if (imageFile) {
-      imageUrl = await uploadBundleImage(imageFile);
+      imageUrl = await uploadAdminImage(imageFile, "bundles");
     }
 
     const items = Array.from(document.querySelectorAll(".item-row")).map(row => {
@@ -168,6 +172,7 @@ async function handleBundleSubmit(event) {
     if (error) throw error;
 
     showAdminToast(id ? "Value pack updated" : "Value pack added");
+    bundleFormDirty?.reset();
     closeBundleModal();
     await loadBundles();
   } catch (error) {
@@ -203,7 +208,8 @@ async function handleBundleTableClick(event) {
   }
 
   if (deleteId) {
-    if (!confirm("Delete this value pack? This cannot be undone.")) return;
+    const confirmed = await showAdminConfirm("Delete this value pack? This cannot be undone.", { title: "Delete Value Pack?" });
+    if (!confirmed) return;
     const { error } = await supabaseClient.from("bundles").delete().eq("id", deleteId);
     if (error) {
       showAdminToast("Failed to delete value pack", true);
@@ -220,16 +226,19 @@ async function initBundlesPage() {
 
   await loadBundles();
 
+  bundleFormDirty = trackFormDirty(document.querySelector("[data-bundle-form]"));
+
   document.querySelector("[data-add-bundle]").addEventListener("click", () => openBundleModal());
-  document.querySelectorAll("[data-close-modal]").forEach(btn => btn.addEventListener("click", closeBundleModal));
+  document.querySelectorAll("[data-close-modal]").forEach(btn => btn.addEventListener("click", attemptCloseBundleModal));
   document.querySelector("[data-bundle-modal]").addEventListener("click", event => {
-    if (event.target === event.currentTarget) closeBundleModal();
+    if (event.target === event.currentTarget) attemptCloseBundleModal();
   });
   document.querySelector("[data-add-item]").addEventListener("click", () => addItemRow());
   document.querySelector("[data-bundle-form]").addEventListener("submit", handleBundleSubmit);
   document.querySelector("[data-bundles-table]").addEventListener("click", handleBundleTableClick);
 
   document.querySelector('[data-field="imageFile"]').addEventListener("change", event => {
+    if (!validateWebpSelection(event.target)) return;
     const file = event.target.files[0];
     if (file) document.querySelector("[data-image-preview]").src = URL.createObjectURL(file);
   });

@@ -138,36 +138,10 @@ async function saveOrderToSupabase(orderCode, customer, cart, totals) {
   if (itemsError) throw itemsError;
 }
 
-function placeOrderOnWhatsApp(event) {
-  event.preventDefault();
+let pendingOrder = null;
 
-  const cart = getCart();
-
-  if (cart.length === 0) {
-    showToast("Your cart is empty");
-    return;
-  }
-
-  const customer = {
-    name: getInputValue("name"),
-    phone: getInputValue("phone"),
-    city: getInputValue("city"),
-    address: getInputValue("address"),
-    note: getInputValue("note"),
-    paymentMethod: document.getElementById("paymentMethod").value
-  };
-
-  if (!customer.name || !customer.phone || !customer.city || !customer.address) {
-    showToast("Please fill all required checkout details");
-    return;
-  }
-
-  const totals = calculateCartTotals(cart);
-  const orderId = `BR-${Date.now().toString().slice(-6)}`;
-
-  saveOrderToSupabase(orderId, customer, cart, totals).catch(error => {
-    console.error("Failed to save order to Supabase:", error);
-  });
+function buildWhatsAppMessage(pending) {
+  const { orderId, customer, cart, totals } = pending;
 
   let message = `New Order - ${STORE_CONFIG.brandName}%0A`;
   message += `Order ID: ${orderId}%0A%0A`;
@@ -205,10 +179,75 @@ function placeOrderOnWhatsApp(event) {
     message += `Payment screenshot will be shared on WhatsApp.%0A`;
   }
 
-  const whatsappUrl = `https://wa.me/${STORE_CONFIG.whatsappNumber}?text=${message}`;
-  window.open(whatsappUrl, "_blank");
+  return message;
+}
 
-  showToast("WhatsApp opened with your order details");
+function showOrderConfirmModal() {
+  document.querySelector("[data-order-confirm-modal]")?.classList.add("show");
+}
+
+function hideOrderConfirmModal() {
+  document.querySelector("[data-order-confirm-modal]")?.classList.remove("show");
+}
+
+function renderOrderPlacedCard(orderCode, phone) {
+  const summary = document.querySelector("[data-checkout-summary]");
+  if (!summary) return;
+
+  const trackUrl = `track-order.html?code=${encodeURIComponent(orderCode)}&phone=${encodeURIComponent(phone)}`;
+
+  summary.innerHTML = `
+    <div class="summary-card order-placed-card">
+      <h3>Order Placed!</h3>
+      <p>Your order has been received. Save your Order ID to check its status anytime.</p>
+      <span class="order-code">${orderCode}</span>
+      <a href="${trackUrl}" class="btn btn-primary full">Track Your Order</a>
+      <a href="shop.html" class="btn btn-soft full">Continue Shopping</a>
+    </div>
+  `;
+}
+
+function finishOrder(orderCode, phone) {
+  saveCart([]);
+  pendingOrder = null;
+  hideOrderConfirmModal();
+  renderOrderPlacedCard(orderCode, phone);
+  document.querySelector("[data-checkout-form]")?.reset();
+}
+
+function handleCheckoutSubmit(event) {
+  event.preventDefault();
+
+  const cart = getCart();
+
+  if (cart.length === 0) {
+    showToast("Your cart is empty");
+    return;
+  }
+
+  const customer = {
+    name: getInputValue("name"),
+    phone: getInputValue("phone"),
+    city: getInputValue("city"),
+    address: getInputValue("address"),
+    note: getInputValue("note"),
+    paymentMethod: document.getElementById("paymentMethod").value
+  };
+
+  if (!customer.name || !customer.phone || !customer.city || !customer.address) {
+    showToast("Please fill all required checkout details");
+    return;
+  }
+
+  const totals = calculateCartTotals(cart);
+  const orderId = `BR-${Date.now().toString().slice(-6)}`;
+
+  saveOrderToSupabase(orderId, customer, cart, totals).catch(error => {
+    console.error("Failed to save order to Supabase:", error);
+  });
+
+  pendingOrder = { orderId, customer, cart, totals };
+  showOrderConfirmModal();
 }
 
 whenReady(() => {
@@ -216,5 +255,21 @@ whenReady(() => {
   initPaymentNotes();
 
   const form = document.querySelector("[data-checkout-form]");
-  form?.addEventListener("submit", placeOrderOnWhatsApp);
+  form?.addEventListener("submit", handleCheckoutSubmit);
+
+  document.querySelector("[data-order-confirm-yes]")?.addEventListener("click", () => {
+    const order = pendingOrder;
+    if (order) {
+      const whatsappUrl = `https://wa.me/${STORE_CONFIG.whatsappNumber}?text=${buildWhatsAppMessage(order)}`;
+      window.open(whatsappUrl, "_blank");
+    }
+    finishOrder(order?.orderId, order?.customer?.phone);
+    showToast("Order placed - WhatsApp opened with your order details");
+  });
+
+  document.querySelector("[data-order-confirm-no]")?.addEventListener("click", () => {
+    const order = pendingOrder;
+    finishOrder(order?.orderId, order?.customer?.phone);
+    showToast("Your order has been placed successfully");
+  });
 });

@@ -35,6 +35,14 @@
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M6 3h12v18l-3-2-3 2-3-2-3 2V3Z"></path><path d="M9 8h6M9 12h6"></path></svg>
           Orders
         </a>
+        <a href="offers.html">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20.59 13.41 11 3.83A2 2 0 0 0 9.59 3.24L4 3a1 1 0 0 0-1 1l.24 5.59a2 2 0 0 0 .59 1.41l9.58 9.59a2 2 0 0 0 2.83 0l4.35-4.35a2 2 0 0 0 0-2.83Z"></path><circle cx="7.5" cy="7.5" r="1.5"></circle></svg>
+          Offers
+        </a>
+        <a href="settings.html">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09a1.65 1.65 0 0 0-1-1.51 1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09a1.65 1.65 0 0 0 1.51-1 1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1Z"></path></svg>
+          Settings
+        </a>
       </nav>
 
       <div class="sidebar-footer">
@@ -43,8 +51,12 @@
       </div>
     </aside>
 
+    <div class="sidebar-backdrop" data-sidebar-backdrop></div>
     <div class="main-area">
       <header class="topbar">
+        <button class="admin-menu-toggle" data-admin-menu-toggle aria-label="Open menu">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 6h18"></path><path d="M3 12h18"></path><path d="M3 18h18"></path></svg>
+        </button>
         <div>
           <h1>Products</h1>
           <p>Add, edit or remove products shown on the shop.</p>
@@ -95,10 +107,9 @@
             <label>Product Image</label>
             <div class="image-upload-row">
               <img class="image-preview" data-image-preview src="" alt="">
-              <input type="file" accept="image/*" data-field="imageFile">
+              <input type="file" accept=".webp,image/webp" data-field="imageFile">
             </div>
-            <div class="hint">Or paste an image URL below instead of uploading.</div>
-            <input type="text" data-field="image" placeholder="assets/products-optimized/example.webp">
+            <input type="hidden" data-field="image">
           </div>
 
           <div class="field">
@@ -144,11 +155,6 @@
           <div class="field">
             <label>Review Count</label>
             <input type="number" step="1" min="0" data-field="reviewCount">
-          </div>
-
-          <div class="field span-2 toggle-row">
-            <input type="checkbox" id="trademark" data-field="trademark">
-            <label for="trademark" style="margin:0;">Show &trade; symbol next to name</label>
           </div>
 
           <div class="field span-2">

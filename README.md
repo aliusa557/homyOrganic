@@ -7,10 +7,11 @@ This is a static HTML/CSS/JavaScript e-commerce website for organic skin-care an
 - MANA-inspired ivory, charcoal, botanical green, champagne-gold, soft rose, aqua and wooden organic theme
 - Responsive modern design
 - Product listing with search, category filter and sorting
-- Product detail page
+- Product detail page and a matching value pack detail page
 - Add to cart using localStorage
 - Cart quantity update/remove
-- Checkout form that opens WhatsApp **and** saves the order to Supabase
+- Checkout form that saves the order to Supabase and lets the customer choose whether to also confirm via WhatsApp
+- Order tracking page (`track-order.html`) where customers check their order status with their Order ID + phone number
 - Cash on Delivery, manual Easypaisa and manual JazzCash options
 - Charming admin dashboard (`/admin`) to manage products, value packs, images and incoming orders
 - No server/build step required - Supabase is used purely from client-side JS
@@ -24,6 +25,8 @@ Once configured, log in at `admin/login.html` to:
 - Add/edit/delete products and value packs, including image uploads
 - Toggle products active/inactive without deleting them
 - View incoming orders and update their status (new / confirmed / shipped / delivered / cancelled)
+- Change the header/footer logo, hero heading and slider images, footer text and contact/social links, and the site's full color theme (`admin/settings.html`)
+- Run promotional offers that appear as a rotating, transitioning banner above the header, each linking to a product, value pack, or custom link (`admin/offers.html`)
 
 ## Important edits before launch
 

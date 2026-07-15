@@ -12,6 +12,16 @@ async function requireAdminSession() {
   return session;
 }
 
+function openMobileSidebar() {
+  document.querySelector(".sidebar")?.classList.add("open");
+  document.querySelector("[data-sidebar-backdrop]")?.classList.add("show");
+}
+
+function closeMobileSidebar() {
+  document.querySelector(".sidebar")?.classList.remove("open");
+  document.querySelector("[data-sidebar-backdrop]")?.classList.remove("show");
+}
+
 document.addEventListener("DOMContentLoaded", () => {
   requireAdminSession();
 
@@ -19,4 +29,7 @@ document.addEventListener("DOMContentLoaded", () => {
     await supabaseClient.auth.signOut();
     window.location.href = "login.html";
   });
+
+  document.querySelector("[data-admin-menu-toggle]")?.addEventListener("click", openMobileSidebar);
+  document.querySelector("[data-sidebar-backdrop]")?.addEventListener("click", closeMobileSidebar);
 });

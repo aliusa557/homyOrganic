@@ -1,5 +1,6 @@
 let allProducts = [];
 let editingImageUrl = "";
+let productFormDirty;
 
 function productRowHtml(product) {
   const statusClass = product.is_active ? "badge-active" : "badge-inactive";
@@ -107,7 +108,6 @@ function openProductModal(product = null) {
     form.querySelector('[data-field="shelfLife"]').value = product.shelf_life || "";
     form.querySelector('[data-field="rating"]').value = product.rating ?? "";
     form.querySelector('[data-field="reviewCount"]').value = product.review_count ?? "";
-    form.querySelector('[data-field="trademark"]').checked = !!product.trademark;
     form.querySelector('[data-field="description"]').value = product.description || "";
     form.querySelector('[data-field="keyBenefits"]').value = (product.key_benefits || []).join("\n");
     form.querySelector('[data-field="ingredients"]').value = product.ingredients || "";
@@ -125,19 +125,22 @@ function openProductModal(product = null) {
   }
 
   document.querySelector("[data-product-modal]").classList.add("show");
+  productFormDirty?.reset();
 }
 
 function closeProductModal() {
   document.querySelector("[data-product-modal]").classList.remove("show");
 }
 
-async function uploadProductImage(file) {
-  const path = `products/${Date.now()}-${slugify(file.name.replace(/\.[^.]+$/, ""))}${file.name.match(/\.[^.]+$/)?.[0] || ""}`;
-  const { error } = await supabaseClient.storage.from("product-images").upload(path, file);
-  if (error) throw error;
-
-  const { data } = supabaseClient.storage.from("product-images").getPublicUrl(path);
-  return data.publicUrl;
+async function attemptCloseProductModal() {
+  if (productFormDirty?.isDirty()) {
+    const confirmed = await showAdminConfirm(
+      "You have unsaved changes. Are you sure you want to close without saving?",
+      { title: "Unsaved Changes", confirmLabel: "Discard Changes", cancelLabel: "Keep Editing" }
+    );
+    if (!confirmed) return;
+  }
+  closeProductModal();
 }
 
 async function handleProductSubmit(event) {
@@ -152,7 +155,7 @@ async function handleProductSubmit(event) {
     let imageUrl = form.querySelector('[data-field="image"]').value.trim() || editingImageUrl;
 
     if (imageFile) {
-      imageUrl = await uploadProductImage(imageFile);
+      imageUrl = await uploadAdminImage(imageFile, "products");
     }
 
     const variants = Array.from(document.querySelectorAll(".variant-row")).map(row => {
@@ -176,7 +179,6 @@ async function handleProductSubmit(event) {
       shelf_life: form.querySelector('[data-field="shelfLife"]').value.trim() || null,
       rating: form.querySelector('[data-field="rating"]').value ? Number(form.querySelector('[data-field="rating"]').value) : 5,
       review_count: form.querySelector('[data-field="reviewCount"]').value ? Number(form.querySelector('[data-field="reviewCount"]').value) : 0,
-      trademark: form.querySelector('[data-field="trademark"]').checked,
       description: form.querySelector('[data-field="description"]').value.trim(),
       key_benefits: form.querySelector('[data-field="keyBenefits"]').value.split("\n").map(line => line.trim()).filter(Boolean),
       ingredients: form.querySelector('[data-field="ingredients"]').value.trim() || null,
@@ -195,6 +197,7 @@ async function handleProductSubmit(event) {
     if (error) throw error;
 
     showAdminToast(id ? "Product updated" : "Product added");
+    productFormDirty?.reset();
     closeProductModal();
     await loadProducts();
   } catch (error) {
@@ -230,7 +233,8 @@ async function handleTableClick(event) {
   }
 
   if (deleteId) {
-    if (!confirm("Delete this product? This cannot be undone.")) return;
+    const confirmed = await showAdminConfirm("Delete this product? This cannot be undone.", { title: "Delete Product?" });
+    if (!confirmed) return;
     const { error } = await supabaseClient.from("products").delete().eq("id", deleteId);
     if (error) {
       showAdminToast("Failed to delete product", true);
@@ -247,10 +251,12 @@ async function initProductsPage() {
 
   await loadProducts();
 
+  productFormDirty = trackFormDirty(document.querySelector("[data-product-form]"));
+
   document.querySelector("[data-add-product]").addEventListener("click", () => openProductModal());
-  document.querySelectorAll("[data-close-modal]").forEach(btn => btn.addEventListener("click", closeProductModal));
+  document.querySelectorAll("[data-close-modal]").forEach(btn => btn.addEventListener("click", attemptCloseProductModal));
   document.querySelector("[data-product-modal]").addEventListener("click", event => {
-    if (event.target === event.currentTarget) closeProductModal();
+    if (event.target === event.currentTarget) attemptCloseProductModal();
   });
   document.querySelector("[data-product-search]").addEventListener("input", filterProducts);
   document.querySelector("[data-add-variant]").addEventListener("click", () => addVariantRow());
@@ -258,6 +264,7 @@ async function initProductsPage() {
   document.querySelector("[data-products-table]").addEventListener("click", handleTableClick);
 
   document.querySelector('[data-field="imageFile"]').addEventListener("change", event => {
+    if (!validateWebpSelection(event.target)) return;
     const file = event.target.files[0];
     if (file) document.querySelector("[data-image-preview]").src = URL.createObjectURL(file);
   });

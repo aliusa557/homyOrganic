@@ -68,7 +68,7 @@ function renderProductDetail() {
     <section class="page-hero small">
       <div class="container">
         <p class="eyebrow">Product Detail</p>
-        <h1>${product.name}${product.trademark ? "&#8482;" : ""}</h1>
+        <h1>${product.name}</h1>
         <p>${product.description}</p>
       </div>
     </section>
@@ -82,7 +82,7 @@ function renderProductDetail() {
 
         <div class="detail-content reveal">
           <p class="product-category">${product.category}${product.size ? ` &middot; ${product.size}` : ""}</p>
-          <h2>${product.name}${product.trademark ? "&#8482;" : ""}</h2>
+          <h2>${product.name}</h2>
           <div class="rating-row">${renderStars(product.rating, product.reviewCount)}</div>
 
           <div class="price-row detail-price">

@@ -100,5 +100,3 @@ function initHeroSlider() {
 
   startAutoplay();
 }
-
-document.addEventListener("DOMContentLoaded", initHeroSlider);

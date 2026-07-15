@@ -58,8 +58,6 @@ async function loadStoreData() {
   } catch (error) {
     console.error("Failed to load store data from Supabase:", error);
   }
-
-  document.dispatchEvent(new CustomEvent("store:ready"));
 }
 
-loadStoreData();
+window.storeReadyPromise = loadStoreData();

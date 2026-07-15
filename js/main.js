@@ -1,6 +1,9 @@
 const STORE_CONFIG = {
   brandName: "Homy Organic",
   logoPath: "assets/brand/homy-organic-logo.webp",
+  logoFooterPath: "assets/brand/homy-organic-logo-footer.webp",
+  footerTagline: "Where Beauty Meets Wellness",
+  footerAbout: "All our products are carefully hand-blended in small batches to ensure maximum freshness, quality, and effectiveness.",
   websiteUrl: "#",
   whatsappNumber: "923023735860",
   supportEmail: "support@homyorganic.pk",
@@ -15,18 +18,34 @@ const STORE_CONFIG = {
   ]
 };
 
-const CART_KEY = "blush_roots_cart";
+function applySiteSettingsToConfig() {
+  const settings = window.SITE_SETTINGS;
+  if (!settings) return;
 
-let storeDataReady = false;
-document.addEventListener("store:ready", () => {
-  storeDataReady = true;
-  updateCartCount();
-});
+  STORE_CONFIG.brandName = settings.brand_name || STORE_CONFIG.brandName;
+  STORE_CONFIG.logoPath = settings.logo_url || STORE_CONFIG.logoPath;
+  STORE_CONFIG.logoFooterPath = settings.logo_footer_url || STORE_CONFIG.logoFooterPath;
+  STORE_CONFIG.footerTagline = settings.footer_tagline || STORE_CONFIG.footerTagline;
+  STORE_CONFIG.footerAbout = settings.footer_about || STORE_CONFIG.footerAbout;
+  STORE_CONFIG.whatsappNumber = settings.whatsapp_number || STORE_CONFIG.whatsappNumber;
+  STORE_CONFIG.supportEmail = settings.support_email || STORE_CONFIG.supportEmail;
+  STORE_CONFIG.easypaisaNumber = settings.easypaisa_number || STORE_CONFIG.easypaisaNumber;
+  STORE_CONFIG.jazzcashNumber = settings.jazzcash_number || STORE_CONFIG.jazzcashNumber;
+
+  const socialLinks = [
+    settings.social_instagram && { label: "Instagram", url: settings.social_instagram },
+    settings.social_facebook && { label: "Facebook", url: settings.social_facebook },
+    settings.social_tiktok && { label: "TikTok", url: settings.social_tiktok }
+  ].filter(Boolean);
+
+  if (socialLinks.length) STORE_CONFIG.socialLinks = socialLinks;
+}
+
+const CART_KEY = "blush_roots_cart";
 
 function whenReady(callback) {
   const run = () => {
-    if (storeDataReady) callback();
-    else document.addEventListener("store:ready", callback, { once: true });
+    Promise.all([window.storeReadyPromise, window.settingsReadyPromise]).then(callback);
   };
 
   if (document.readyState === "loading") {
@@ -34,6 +53,10 @@ function whenReady(callback) {
   } else {
     run();
   }
+}
+
+if (window.storeReadyPromise) {
+  window.storeReadyPromise.then(() => updateCartCount());
 }
 
 function getCart() {
@@ -146,7 +169,7 @@ function addProductToCart(productId, quantity = 1, variantId = null) {
   showToast(`${selectedVariant ? `${product.name} - ${selectedVariant.name}` : product.name} added to cart`);
 }
 
-function addBundleToCart(bundleId) {
+function addBundleToCart(bundleId, quantity = 1) {
   const bundle = findBundle(bundleId);
   if (!bundle) return;
 
@@ -154,9 +177,9 @@ function addBundleToCart(bundleId) {
   const existing = cart.find(item => item.type === "bundle" && Number(item.id) === Number(bundleId));
 
   if (existing) {
-    existing.quantity += 1;
+    existing.quantity += quantity;
   } else {
-    cart.push({ type: "bundle", id: Number(bundleId), quantity: 1 });
+    cart.push({ type: "bundle", id: Number(bundleId), quantity });
   }
 
   saveCart(cart);
@@ -247,6 +270,21 @@ function initProductLinks() {
   });
 }
 
+function setSelectedBundleId(bundleId) {
+  sessionStorage.setItem("blush_roots_selected_bundle", String(bundleId));
+}
+
+function initBundleLinks() {
+  document.addEventListener("click", event => {
+    const link = event.target.closest("a[data-bundle-id]");
+    if (!link) return;
+
+    event.preventDefault();
+    setSelectedBundleId(link.getAttribute("data-bundle-id"));
+    window.location.assign("bundle-detail.html");
+  });
+}
+
 function discountPercent(product) {
   if (!product.oldPrice || product.oldPrice <= product.price) return 0;
   return Math.round((1 - product.price / product.oldPrice) * 100);
@@ -329,12 +367,14 @@ function bundleCard(bundle) {
       <div class="product-image-wrap">
         <span class="product-tag">${bundle.tag}</span>
         ${discount > 0 ? `<span class="discount-badge">-${discount}%</span>` : ""}
-        <img src="${bundle.image}" alt="${bundle.name}" loading="lazy" decoding="async">
+        <a href="bundle-detail.html" data-bundle-id="${bundle.id}" aria-label="View ${bundle.name}">
+          <img src="${bundle.image}" alt="${bundle.name}" loading="lazy" decoding="async">
+        </a>
       </div>
 
       <div class="product-content">
         <p class="product-category">Value Pack</p>
-        <h3>${bundle.name}</h3>
+        <h3><a href="bundle-detail.html" data-bundle-id="${bundle.id}">${bundle.name}</a></h3>
         <div class="rating-row">
           ${renderStars(bundle.rating, bundle.reviewCount)}
         </div>
@@ -466,6 +506,19 @@ function initBranding() {
     image.alt = `${STORE_CONFIG.brandName} logo`;
   });
 
+  document.querySelectorAll("[data-brand-logo-footer]").forEach(image => {
+    image.src = STORE_CONFIG.logoFooterPath;
+    image.alt = `${STORE_CONFIG.brandName} logo`;
+  });
+
+  document.querySelectorAll("[data-footer-tagline]").forEach(element => {
+    element.textContent = STORE_CONFIG.footerTagline;
+  });
+
+  document.querySelectorAll("[data-footer-about]").forEach(element => {
+    element.textContent = STORE_CONFIG.footerAbout;
+  });
+
   document.querySelectorAll("[data-current-year]").forEach(element => {
     element.textContent = new Date().getFullYear();
   });
@@ -508,4 +561,15 @@ document.addEventListener("DOMContentLoaded", () => {
   initNewsletter();
   initWhatsAppFloatingButton();
   initProductLinks();
+  initBundleLinks();
 });
+
+if (window.settingsReadyPromise) {
+  window.settingsReadyPromise.then(() => {
+    applySiteSettingsToConfig();
+    initBranding();
+    initSocialLinks();
+    initSupportEmail();
+    initWhatsAppFloatingButton();
+  });
+}
