@@ -104,12 +104,18 @@
 
         <div class="form-grid">
           <div class="field span-2">
-            <label>Product Image</label>
+            <label>Product Image (cover)</label>
             <div class="image-upload-row">
               <img class="image-preview" data-image-preview src="" alt="">
               <input type="file" accept=".webp,image/webp" data-field="imageFile">
             </div>
             <input type="hidden" data-field="image">
+          </div>
+
+          <div class="field span-2">
+            <label>Gallery Images (optional — shown on the product detail page)</label>
+            <div data-gallery-rows></div>
+            <button type="button" class="btn btn-soft small" data-add-gallery-image>+ Add Image</button>
           </div>
 
           <div class="field">

@@ -7,7 +7,7 @@ This is a static HTML/CSS/JavaScript e-commerce website for organic skin-care an
 - MANA-inspired ivory, charcoal, botanical green, champagne-gold, soft rose, aqua and wooden organic theme
 - Responsive modern design
 - Product listing with search, category filter and sorting
-- Product detail page and a matching value pack detail page
+- Product detail page with a multi-image gallery (click thumbnails to switch photos) and a matching value pack detail page
 - Add to cart using localStorage
 - Cart quantity update/remove
 - Checkout form that saves the order to Supabase and lets the customer choose whether to also confirm via WhatsApp

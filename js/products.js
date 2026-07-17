@@ -15,6 +15,7 @@ function mapProductRow(row) {
     rating: Number(row.rating),
     reviewCount: row.review_count,
     image: row.image,
+    images: row.images || [],
     description: row.description,
     keyBenefits: row.key_benefits || [],
     ingredients: row.ingredients,

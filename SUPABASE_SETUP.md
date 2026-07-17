@@ -38,6 +38,12 @@ This connects your site to a free Supabase backend so you can manage products, v
 2. Open [supabase/offers.sql](supabase/offers.sql), copy its contents, paste, and click **Run**.
 3. This creates the `offers` table used by `admin/offers.html` to run the rotating promo banner above the header. With no active offers, the banner just shows the default "Free Shipping..." text — nothing changes until you add one.
 
+## 3e. Enable multiple product images
+
+1. Open a new query in the SQL Editor.
+2. Open [supabase/product_gallery.sql](supabase/product_gallery.sql), copy its contents, paste, and click **Run**.
+3. This adds an `images` column to `products` so you can add extra gallery photos per product from `admin/products.html` — customers can then click through them on the product detail page.
+
 ## 4. Create your admin login
 
 1. Go to **Authentication → Users** (left sidebar).
@@ -69,6 +75,7 @@ This is the only account that can log into `/admin` and make changes — Row Lev
 5. On `track-order.html`, enter the Order ID and phone number from the test order you just placed and confirm it shows the correct status.
 6. Click a value pack on the homepage — it should open `bundle-detail.html` with the right details.
 7. In `admin/offers.html`, add an offer linked to a product and activate it — the top bar on the site should now show it instead of the default text.
+8. Add a couple of gallery images to a product in `admin/products.html`, then open that product's detail page and confirm the thumbnails appear and switch the main image on click.
 
 ## Notes
 

@@ -81,11 +81,92 @@ function addVariantRow(name = "", price = "") {
   container.appendChild(row);
 }
 
+function galleryRowHtml(image = "") {
+  return `
+    <div class="gallery-image-row" data-gallery-row>
+      <img class="image-preview" data-gallery-preview src="${escapeHtml(resolveAdminImageUrl(image))}" alt="">
+      <div class="slide-inputs">
+        <input type="hidden" class="gallery-image" value="${escapeHtml(image)}">
+        <input type="file" accept=".webp,image/webp" class="gallery-file">
+      </div>
+      <div class="row-actions">
+        <button type="button" class="icon-btn" data-move-gallery-up title="Move up">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 19V5"></path><path d="M5 12l7-7 7 7"></path></svg>
+        </button>
+        <button type="button" class="icon-btn" data-move-gallery-down title="Move down">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 5v14"></path><path d="M19 12l-7 7-7-7"></path></svg>
+        </button>
+        <button type="button" class="icon-btn danger" data-remove-gallery title="Remove">&times;</button>
+      </div>
+    </div>
+  `;
+}
+
+function addGalleryRow(image = "") {
+  const container = document.querySelector("[data-gallery-rows]");
+  container.insertAdjacentHTML("beforeend", galleryRowHtml(image));
+}
+
+function wireGalleryRowEvents() {
+  const container = document.querySelector("[data-gallery-rows]");
+
+  container.addEventListener("click", event => {
+    const row = event.target.closest("[data-gallery-row]");
+    if (!row) return;
+
+    if (event.target.closest("[data-remove-gallery]")) {
+      row.remove();
+      productFormDirty?.markDirty();
+      return;
+    }
+
+    if (event.target.closest("[data-move-gallery-up]")) {
+      const prev = row.previousElementSibling;
+      if (prev) container.insertBefore(row, prev);
+      productFormDirty?.markDirty();
+      return;
+    }
+
+    if (event.target.closest("[data-move-gallery-down]")) {
+      const next = row.nextElementSibling;
+      if (next) container.insertBefore(next, row);
+      productFormDirty?.markDirty();
+    }
+  });
+
+  container.addEventListener("change", event => {
+    if (!event.target.classList.contains("gallery-file")) return;
+    if (!validateWebpSelection(event.target)) return;
+    const row = event.target.closest("[data-gallery-row]");
+    const file = event.target.files[0];
+    if (file) row.querySelector("[data-gallery-preview]").src = URL.createObjectURL(file);
+  });
+}
+
+async function collectGalleryImages() {
+  const rows = Array.from(document.querySelectorAll("[data-gallery-row]"));
+  const images = [];
+
+  for (const row of rows) {
+    const file = row.querySelector(".gallery-file").files[0];
+    let image = row.querySelector(".gallery-image").value.trim();
+
+    if (file) {
+      image = await uploadAdminImage(file, "products/gallery");
+    }
+
+    if (image) images.push(image);
+  }
+
+  return images;
+}
+
 function resetProductForm() {
   const form = document.querySelector("[data-product-form]");
   form.reset();
   form.querySelector('[data-field="id"]').value = "";
   document.querySelector("[data-variant-rows]").innerHTML = "";
+  document.querySelector("[data-gallery-rows]").innerHTML = "";
   document.querySelector("[data-image-preview]").src = "";
   editingImageUrl = "";
   document.querySelector('[data-field="isActive"]').checked = true;
@@ -122,6 +203,7 @@ function openProductModal(product = null) {
     document.querySelector("[data-image-preview]").src = resolveAdminImageUrl(product.image);
 
     (product.variants || []).forEach(variant => addVariantRow(variant.name, variant.price));
+    (product.images || []).forEach(image => addGalleryRow(image));
   }
 
   document.querySelector("[data-product-modal]").classList.add("show");
@@ -158,6 +240,8 @@ async function handleProductSubmit(event) {
       imageUrl = await uploadAdminImage(imageFile, "products");
     }
 
+    const galleryImages = await collectGalleryImages();
+
     const variants = Array.from(document.querySelectorAll(".variant-row")).map(row => {
       const name = row.querySelector(".variant-name").value.trim();
       const price = Number(row.querySelector(".variant-price").value);
@@ -187,7 +271,8 @@ async function handleProductSubmit(event) {
       quality: form.querySelector('[data-field="quality"]').value.split("\n").map(line => line.trim()).filter(Boolean),
       variants: variants.length ? variants : null,
       is_active: form.querySelector('[data-field="isActive"]').checked,
-      image: imageUrl || null
+      image: imageUrl || null,
+      images: galleryImages
     };
 
     const { error } = id
@@ -252,6 +337,7 @@ async function initProductsPage() {
   await loadProducts();
 
   productFormDirty = trackFormDirty(document.querySelector("[data-product-form]"));
+  wireGalleryRowEvents();
 
   document.querySelector("[data-add-product]").addEventListener("click", () => openProductModal());
   document.querySelectorAll("[data-close-modal]").forEach(btn => btn.addEventListener("click", attemptCloseProductModal));
@@ -260,6 +346,10 @@ async function initProductsPage() {
   });
   document.querySelector("[data-product-search]").addEventListener("input", filterProducts);
   document.querySelector("[data-add-variant]").addEventListener("click", () => addVariantRow());
+  document.querySelector("[data-add-gallery-image]").addEventListener("click", () => {
+    addGalleryRow();
+    productFormDirty?.markDirty();
+  });
   document.querySelector("[data-product-form]").addEventListener("submit", handleProductSubmit);
   document.querySelector("[data-products-table]").addEventListener("click", handleTableClick);
 

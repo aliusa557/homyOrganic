@@ -33,6 +33,48 @@ function renderQualityMarkup(quality) {
   return `<p>${quality}</p>`;
 }
 
+function initProductGallery(imageCount) {
+  const gallery = document.querySelector("[data-gallery]");
+  if (!gallery || imageCount <= 1) return;
+
+  const mainImages = Array.from(gallery.querySelectorAll("[data-gallery-main-img]"));
+  const thumbs = Array.from(gallery.querySelectorAll("[data-gallery-thumb-index]"));
+  let activeIndex = 0;
+  let autoplayTimer = null;
+
+  function goToSlide(index) {
+    mainImages[activeIndex]?.classList.remove("active");
+    thumbs[activeIndex]?.classList.remove("active");
+    activeIndex = (index + imageCount) % imageCount;
+    mainImages[activeIndex]?.classList.add("active");
+    thumbs[activeIndex]?.classList.add("active");
+  }
+
+  const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  function startAutoplay() {
+    if (prefersReducedMotion) return;
+    stopAutoplay();
+    autoplayTimer = window.setInterval(() => goToSlide(activeIndex + 1), 2000);
+  }
+
+  function stopAutoplay() {
+    window.clearInterval(autoplayTimer);
+  }
+
+  thumbs.forEach(thumb => {
+    thumb.addEventListener("click", () => {
+      goToSlide(Number(thumb.dataset.galleryThumbIndex));
+      startAutoplay();
+    });
+  });
+
+  gallery.addEventListener("mouseenter", stopAutoplay);
+  gallery.addEventListener("mouseleave", startAutoplay);
+
+  startAutoplay();
+}
+
 function renderProductDetail() {
   const product = findProduct(getProductIdFromUrl());
   const wrapper = document.querySelector("[data-product-detail]");
@@ -64,6 +106,8 @@ function renderProductDetail() {
 
   document.title = `${product.name} | ${STORE_CONFIG.brandName}`;
 
+  const galleryImages = [product.image, ...(product.images || [])].filter(Boolean);
+
   wrapper.innerHTML = `
     <section class="page-hero small">
       <div class="container">
@@ -75,9 +119,23 @@ function renderProductDetail() {
 
     <section class="section">
       <div class="container product-detail-grid">
-        <div class="detail-image reveal">
+        <div class="detail-image reveal" data-gallery>
           <span class="product-tag">${product.tag}</span>
-          <img src="${product.image}" alt="${product.name}" fetchpriority="high" decoding="async">
+          <div class="gallery-main-stack">
+            ${galleryImages.map((image, index) => `
+              <img src="${image}" alt="${product.name}" class="gallery-main-img${index === 0 ? " active" : ""}" data-gallery-main-img
+                ${index === 0 ? 'fetchpriority="high"' : 'loading="lazy"'} decoding="async">
+            `).join("")}
+          </div>
+          ${galleryImages.length > 1 ? `
+            <div class="gallery-thumbs" data-gallery-thumbs>
+              ${galleryImages.map((image, index) => `
+                <button type="button" class="gallery-thumb${index === 0 ? " active" : ""}" data-gallery-thumb-index="${index}" aria-label="View image ${index + 1}">
+                  <img src="${image}" alt="${product.name} view ${index + 1}" loading="lazy" decoding="async">
+                </button>
+              `).join("")}
+            </div>
+          ` : ""}
         </div>
 
         <div class="detail-content reveal">
@@ -176,6 +234,8 @@ function renderProductDetail() {
       </div>
     </section>
   `;
+
+  initProductGallery(galleryImages.length);
 
   document.querySelector("[data-add-detail]")?.addEventListener("click", () => {
     const quantity = Number(document.getElementById("quantity").value) || 1;
