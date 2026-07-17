@@ -358,7 +358,6 @@ function productCard(product) {
 }
 
 function bundleCard(bundle) {
-  const items = bundle.items || (bundle.itemIds || []).map(findProduct).filter(Boolean);
   const oldPrice = bundlePrice(bundle);
   const discount = oldPrice > bundle.price ? Math.round((1 - bundle.price / oldPrice) * 100) : 0;
 
@@ -377,12 +376,6 @@ function bundleCard(bundle) {
         <h3><a href="bundle-detail.html" data-bundle-id="${bundle.id}">${bundle.name}</a></h3>
         <div class="rating-row">
           ${renderStars(bundle.rating, bundle.reviewCount)}
-        </div>
-        <div class="bundle-includes">
-          <strong>Includes:</strong>
-          <ul>
-            ${items.map(item => `<li><span>${item.name}</span><span>${formatBundlePrice(item.price)}</span></li>`).join("")}
-          </ul>
         </div>
 
         <div class="price-row">

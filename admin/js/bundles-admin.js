@@ -1,4 +1,5 @@
 let allBundles = [];
+let allBundleProducts = [];
 let editingBundleImageUrl = "";
 let bundleFormDirty;
 
@@ -59,16 +60,63 @@ async function loadBundles() {
   renderBundlesTable(allBundles);
 }
 
-function addItemRow(name = "", price = "") {
+async function loadBundleProducts() {
+  const { data, error } = await supabaseClient
+    .from("products")
+    .select("id, name, price, is_active")
+    .eq("is_active", true)
+    .order("name");
+
+  if (error) {
+    showAdminToast("Failed to load products for value pack items", true);
+    return;
+  }
+
+  allBundleProducts = data || [];
+}
+
+function bundleProductOptionHtml(product, selectedProductId) {
+  return `
+    <option value="${product.id}" data-name="${escapeHtml(product.name)}" data-price="${escapeHtml(product.price)}" ${String(product.id) === String(selectedProductId) ? "selected" : ""}>
+      ${escapeHtml(product.name)} - ${formatCurrency(product.price)}
+    </option>
+  `;
+}
+
+function addItemRow(item = {}) {
   const container = document.querySelector("[data-item-rows]");
   const row = document.createElement("div");
+  const selectedProduct = item.product_id
+    ? allBundleProducts.find(product => String(product.id) === String(item.product_id))
+    : allBundleProducts.find(product => product.name === item.name);
+  const savedName = item.name || "";
+  const savedPrice = item.price ?? "";
+  const selectedProductId = selectedProduct?.id || "";
+  const showSavedOption = savedName && !selectedProduct;
+
   row.className = "item-row";
   row.innerHTML = `
-    <input type="text" placeholder="Item name" class="item-name" value="${escapeHtml(name)}">
-    <input type="number" step="0.01" placeholder="Price" class="item-price" value="${escapeHtml(price)}">
+    <select class="item-product">
+      <option value="">Select a product</option>
+      ${allBundleProducts.map(product => bundleProductOptionHtml(product, selectedProductId)).join("")}
+      ${showSavedOption ? `<option value="saved" data-name="${escapeHtml(savedName)}" data-price="${escapeHtml(savedPrice)}" selected>${escapeHtml(savedName)} - saved item</option>` : ""}
+    </select>
+    <input type="number" step="0.01" placeholder="Price" class="item-price" value="${escapeHtml(selectedProduct?.price ?? savedPrice)}" readonly>
     <button type="button" class="icon-btn danger" data-remove-item>&times;</button>
   `;
-  row.querySelector("[data-remove-item]").addEventListener("click", () => row.remove());
+
+  const productSelect = row.querySelector(".item-product");
+  const priceInput = row.querySelector(".item-price");
+
+  productSelect.addEventListener("change", () => {
+    const option = productSelect.selectedOptions[0];
+    priceInput.value = option?.dataset.price || "";
+  });
+
+  row.querySelector("[data-remove-item]").addEventListener("click", () => {
+    row.remove();
+    bundleFormDirty?.markDirty();
+  });
   container.appendChild(row);
 }
 
@@ -103,7 +151,7 @@ function openBundleModal(bundle = null) {
     editingBundleImageUrl = bundle.image || "";
     document.querySelector("[data-image-preview]").src = resolveAdminImageUrl(bundle.image);
 
-    (bundle.items || []).forEach(item => addItemRow(item.name, item.price));
+    (bundle.items || []).forEach(item => addItemRow(item));
   }
 
   document.querySelector("[data-bundle-modal]").classList.add("show");
@@ -141,9 +189,12 @@ async function handleBundleSubmit(event) {
     }
 
     const items = Array.from(document.querySelectorAll(".item-row")).map(row => {
-      const name = row.querySelector(".item-name").value.trim();
+      const productSelect = row.querySelector(".item-product");
+      const selectedOption = productSelect.selectedOptions[0];
+      const productId = productSelect.value && productSelect.value !== "saved" ? Number(productSelect.value) : null;
+      const name = selectedOption?.dataset.name || "";
       const price = Number(row.querySelector(".item-price").value);
-      return { name, price };
+      return { product_id: productId, name, price };
     }).filter(item => item.name && !Number.isNaN(item.price));
 
     const id = form.querySelector('[data-field="id"]').value;
@@ -224,7 +275,7 @@ async function initBundlesPage() {
   const session = await requireAdminSession();
   if (!session) return;
 
-  await loadBundles();
+  await Promise.all([loadBundles(), loadBundleProducts()]);
 
   bundleFormDirty = trackFormDirty(document.querySelector("[data-bundle-form]"));
 

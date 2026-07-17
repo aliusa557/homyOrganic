@@ -565,6 +565,15 @@ table.data-table {
   align-items: center;
 }
 
+.item-row {
+  grid-template-columns: minmax(0, 1.4fr) minmax(110px, .6fr) auto;
+}
+
+.item-row select,
+.item-row input {
+  min-width: 0;
+}
+
 .image-upload-row {
   display: flex;
   gap: 14px;

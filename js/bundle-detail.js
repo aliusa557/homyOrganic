@@ -73,11 +73,20 @@ function renderBundleDetail() {
 
           <p class="lead-text">${bundle.description || ""}</p>
 
-          <div class="bundle-includes">
-            <strong>What's Included:</strong>
-            <ul>
-              ${items.map(item => `<li><span>${item.name}</span><span>${formatBundlePrice(item.price)}</span></li>`).join("")}
-            </ul>
+          <div class="value-pack-includes">
+            <div class="value-pack-includes-head">
+              <strong>What's Included</strong>
+              <span>${items.length} item${items.length === 1 ? "" : "s"} in this value pack</span>
+            </div>
+            <div class="value-pack-items">
+              ${items.map((item, index) => `
+                <div class="value-pack-item">
+                  <span class="value-pack-item-index">${index + 1}</span>
+                  <span class="value-pack-item-name">${item.name}</span>
+                  <strong>${formatBundlePrice(item.price)}</strong>
+                </div>
+              `).join("")}
+            </div>
           </div>
 
           <div class="quantity-box">
