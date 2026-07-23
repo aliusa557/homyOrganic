@@ -85,10 +85,6 @@ function renderProductDetail() {
   const initialVariant = hasVariants ? findProductVariant(product, null) : null;
   const displayPrice = initialVariant ? initialVariant.price : product?.price;
 
-  if (window.location.search.includes("id=")) {
-    window.history.replaceState({}, "", "product-detail.html");
-  }
-
   if (!wrapper) return;
 
   if (!product) {

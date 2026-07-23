@@ -3,16 +3,24 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="facebook-domain-verification" content="6fo4rxtazwbiqpy8bf7asi87pa677d">
   <link rel="icon" type="image/webp" href="assets/brand/homy-organic-logo.webp">
-  <title>Homy Organic | Organic Store</title>
-  <meta name="description" content="Homy Organic — premium organic beauty and wellness brand offering hand-blended products made from natural ingredients. Where beauty meets wellness.">
+  <title>Homy Organic | Organic Beauty & Wellness Products in Pakistan</title>
+  <meta name="description" content="Shop premium organic beauty and wellness products from Homy Organic, including herbal hair oil, glass glow face pack, herbal tea, digestive wellness powder, spa soak, and value packs.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="preload" as="image" href="assets/hero-optimized/signature-hair-oil.webp" fetchpriority="high">
   <link href="https://fonts.googleapis.com/css2?family=Jost:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/style.css">
+  <!-- Facebook Pixel Code -->
+  <script>
+    !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');
+    fbq('init', '2422288738300251');
+    fbq('track', 'PageView');
+  </script>
+  <!-- End Facebook Pixel Code -->
 </head>
 <body>
+  <noscript><img height="1" width="1" alt="" src="https://www.facebook.com/tr?id=2422288738300251&ev=PageView&noscript=1"></noscript>
   <div class="topbar">Free Shipping on Orders Above Rs. 3,000 - COD Available - WhatsApp Orders</div>
 
   <header class="header">
@@ -68,21 +76,7 @@
       </div>
 
       <div class="slider-track">
-        <div class="slide active" data-slide>
-          <img src="assets/hero-optimized/signature-hair-oil.webp" alt="Homy Organic Signature Hair Oil" fetchpriority="high" decoding="async">
-        </div>
-        <div class="slide" data-slide>
-          <img src="assets/hero-optimized/pure-glow-tea.webp" alt="Homy Organic Pure Glow Tea" loading="lazy" decoding="async">
-        </div>
-        <div class="slide" data-slide>
-          <img src="assets/hero-optimized/organic-ubtan-powder.webp" alt="Homy Organic Glass Glow Face Pack" loading="lazy" decoding="async">
-        </div>
-        <div class="slide" data-slide>
-          <img src="assets/hero-optimized/herbal-spice-blend.webp" alt="Homy Organic Digest Well Powder" loading="lazy" decoding="async">
-        </div>
-        <div class="slide" data-slide>
-          <img src="assets/hero-optimized/signature-spa-soak.webp" alt="Homy Organic Signature Spa Soak" loading="lazy" decoding="async">
-        </div>
+        <div class="slide active" data-slide></div>
       </div>
 
       <button class="slider-arrow slider-arrow-prev" data-slider-prev aria-label="Previous slide">
@@ -111,7 +105,12 @@
           <a class="btn btn-outline" href="shop.html">View All</a>
         </div>
 
-        <div class="product-grid" data-best-sellers></div>
+        <div class="product-grid" data-best-sellers>
+          <article class="product-card product-card-loading"></article>
+          <article class="product-card product-card-loading"></article>
+          <article class="product-card product-card-loading"></article>
+          <article class="product-card product-card-loading"></article>
+        </div>
       </div>
     </section>
 
@@ -124,7 +123,12 @@
           <a class="btn btn-outline" href="shop.html">View All</a>
         </div>
 
-        <div class="product-grid" data-featured-products></div>
+        <div class="product-grid" data-featured-products>
+          <article class="product-card product-card-loading"></article>
+          <article class="product-card product-card-loading"></article>
+          <article class="product-card product-card-loading"></article>
+          <article class="product-card product-card-loading"></article>
+        </div>
       </div>
     </section>
 
@@ -136,7 +140,12 @@
           </div>
         </div>
 
-        <div class="product-grid bundle-grid" data-bundles></div>
+        <div class="product-grid bundle-grid" data-bundles>
+          <article class="product-card product-card-loading"></article>
+          <article class="product-card product-card-loading"></article>
+          <article class="product-card product-card-loading"></article>
+          <article class="product-card product-card-loading"></article>
+        </div>
       </div>
     </section>
 
@@ -284,8 +293,9 @@
   <script src="js/site-settings.js"></script>
   <script src="js/products.js"></script>
   <script src="js/main.js"></script>
-  <script src="js/home.js"></script>
   <script src="js/hero-slider.js"></script>
+  <script src="js/home.js"></script>
+  <script src="js/seo.js"></script>
 </body>
 </html>
 

@@ -18,19 +18,19 @@ function renderHeroFromSettings() {
 
     track.innerHTML = slides.map((slide, index) => `
       <div class="slide${index === 0 ? " active" : ""}" data-slide>
-        <img src="${slide.image}" alt="${slide.alt || ""}" ${index === 0 ? 'fetchpriority="high"' : 'loading="lazy"'} decoding="async">
+        <img src="${slide.image}" alt="${slide.alt || ""}" ${index === 0 ? 'fetchpriority="high"' : 'loading="lazy"'} decoding="async" onerror="this.closest('[data-slide]')?.classList.add('image-failed')">
       </div>
     `).join("");
 
     if (dotsContainer) dotsContainer.innerHTML = "";
+  } else {
+    heroSlider.classList.add("single-slide");
   }
 
   initHeroSlider();
 }
 
-whenReady(() => {
-  renderHeroFromSettings();
-
+function renderHomeSections() {
   const bestSellersGrid = document.querySelector("[data-best-sellers]");
   const featuredGrid = document.querySelector("[data-featured-products]");
   const bundleGrid = document.querySelector("[data-bundles]");
@@ -40,22 +40,22 @@ whenReady(() => {
     const bestSellers = [...PRODUCTS]
       .sort((a, b) => b.reviewCount - a.reviewCount)
       .slice(0, 4);
-    bestSellersGrid.innerHTML = bestSellers.map(productCard).join("");
+    if (bestSellers.length) bestSellersGrid.innerHTML = bestSellers.map(productCard).join("");
   }
 
   if (featuredGrid) {
-    featuredGrid.innerHTML = PRODUCTS.map(productCard).join("");
+    if (PRODUCTS.length) featuredGrid.innerHTML = PRODUCTS.map(productCard).join("");
   }
 
   if (bundleGrid) {
-    bundleGrid.innerHTML = BUNDLES.map(bundleCard).join("");
+    if (BUNDLES.length) bundleGrid.innerHTML = BUNDLES.map(bundleCard).join("");
   }
 
   if (instaGrid) {
     const gallery = [...PRODUCTS, ...PRODUCTS].slice(0, 6);
-    instaGrid.innerHTML = gallery.map(product => `
+    if (gallery.length) instaGrid.innerHTML = gallery.map(product => `
       <a class="insta-tile reveal" href="${INSTAGRAM_URL}" target="_blank" rel="noopener" aria-label="View ${product.name} on Instagram">
-        <img src="${product.image}" alt="${product.name}" loading="lazy" decoding="async">
+        <img src="${product.image}" alt="${product.name}" loading="lazy" decoding="async" onerror="this.closest('.insta-tile')?.remove()">
         ${INSTAGRAM_ICON}
       </a>
     `).join("");
@@ -63,4 +63,16 @@ whenReady(() => {
 
   rewriteInternalLinks();
   initRevealAnimations();
-});
+}
+
+function initHomePage() {
+  renderHeroFromSettings();
+  (window.settingsReadyPromise || Promise.resolve()).then(renderHeroFromSettings);
+  (window.storeReadyPromise || Promise.resolve()).then(renderHomeSections);
+}
+
+if (document.readyState === "loading") {
+  document.addEventListener("DOMContentLoaded", initHomePage);
+} else {
+  initHomePage();
+}

@@ -18,10 +18,6 @@ function renderBundleDetail() {
   const bundle = findBundle(getBundleIdFromUrl());
   const wrapper = document.querySelector("[data-bundle-detail]");
 
-  if (window.location.search.includes("id=")) {
-    window.history.replaceState({}, "", "bundle-detail.html");
-  }
-
   if (!wrapper) return;
 
   if (!bundle) {

@@ -432,6 +432,7 @@ button {
 
 .hero-slider {
   position: relative;
+  background: var(--aqua);
 }
 
 .hero-slider::after {
@@ -480,6 +481,13 @@ button {
   color: rgba(255, 255, 255, .92);
   font-size: 17px;
   text-shadow: 0 1px 10px rgba(0, 0, 0, .2);
+}
+
+.hero-slider:not(.slider-ready) .slider-arrow,
+.hero-slider:not(.slider-ready) .slider-dots,
+.hero-slider.single-slide .slider-arrow,
+.hero-slider.single-slide .slider-dots {
+  display: none;
 }
 
 .slider-track {
@@ -777,6 +785,26 @@ button {
   box-shadow: none;
 }
 
+.product-card-loading {
+  min-height: 360px;
+  background:
+    linear-gradient(90deg, transparent, rgba(255, 255, 255, .58), transparent) 0 0 / 220px 100% no-repeat,
+    linear-gradient(#f0eee9 0 0) 0 0 / 100% 72% no-repeat,
+    linear-gradient(#eee9e2 0 0) 0 78% / 70% 14px no-repeat,
+    linear-gradient(#f4f0ea 0 0) 0 86% / 92% 12px no-repeat,
+    linear-gradient(#eadfce 0 0) 0 94% / 44% 14px no-repeat;
+  animation: loadingShimmer 1.45s ease-in-out infinite;
+}
+
+.product-card-loading:hover {
+  transform: none;
+}
+
+@keyframes loadingShimmer {
+  0% { background-position: -240px 0, 0 0, 0 78%, 0 86%, 0 94%; }
+  100% { background-position: calc(100% + 240px) 0, 0 0, 0 78%, 0 86%, 0 94%; }
+}
+
 .product-image-wrap {
   position: relative;
   display: block;
@@ -796,6 +824,43 @@ button {
   border-radius: 0;
   transform: scale(1);
   transition: transform .5s ease;
+}
+
+.product-image-wrap.image-failed {
+  aspect-ratio: 1 / 1.16;
+  display: grid;
+  place-items: center;
+  background: linear-gradient(135deg, var(--aqua), var(--green-soft));
+}
+
+.product-image-wrap.image-failed img {
+  display: none;
+}
+
+.product-image-wrap.image-failed::before,
+.slider-track [data-slide].image-failed::before {
+  content: "Homy Organic";
+  display: grid;
+  place-items: center;
+  width: 62%;
+  max-width: 220px;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, .7);
+  color: var(--brown);
+  font-weight: 700;
+  text-align: center;
+  box-shadow: var(--shadow-soft);
+}
+
+.slider-track [data-slide].image-failed {
+  display: grid;
+  place-items: center;
+  background: linear-gradient(135deg, var(--brown), var(--green));
+}
+
+.slider-track [data-slide].image-failed img {
+  display: none;
 }
 
 .product-card:hover .product-image-wrap img {

@@ -247,12 +247,16 @@ function normalizePagePath(pathname = window.location.pathname) {
 function rewriteInternalLinks(root = document) {
   root.querySelectorAll("a[href]").forEach(link => {
     const href = link.getAttribute("href");
-    const htmlPages = new Set(["index", "about", "shop", "contact", "cart", "checkout", "product-detail"]);
+    const htmlPages = new Set(["index", "about", "shop", "contact", "cart", "checkout", "product-detail", "bundle-detail", "track-order"]);
 
     if (htmlPages.has(href)) {
       link.setAttribute("href", `${href}.html`);
     }
   });
+}
+
+function productDetailUrl(productId) {
+  return `product-detail.html?id=${encodeURIComponent(productId)}`;
 }
 
 function setSelectedProductId(productId) {
@@ -264,10 +268,17 @@ function initProductLinks() {
     const link = event.target.closest("a[data-product-id]");
     if (!link) return;
 
-    event.preventDefault();
     setSelectedProductId(link.getAttribute("data-product-id"));
-    window.location.assign("product-detail.html");
+
+    if (!link.getAttribute("href")) {
+      event.preventDefault();
+      window.location.assign(productDetailUrl(link.getAttribute("data-product-id")));
+    }
   });
+}
+
+function bundleDetailUrl(bundleId) {
+  return `bundle-detail.html?id=${encodeURIComponent(bundleId)}`;
 }
 
 function setSelectedBundleId(bundleId) {
@@ -279,9 +290,12 @@ function initBundleLinks() {
     const link = event.target.closest("a[data-bundle-id]");
     if (!link) return;
 
-    event.preventDefault();
     setSelectedBundleId(link.getAttribute("data-bundle-id"));
-    window.location.assign("bundle-detail.html");
+
+    if (!link.getAttribute("href")) {
+      event.preventDefault();
+      window.location.assign(bundleDetailUrl(link.getAttribute("data-bundle-id")));
+    }
   });
 }
 
@@ -330,18 +344,18 @@ function productCard(product) {
       <div class="product-image-wrap">
         <span class="product-tag">${product.tag}</span>
         ${discount > 0 ? `<span class="discount-badge">-${discount}%</span>` : ""}
-        <a href="product-detail.html" data-product-id="${product.id}" aria-label="View ${product.name}">
-          <img src="${product.image}" alt="${product.name}" loading="lazy" decoding="async">
+        <a href="${productDetailUrl(product.id)}" data-product-id="${product.id}" aria-label="View ${product.name}">
+          <img src="${product.image}" alt="${product.name}" loading="lazy" decoding="async" onerror="this.closest('.product-image-wrap')?.classList.add('image-failed')">
         </a>
         <div class="product-quick-actions">
           <button class="icon-action" type="button" onclick="addToCart(${product.id})" aria-label="Add ${product.name} to cart">${cartIcon()}</button>
-          <a class="icon-action" href="product-detail.html" data-product-id="${product.id}" aria-label="View ${product.name}">${eyeIcon()}</a>
+          <a class="icon-action" href="${productDetailUrl(product.id)}" data-product-id="${product.id}" aria-label="View ${product.name}">${eyeIcon()}</a>
         </div>
       </div>
 
       <div class="product-content">
         <p class="product-category">${product.category}</p>
-        <h3><a href="product-detail.html" data-product-id="${product.id}">${product.name}</a></h3>
+        <h3><a href="${productDetailUrl(product.id)}" data-product-id="${product.id}">${product.name}</a></h3>
 
         <div class="rating-row">
           ${renderStars(product.rating, product.reviewCount)}
@@ -366,14 +380,14 @@ function bundleCard(bundle) {
       <div class="product-image-wrap">
         <span class="product-tag">${bundle.tag}</span>
         ${discount > 0 ? `<span class="discount-badge">-${discount}%</span>` : ""}
-        <a href="bundle-detail.html" data-bundle-id="${bundle.id}" aria-label="View ${bundle.name}">
-          <img src="${bundle.image}" alt="${bundle.name}" loading="lazy" decoding="async">
+        <a href="${bundleDetailUrl(bundle.id)}" data-bundle-id="${bundle.id}" aria-label="View ${bundle.name}">
+          <img src="${bundle.image}" alt="${bundle.name}" loading="lazy" decoding="async" onerror="this.closest('.product-image-wrap')?.classList.add('image-failed')">
         </a>
       </div>
 
       <div class="product-content">
         <p class="product-category">Value Pack</p>
-        <h3><a href="bundle-detail.html" data-bundle-id="${bundle.id}">${bundle.name}</a></h3>
+        <h3><a href="${bundleDetailUrl(bundle.id)}" data-bundle-id="${bundle.id}">${bundle.name}</a></h3>
         <div class="rating-row">
           ${renderStars(bundle.rating, bundle.reviewCount)}
         </div>

@@ -7,6 +7,8 @@ function initHeroSlider() {
   const dotsContainer = slider.querySelector("[data-slider-dots]");
   const prevButton = slider.querySelector("[data-slider-prev]");
   const nextButton = slider.querySelector("[data-slider-next]");
+  slider.classList.toggle("single-slide", slides.length <= 1);
+  slider.classList.toggle("slider-ready", slides.length > 1);
   if (slides.length <= 1) return;
 
   let activeIndex = slides.findIndex(slide => slide.classList.contains("active"));
